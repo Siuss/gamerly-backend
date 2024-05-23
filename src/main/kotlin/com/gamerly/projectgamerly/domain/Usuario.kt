@@ -8,7 +8,9 @@ class Usuario (
     var juegosPreferidos: List<String>,
     var diasPreferidos: List<String>,
     
-)
+) {
+    var id = 0
+}
 
 /*
  nombre
