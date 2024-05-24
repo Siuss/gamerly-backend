@@ -32,7 +32,7 @@ class Búsqueda(private val repositorio: List<Usuario>) {
             (juegosPreferidos == null || usuario.juegosPreferidos.intersect(juegosPreferidos).isNotEmpty()) &&
             (reputacion == null || usuario.reputacion == reputacion) && 
             (diasPreferidos == null || usuario.diasPreferidos.intersect(diasPreferidos).isNotEmpty()) &&
-            (horariosPreferidos == null || usuario.diasPreferidos.intersect(horariosPreferidos).isNotEmpty())) 
+            (horariosPreferidos == null || usuario.diasPreferidos.intersect(horariosPreferidos).isNotEmpty()) 
         }
     }
 }
