@@ -3,16 +3,6 @@ package com.gamerly.projectgamerly.domain
 import java.time.LocalDate
 
 class Usuario (
-<<<<<<< Updated upstream
-    var nombre: String,
-    var foto: String,
-    var fechaDeNacimiento : LocalDate,
-    var email: String,
-    var password: String,
-    var juegosPreferidos: List<String>,
-    var diasPreferidos: List<String>,
-    var id : Int
-=======
 	var id : Long,
 	var nombre: String,
 	var foto: String,
@@ -22,12 +12,10 @@ class Usuario (
 	var juegosPreferidos: List<String>,
 	var diasPreferidos: List<String>,
 	var reputacion: Long,
->>>>>>> Stashed changes
 ) {
 
 }
 
-<<<<<<< Updated upstream
 
 
 /*
@@ -70,15 +58,3 @@ data class Usuario(
 )
 
 * */
-
-=======
->>>>>>> Stashed changes
-/*
- nombre
- foto
- edad
- sexo
- juegos preferidos
- dias preferido
- horarios preferido
- */
