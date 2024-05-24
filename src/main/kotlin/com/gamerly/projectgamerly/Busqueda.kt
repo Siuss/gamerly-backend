@@ -1,6 +1,6 @@
 package com.gamerly.projectgamerly
 
-import domain.Usuario
+import com.gamerly.projectgamerly.domain.Usuario
 
 /**
  * TODO: Corresponde incluir en Usuario los atributos faltantes
@@ -22,8 +22,9 @@ class Búsqueda(private val repositorio: List<Usuario>) {
     private fun coincideConCriterios(usuario: Usuario, preferido: Usuario): Boolean {
         
         if ((usuario.juegosPreferidos == preferido.juegosPreferidos) ||
-            (usuario.califiacion == preferido.califiacion) || 
-            (dias == preferido.dias) || (usuario.horariosPreferidos == preferido.horariosPrefer)){
+            (usuario.reputacion == preferido.reputacion) ||
+            (usuario.diasPreferidos == preferido.diasPreferidos) ||
+            (usuario.horariosPreferidos == preferido.horariosPreferidos)){
             return true
         }
         
