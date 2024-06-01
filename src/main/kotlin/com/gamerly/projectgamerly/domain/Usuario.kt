@@ -50,6 +50,14 @@ class Usuario(
     @Column(name = "dia_preferido")
     var diasPreferidos: List<String> = mutableListOf(),
 
+    @Column(nullable = false)
+    var nacionalidad: String = "",
+
+    @ElementCollection
+    @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "plataforma")
+    var plataformas: List<String> = mutableListOf(),
+
 //    @Column()
 //    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
 //    var resenias: List<Resenia> = mutableListOf(),

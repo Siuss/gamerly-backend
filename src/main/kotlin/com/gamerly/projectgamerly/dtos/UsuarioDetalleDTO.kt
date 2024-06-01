@@ -10,11 +10,12 @@ class UsuarioDetalleDTO() {
     lateinit var foto: String
     lateinit var fechaDeNacimiento: LocalDate
     lateinit var email: String
-    lateinit var password: String
     lateinit var juegosPreferidos: List<String>
+    lateinit var plataformas: List<String>
     lateinit var diasPreferidos: List<String>
+    lateinit var nacionalidad: String
     var reputacion: Long = 0
-    lateinit var resenias: List<Resenia>
+    var resenias: List<Resenia> = emptyList()
 
     constructor(
         usuario: Usuario
@@ -24,9 +25,9 @@ class UsuarioDetalleDTO() {
         this.fechaDeNacimiento = usuario.fechaDeNacimiento
         this.foto = usuario.foto
         this.email = usuario.email
-        this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos
         this.diasPreferidos = usuario.diasPreferidos
-
+        this.plataformas = usuario.plataformas
+        this.nacionalidad = usuario.nacionalidad
     }
 }

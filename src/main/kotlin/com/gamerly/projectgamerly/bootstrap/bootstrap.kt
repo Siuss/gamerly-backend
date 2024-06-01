@@ -32,6 +32,7 @@ class Bootstrap: InitializingBean {
             "usuarioFafa",
             listOf("lol", "terraria"),
             listOf("viernes", "sabado"),
+            "Argentina"
 
 
         )
