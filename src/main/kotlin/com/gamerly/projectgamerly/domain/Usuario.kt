@@ -1,14 +1,6 @@
 package com.gamerly.projectgamerly.domain
 
-import jakarta.persistence.CollectionTable
-import jakarta.persistence.Column
-import jakarta.persistence.ElementCollection
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.time.LocalDate
 
 //class Usuario(
@@ -32,25 +24,21 @@ import java.time.LocalDate
 
 @Entity
 @Table(name = "usuarios")
-data class Usuario(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+class Usuario(
+    @Column(nullable = false)
+    var nombre: String = "",
 
     @Column(nullable = false)
-    var nombre: String,
-
-    @Column(nullable = false)
-    var foto: String,
+    var foto: String = "",
 
     @Column(name = "fecha_de_nacimiento", nullable = false)
-    var fechaDeNacimiento: LocalDate,
+    var fechaDeNacimiento: LocalDate = LocalDate.now(),
 
     @Column(nullable = false, unique = true)
-    var email: String,
+    var email: String = "",
 
     @Column(nullable = false)
-    var password: String,
+    var password: String = "",
 
     @ElementCollection
     @CollectionTable(name = "usuario_juegos_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
@@ -60,6 +48,19 @@ data class Usuario(
     @ElementCollection
     @CollectionTable(name = "usuario_dias_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_preferido")
-    var diasPreferidos: List<String> = mutableListOf()
-)
+    var diasPreferidos: List<String> = mutableListOf(),
+
+//    @Column()
+//    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+//    var resenias: List<Resenia> = mutableListOf(),
+
+    ) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
+
+
+}
+
+
 
