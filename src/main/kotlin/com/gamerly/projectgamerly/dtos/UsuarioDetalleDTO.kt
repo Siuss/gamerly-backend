@@ -27,7 +27,6 @@ class UsuarioDetalleDTO() {
         this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos
         this.diasPreferidos = usuario.diasPreferidos
-        this.reputacion = usuario.reputacion
-        this.resenias = usuario.resenias
+
     }
 }
