@@ -1,29 +1,34 @@
 package com.gamerly.projectgamerly.domain
 
+import jakarta.persistence.CollectionTable
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.Table
 import java.time.LocalDate
 
-class Usuario(
-	var id: Long,
-	var nombre: String,
-	var foto: String,
-	var fechaDeNacimiento: LocalDate,
-	var email: String,
-	var password: String,
-	var juegosPreferidos: List<String>,
-	var diasPreferidos: List<String>,
-	var reputacion: Long,
-	var resenias: List<Resenia>
-) {
+//class Usuario(
+//	var id: Long,
+//	var nombre: String,
+//	var foto: String,
+//	var fechaDeNacimiento: LocalDate,
+//	var email: String,
+//	var password: String,
+//	var juegosPreferidos: List<String>,
+//	var diasPreferidos: List<String>,
+//	var reputacion: Long,
+//	var resenias: List<Resenia>
+//) {
+//
+//}
+//
+//
 
-}
 
-
-
-/*
-suponiendo que usamos jpa para persistir...igual no sabria si esta bien implementado
-
-import java.time.LocalDate
-import javax.persistence.*
 
 @Entity
 @Table(name = "usuarios")
@@ -58,4 +63,3 @@ data class Usuario(
     var diasPreferidos: List<String> = mutableListOf()
 )
 
-* */

@@ -33,8 +33,7 @@ class Bootstrap: InitializingBean {
             "123",
             listOf("lol", "terraria"),
             listOf("viernes", "sabado"),
-            4,
-            listOf(resenia12)
+
         )
         val usuario2 = Usuario(
             2,
@@ -45,8 +44,6 @@ class Bootstrap: InitializingBean {
             "123",
             listOf("stardew valley", "overcooked"),
             listOf("miercoles", "martes"),
-            3,
-            listOf(resenia21)
         )
 
         usuarioRepository.usuarios.addAll(listOf(usuario1, usuario2))
