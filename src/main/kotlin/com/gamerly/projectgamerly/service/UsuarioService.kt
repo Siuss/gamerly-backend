@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Usuario
+import com.gamerly.projectgamerly.dtos.ReseniasDTO
 import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
 import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
@@ -35,5 +36,15 @@ class UsuarioService {
         }
         UsuarioCreacionDTO.fromUsuario(usuarioRegistro)
         return userRepository.save(usuarioRegistro)
+    }
+
+    fun comentariosUsuario(idUsuario: Long) : List<ReseniasDTO> {
+        val usuario = usuarioRepository.findById(idUsuario)
+        val resenias = userRepository.findReseniasByUsuarioId(usuario.get().id)
+        return resenias.map { resenia -> ReseniasDTO.fromResenias(usuario.get(), resenia) }
+    }
+
+    fun getAllUsers(): List<UsuarioDetalleDTO> {
+        return usuarioRepository.findAll().map { UsuarioDetalleDTO(it) }
     }
 }

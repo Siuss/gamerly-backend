@@ -1,5 +1,6 @@
 package com.gamerly.projectgamerly.controller;
 
+import com.gamerly.projectgamerly.dtos.ReseniasDTO
 import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
 import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
@@ -30,5 +31,15 @@ class UsuarioController {
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         return usuarioService.getUsuario(idUsuario)
+    }
+
+    @GetMapping("/comentarios/{idUsuario}")
+    fun comentariosUsuario(@PathVariable idUsuario: Long) : List<ReseniasDTO>{
+        return usuarioService.comentariosUsuario(idUsuario)
+    }
+
+    @GetMapping("/")
+    fun getAllUsers(): List<UsuarioDetalleDTO> {
+        return usuarioService.getAllUsers()
     }
 }

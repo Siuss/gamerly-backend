@@ -50,15 +50,14 @@ class Usuario(
     @Column(name = "dia_preferido")
     var diasPreferidos: List<String> = mutableListOf(),
 
-//    @Column()
-//    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-//    var resenias: List<Resenia> = mutableListOf(),
 
     ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    var resenias: List<Resenia> = mutableListOf()
 
 }
 
