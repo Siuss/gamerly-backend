@@ -22,10 +22,10 @@ class UsuarioController {
         usuarioService.crearUsuario(usuarioNuevo)
     }
 
-//    @GetMapping("/buscar")
-//    fun busquedaAvanzada(@RequestParam(required = false) juegosEnComun: List<String>?,@RequestParam(required = false) puntaje: Long?): List<UsuarioBusquedaDto> {
-//        return usuarioService.busquedaAvanzada(juegosEnComun, puntaje)
-//    }
+    @GetMapping("/buscar")
+    fun busquedaAvanzada(@RequestParam(required = false) juegosEnComun: List<String>?,@RequestParam(required = false) puntaje: Long?): List<UsuarioBusquedaDto> {
+        return usuarioService.busquedaAvanzada(juegosEnComun, puntaje)
+    }
 
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {

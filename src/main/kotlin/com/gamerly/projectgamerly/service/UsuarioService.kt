@@ -17,14 +17,16 @@ class UsuarioService {
     lateinit var usuarioRepository: UserRepository
 
     fun getUsuario(idUsuario: Long): UsuarioDetalleDTO {
-        val usuario = usuarioRepository.findById(idUsuario).orElse(null)
+        val usuario = usuarioRepository.findById(idUsuario).get()
         return UsuarioDetalleDTO(usuario)
     }
 
-//    fun busquedaAvanzada(juegosEnComun: List<String>?, puntaje: Long?): List<UsuarioBusquedaDto>{
-//        val usuariosFiltrados = usuarioRepository.busquedaAvanzada(juegosEnComun, puntaje)
-//        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
-//    }
+    fun busquedaAvanzada(juegosEnComun: List<String>?, puntaje: Long?): List<UsuarioBusquedaDto>{
+        val juegosEnComunAssert = juegosEnComun ?: mutableListOf()
+        val puntajeAssert = puntaje ?: 0
+        val usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros( puntajeAssert)
+        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
+    }
 
     fun crearUsuario(user: UsuarioCreacionDTO) : Usuario  {
         val usuarioRegistro = Usuario().apply {

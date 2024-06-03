@@ -49,17 +49,14 @@ class Usuario(
     @CollectionTable(name = "usuario_dias_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_preferido")
     var diasPreferidos: List<String> = mutableListOf(),
-
-//    @Column()
-//    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-//    var resenias: List<Resenia> = mutableListOf(),
-
-    ) {
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
-
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @Column(name = "resenias")
+    var resenias: MutableList<Resenia> = mutableListOf()
 }
 
 

@@ -21,8 +21,8 @@ class Bootstrap: InitializingBean {
     }
 
     fun init() {
-//        val resenia12 = Resenia(2, 1, 4, "Buen compañero")
-//        val resenia21 = Resenia(1, 2, 3, "Ni bien ni mal")
+        val resenia12 = Resenia(1, 2, 4, "Buen compañero")
+        val resenia21 = Resenia(2, 1, 3, "Ni bien ni mal")
 
         val usuario1 = Usuario(
             "Nanami",
@@ -32,22 +32,20 @@ class Bootstrap: InitializingBean {
             "usuarioFafa",
             listOf("lol", "terraria"),
             listOf("viernes", "sabado"),
-
-
         )
-//        val usuario2 = Usuario(
-//            2,
-//            "Usuario 2",
-//            "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
-//            LocalDate.now(),
-//            "test2@gmail.com",
-//            "123",
-//            listOf("stardew valley", "overcooked"),
-//            listOf("miercoles", "martes"),
-//            3,
-//            listOf(resenia21)
-//        )
+        usuario1.resenias.add(resenia21)
 
-        usuarioRepository.saveAll(listOf(usuario1))
+        val usuario2 = Usuario(
+            "Usuario 2",
+            "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
+            LocalDate.now(),
+            "test2@gmail.com",
+            "123",
+            listOf("stardew valley", "overcooked"),
+            listOf("miercoles", "martes"),
+        )
+        usuario2.resenias.add(resenia12)
+
+        usuarioRepository.saveAll(listOf(usuario1, usuario2))
     }
 }
