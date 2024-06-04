@@ -48,7 +48,7 @@ class Usuario(
     @ElementCollection
     @CollectionTable(name = "usuario_dias_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_preferido")
-    var diasPreferidos: List<String> = mutableListOf(),
+    var diasPreferidos: Set<String> = mutableSetOf(),
 
     @Column(nullable = false)
     var nacionalidad: String = "",
@@ -56,7 +56,7 @@ class Usuario(
     @ElementCollection
     @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "plataforma")
-    var plataformas: List<String> = mutableListOf(),
+    var plataformas: Set<String> = mutableSetOf(),
 
 //    @Column()
 //    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])

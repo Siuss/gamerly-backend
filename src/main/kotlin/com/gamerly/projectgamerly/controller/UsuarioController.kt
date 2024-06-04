@@ -1,8 +1,9 @@
 package com.gamerly.projectgamerly.controller;
 
-import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
+import com.gamerly.projectgamerly.dtos.CredencialesDTO
 import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
+import com.gamerly.projectgamerly.dtos.UsuarioLoginDTO
 import com.gamerly.projectgamerly.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -18,6 +19,11 @@ class UsuarioController {
     @PostMapping("/sign-up")
     fun crearUsuario(@RequestBody usuarioNuevo: UsuarioCreacionDTO) {
         usuarioService.crearUsuario(usuarioNuevo)
+    }
+
+    @PostMapping("/login")
+    fun loginUsuario(@RequestBody credenciales: CredencialesDTO): UsuarioLoginDTO {
+        return usuarioService.login(credenciales)
     }
 
 //    @GetMapping("/buscar")
