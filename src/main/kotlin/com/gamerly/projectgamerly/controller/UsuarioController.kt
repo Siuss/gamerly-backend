@@ -42,7 +42,10 @@ class UsuarioController {
     }
 
     @ExceptionHandler(Exception::class)
-    fun excepcionGenerica(exception: Exception): ResponseEntity<String> {
-        return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
+    fun excepcionGenerica(exception: Exception): ResponseEntity<HashMap<String, Any>> {
+        val entity = hashMapOf<String, Any>()
+        exception.message?.let { entity.put("message", it) }
+
+        return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
     }
 }

@@ -4,7 +4,9 @@ import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 
 @Service
 class UsuarioService {
@@ -16,14 +18,14 @@ class UsuarioService {
 
     fun getUsuario(idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario).orElse(null)
-            ?: throw Exception("Usuario con el id solicitado no existe")
+            ?: throw Exception("Usuario con el id solicitado no existe");
 
         return UsuarioDetalleDTO(usuario)
     }
 
     fun login(credenciales: CredencialesDTO): UsuarioLoginDTO {
         val usuario = usuarioRepository.findByEmailAndPassword(credenciales.email, credenciales.password).orElse(null)
-            ?: throw Exception("Credenciales incorrectas")
+            ?: throw Exception("Credenciales incorrectas");
 
         return UsuarioLoginDTO.from(usuario)
     }
@@ -45,11 +47,10 @@ class UsuarioService {
     }
 
     fun deleteUsuario(idUsuario: Long): UsuarioDetalleDTO {
-        val usuarioABorrar = usuarioRepository.findById(idUsuario).orElse(null)
-            ?: throw Exception("Usuario con id solicitado no existe");
+        val usuarioABorrar = getUsuario(idUsuario);
 
         usuarioRepository.deleteById(idUsuario);
 
-        return UsuarioDetalleDTO(usuarioABorrar);
+        return usuarioABorrar;
     }
 }
