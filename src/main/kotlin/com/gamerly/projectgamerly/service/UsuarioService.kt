@@ -1,9 +1,7 @@
 package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Usuario
-import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
-import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
-import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
+import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -21,6 +19,13 @@ class UsuarioService {
             ?: throw Exception("Usuario con el id solicitado no existe")
 
         return UsuarioDetalleDTO(usuario)
+    }
+
+    fun login(credenciales: CredencialesDTO): UsuarioLoginDTO {
+        val usuario = usuarioRepository.findByEmailAndPassword(credenciales.email, credenciales.password).orElse(null)
+            ?: throw Exception("Credenciales incorrectas")
+
+        return UsuarioLoginDTO.from(usuario)
     }
 
 //    fun busquedaAvanzada(juegosEnComun: List<String>?, puntaje: Long?): List<UsuarioBusquedaDto>{

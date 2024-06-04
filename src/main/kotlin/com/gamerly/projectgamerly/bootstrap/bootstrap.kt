@@ -31,7 +31,7 @@ class Bootstrap: InitializingBean {
             "test@gmail.com",
             "usuarioFafa",
             listOf("lol", "terraria"),
-            listOf("viernes", "sabado"),
+            hashSetOf("viernes", "sabado"),
             "Argentina"
 
 

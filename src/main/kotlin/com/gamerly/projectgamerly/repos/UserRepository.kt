@@ -10,4 +10,7 @@ import java.util.*
 interface UserRepository : CrudRepository<Usuario, Long>{
     @EntityGraph(attributePaths = ["juegosPreferidos", "diasPreferidos", "plataformas"])
     override fun findById(id: Long): Optional<Usuario>
+
+    @EntityGraph(attributePaths = ["juegosPreferidos", "diasPreferidos", "plataformas"])
+    fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 }
