@@ -18,6 +18,8 @@ class UsuarioService {
 
     fun getUsuario(idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario).orElse(null)
+            ?: throw Exception("Usuario con el id solicitado no existe")
+
         return UsuarioDetalleDTO(usuario)
     }
 
@@ -35,5 +37,14 @@ class UsuarioService {
         }
         UsuarioCreacionDTO.fromUsuario(usuarioRegistro)
         return userRepository.save(usuarioRegistro)
+    }
+
+    fun deleteUsuario(idUsuario: Long): UsuarioDetalleDTO {
+        val usuarioABorrar = usuarioRepository.findById(idUsuario).orElse(null)
+            ?: throw Exception("Usuario con id solicitado no existe");
+
+        usuarioRepository.deleteById(idUsuario);
+
+        return UsuarioDetalleDTO(usuarioABorrar);
     }
 }

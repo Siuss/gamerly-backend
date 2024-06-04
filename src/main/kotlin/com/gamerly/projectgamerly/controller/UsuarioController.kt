@@ -5,14 +5,12 @@ import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
 import com.gamerly.projectgamerly.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
+@CrossOrigin
 class UsuarioController {
     @Autowired
     lateinit var usuarioService: UsuarioService
@@ -30,5 +28,15 @@ class UsuarioController {
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         return usuarioService.getUsuario(idUsuario)
+    }
+
+    @DeleteMapping("/usuarios/{idUsuario}")
+    fun deleteUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
+        return usuarioService.deleteUsuario(idUsuario)
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun excepcionGenerica(exception: Exception): ResponseEntity<String> {
+        return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
     }
 }
