@@ -1,10 +1,12 @@
 package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Usuario
+import com.gamerly.projectgamerly.dtos.InputBusquedaDTO
 import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
 import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
 import com.gamerly.projectgamerly.repos.UserRepository
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -21,10 +23,9 @@ class UsuarioService {
         return UsuarioDetalleDTO(usuario)
     }
 
-    fun busquedaAvanzada(juegosEnComun: List<String>?, puntaje: Long?): List<UsuarioBusquedaDto>{
-        val juegosEnComunAssert = juegosEnComun ?: mutableListOf()
-        val puntajeAssert = puntaje ?: 0
-        val usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros( puntajeAssert)
+    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
+        //TODO: cambiar juegos a lista de Int, resolver segun id
+        val usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.juegos, inputBusqueda.puntaje!!)
         return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
     }
 

@@ -46,9 +46,9 @@ class Usuario(
     var juegosPreferidos: List<String> = mutableListOf(),
 
     @ElementCollection
-    @CollectionTable(name = "usuario_dias_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
-    @Column(name = "dia_preferido")
-    var diasPreferidos: List<String> = mutableListOf(),
+    @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "dia_horario_preferido")
+    var diasHorariosPreferidos: List<String> = mutableListOf(),
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

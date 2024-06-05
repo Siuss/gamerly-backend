@@ -31,7 +31,7 @@ class Bootstrap: InitializingBean {
             "test@gmail.com",
             "usuarioFafa",
             listOf("lol", "terraria"),
-            listOf("viernes", "sabado"),
+            listOf("ViernesMañana", "SabadoTarde", "SabadoNoche"),
         )
         usuario1.resenias.add(resenia21)
 
@@ -42,7 +42,7 @@ class Bootstrap: InitializingBean {
             "test2@gmail.com",
             "123",
             listOf("stardew valley", "overcooked"),
-            listOf("miercoles", "martes"),
+            listOf("MiercolesTarde", "MartesTarde"),
         )
         usuario2.resenias.add(resenia12)
 
