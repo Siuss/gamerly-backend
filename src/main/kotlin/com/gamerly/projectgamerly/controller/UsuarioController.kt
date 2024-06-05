@@ -45,7 +45,8 @@ class UsuarioController {
     @GetMapping("/")
     fun getAllUsers(): List<UsuarioDetalleDTO> {
         return usuarioService.getAllUsers()
-        
+    }
+
     @DeleteMapping("/usuarios/{idUsuario}")
     fun deleteUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         return usuarioService.deleteUsuario(idUsuario)

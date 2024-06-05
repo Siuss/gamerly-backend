@@ -43,7 +43,9 @@ class Bootstrap: InitializingBean {
             "test@gmail.com",
             "usuarioFafa",
             listOf("lol", "terraria"),
-            listOf("viernes", "sabado"),
+            setOf("viernes", "sabado"),
+            "Argentina",
+            setOf("PC", "PS4")
             )
         usuario2 = Usuario(
             "Michael",
@@ -52,8 +54,9 @@ class Bootstrap: InitializingBean {
             "test2@gmail.com",
             "contrasenia",
             listOf("stardew valley", "overcooked"),
-            listOf("miercoles", "martes"),
-
+            setOf("viernes", "sabado"),
+            "Argentina",
+            setOf("PC")
         )
         usuario3 = Usuario(
             "Nicolas",
@@ -61,13 +64,14 @@ class Bootstrap: InitializingBean {
             LocalDate.of(1999, 9, 1),
             "test1@gmail.com",
             "contrasenia",
-            listOf("Fifa24", "WWE 2k23, ternaria"),
-            listOf("miercoles", "martes"),
+            listOf("Fifa24", "WWE 2k23, ternaria","ETS2"),
+            setOf("miercoles", "martes"),
+            "Argentina",
+            setOf("PC", "PS4", "XBOX")
             )
         usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3 ))
     }
-            /*hashSetOf("viernes", "sabado"),
-            "Argentina"*/
+
 
 
     fun resenias() {
