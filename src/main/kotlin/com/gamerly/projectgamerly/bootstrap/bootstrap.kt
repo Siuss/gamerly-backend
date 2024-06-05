@@ -66,6 +66,9 @@ class Bootstrap: InitializingBean {
             )
         usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3 ))
     }
+            /*hashSetOf("viernes", "sabado"),
+            "Argentina"*/
+
 
     fun resenias() {
         val userEmisor1=usuarioRepository.findById(usuario1.id)

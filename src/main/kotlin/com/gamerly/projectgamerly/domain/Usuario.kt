@@ -48,7 +48,15 @@ class Usuario(
     @ElementCollection
     @CollectionTable(name = "usuario_dias_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_preferido")
-    var diasPreferidos: List<String> = mutableListOf(),
+    var diasPreferidos: Set<String> = mutableSetOf(),
+
+    @Column(nullable = false)
+    var nacionalidad: String = "",
+
+    @ElementCollection
+    @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "plataforma")
+    var plataformas: Set<String> = mutableSetOf(),
 
 
     ) {
