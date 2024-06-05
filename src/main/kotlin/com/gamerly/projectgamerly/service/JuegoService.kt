@@ -2,12 +2,13 @@ package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Juego
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Service
 import java.io.File
 
 @Service
 class JuegoService {
-    var info = File("src/main/resources/game_info.csv")
+    var info = ClassPathResource("game_info.csv").file
     var infoFiltrada = csvReader().readAllWithHeader(info).filter {
         it["rating"]!!.toDouble() > 0
     }
