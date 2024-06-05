@@ -46,6 +46,16 @@ class UsuarioService {
         return userRepository.save(usuarioRegistro)
     }
 
+
+    fun comentariosUsuario(idUsuario: Long) : List<ReseniasDTO> {
+        val usuario = usuarioRepository.findById(idUsuario)
+        val resenias = userRepository.findReseniasByUsuarioId(usuario.get().id)
+        return resenias.map { resenia -> ReseniasDTO.fromResenias(usuario.get(), resenia) }
+    }
+
+    fun getAllUsers(): List<UsuarioDetalleDTO> {
+        return usuarioRepository.findAll().map { UsuarioDetalleDTO(it) }
+
     fun deleteUsuario(idUsuario: Long): UsuarioDetalleDTO {
         val usuarioABorrar = getUsuario(idUsuario);
 
