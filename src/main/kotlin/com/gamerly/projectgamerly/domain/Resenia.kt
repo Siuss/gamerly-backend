@@ -19,4 +19,14 @@ class Resenia(
     var comentario: String) {
 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 var id: Long = 0
+
+    fun sendResenia(usuarioReceptor: Usuario, puntaje: Int, comentario: String) {
+        val resenia = Resenia(
+            idUsuarioEmisor = this.id.toInt(),
+            idUsuarioReceptor = usuarioReceptor.id.toInt(),
+            puntaje = puntaje,
+            comentario = comentario
+        )
+        this.reseniasEnviadas.add(resenia)
+    }
 }
