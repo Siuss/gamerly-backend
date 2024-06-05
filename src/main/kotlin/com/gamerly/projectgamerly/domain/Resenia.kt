@@ -11,9 +11,9 @@ import jakarta.persistence.JoinColumn
 @Entity
 class Resenia(
     @JoinColumn(name = "usuario_id")
-    var idUsuarioEmisor: Int,
+    var idUsuarioEmisor: Long,
     @JoinColumn(name = "usuario_id")
-    var idUsuarioReceptor: Int,
+    var idUsuarioReceptor: Long,
     @Column
     var puntaje: Int,
     @Column
@@ -21,13 +21,5 @@ class Resenia(
 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 var id: Long = 0
 
-    fun sendResenia(usuarioReceptor: Usuario, puntaje: Int, comentario: String) {
-        val resenia = Resenia(
-            idUsuarioEmisor = this.id.toInt(),
-            idUsuarioReceptor = usuarioReceptor.id.toInt(),
-            puntaje = puntaje,
-            comentario = comentario
-        )
-        this.reseniasEnviadas.add(resenia)
-    }
+
 }

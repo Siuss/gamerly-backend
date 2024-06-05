@@ -80,21 +80,21 @@ class Bootstrap: InitializingBean {
         val usuarioEmisor3=usuarioRepository.findById(usuario3.id)
 
         resenia1 = Resenia(
-            userEmisor1.get().id.toInt(),
-            user2Receptor.get().id.toInt(),
+            userEmisor1.get().id,
+            user2Receptor.get().id,
             4,
             "Buen compañero"
         )
         resenia2 = Resenia(
-            user2Receptor.get().id.toInt(),
-            userEmisor1.get().id.toInt(),
+            user2Receptor.get().id,
+            userEmisor1.get().id,
             1,
             "mereces perma por manco"
         )
 
         resenia3= Resenia(
-            usuarioEmisor3.get().id.toInt(),
-            user2Receptor.get().id.toInt(),
+            usuarioEmisor3.get().id,
+            user2Receptor.get().id,
             5,
             "Amigo pasame la receta para ganar en el fifa"
         )

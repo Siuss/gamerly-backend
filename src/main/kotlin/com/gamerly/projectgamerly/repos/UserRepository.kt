@@ -13,7 +13,7 @@ import java.util.*
 
 @Repository
 interface UserRepository : CrudRepository<Usuario, Long>{
-    @EntityGraph(attributePaths = ["juegosPreferidos", "diasPreferidos", "plataformas"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "diasPreferidos", "plataformas", "resenias"])
     override fun findById(id: Long): Optional<Usuario>
 
     @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
