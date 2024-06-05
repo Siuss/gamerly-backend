@@ -11,13 +11,15 @@ import jakarta.persistence.JoinColumn
 @Entity
 class Resenia(
     @JoinColumn(name = "usuario_id")
-    var idUsuarioEmisor: Int,
+    var idUsuarioEmisor: Long,
     @JoinColumn(name = "usuario_id")
-    var idUsuarioReceptor: Int,
+    var idUsuarioReceptor: Long,
     @Column
     var puntaje: Int,
     @Column
     var comentario: String) {
 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 var id: Long = 0
+
+
 }
