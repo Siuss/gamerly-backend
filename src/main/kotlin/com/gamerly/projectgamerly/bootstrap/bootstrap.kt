@@ -2,6 +2,7 @@ package com.gamerly.projectgamerly.bootstrap
 
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
+import com.gamerly.projectgamerly.repos.ReviewRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,6 +13,14 @@ import java.time.LocalDate
 class Bootstrap: InitializingBean {
     @Autowired
     lateinit var usuarioRepository : UserRepository
+    @Autowired
+    lateinit var reseniaRepository : ReviewRepository
+    lateinit var usuario1 :Usuario
+    lateinit var usuario2 : Usuario
+    lateinit var usuario3 : Usuario
+    lateinit var resenia1 : Resenia
+    lateinit var resenia2: Resenia
+    lateinit var resenia3: Resenia
 
     override fun afterPropertiesSet() {
         println("************************************************************************")
@@ -21,34 +30,82 @@ class Bootstrap: InitializingBean {
     }
 
     fun init() {
-//        val resenia12 = Resenia(2, 1, 4, "Buen compañero")
-//        val resenia21 = Resenia(1, 2, 3, "Ni bien ni mal")
+        this.usuario()
+        this.resenias()
+        this.obtenerResenias()
+    }
 
-        val usuario1 = Usuario(
+    fun usuario() {
+        usuario1 = Usuario(
             "Nanami",
             "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
             LocalDate.of(1999, 1, 1),
             "test@gmail.com",
             "usuarioFafa",
             listOf("lol", "terraria"),
-            hashSetOf("viernes", "sabado"),
-            "Argentina"
-
+            listOf("viernes", "sabado"),
+            )
+        usuario2 = Usuario(
+            "Michael",
+            "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/152.png",
+            LocalDate.of(1999, 12, 1),
+            "test2@gmail.com",
+            "contrasenia",
+            listOf("stardew valley", "overcooked"),
+            listOf("miercoles", "martes"),
 
         )
-//        val usuario2 = Usuario(
-//            2,
-//            "Usuario 2",
-//            "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
-//            LocalDate.now(),
-//            "test2@gmail.com",
-//            "123",
-//            listOf("stardew valley", "overcooked"),
-//            listOf("miercoles", "martes"),
-//            3,
-//            listOf(resenia21)
-//        )
+        usuario3 = Usuario(
+            "Nicolas",
+            "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png",
+            LocalDate.of(1999, 9, 1),
+            "test1@gmail.com",
+            "contrasenia",
+            listOf("Fifa24", "WWE 2k23, ternaria"),
+            listOf("miercoles", "martes"),
+            )
+        usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3 ))
+    }
+            /*hashSetOf("viernes", "sabado"),
+            "Argentina"*/
 
-        usuarioRepository.saveAll(listOf(usuario1))
+
+    fun resenias() {
+        val userEmisor1=usuarioRepository.findById(usuario1.id)
+        val user2Receptor=usuarioRepository.findById(usuario2.id)
+        val usuarioEmisor3=usuarioRepository.findById(usuario3.id)
+
+        resenia1 = Resenia(
+            userEmisor1.get().id.toInt(),
+            user2Receptor.get().id.toInt(),
+            4,
+            "Buen compañero"
+        )
+        resenia2 = Resenia(
+            user2Receptor.get().id.toInt(),
+            userEmisor1.get().id.toInt(),
+            1,
+            "mereces perma por manco"
+        )
+
+        resenia3= Resenia(
+            usuarioEmisor3.get().id.toInt(),
+            user2Receptor.get().id.toInt(),
+            5,
+            "Amigo pasame la receta para ganar en el fifa"
+        )
+
+        reseniaRepository.saveAll(listOf(resenia1, resenia2))
+    }
+
+    fun obtenerResenias() {
+        usuario1.also {
+            it.resenias = mutableListOf(resenia1)
+            usuarioRepository.save(it)
+        }
+        usuario2.also {
+            it.resenias = mutableListOf(resenia2, resenia3)
+            usuarioRepository.save(it)
+        }
     }
 }

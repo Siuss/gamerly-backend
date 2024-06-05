@@ -10,6 +10,7 @@ class UsuarioDetalleDTO() {
     lateinit var foto: String
     lateinit var fechaDeNacimiento: LocalDate
     lateinit var email: String
+    lateinit var password: String
     lateinit var juegosPreferidos: List<String>
     lateinit var plataformas: Set<String>
     lateinit var diasPreferidos: Set<String>
@@ -25,6 +26,7 @@ class UsuarioDetalleDTO() {
         this.fechaDeNacimiento = usuario.fechaDeNacimiento
         this.foto = usuario.foto
         this.email = usuario.email
+        this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos
         this.diasPreferidos = usuario.diasPreferidos
         this.plataformas = usuario.plataformas

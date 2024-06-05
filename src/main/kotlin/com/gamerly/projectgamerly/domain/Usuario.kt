@@ -58,15 +58,14 @@ class Usuario(
     @Column(name = "plataforma")
     var plataformas: Set<String> = mutableSetOf(),
 
-//    @Column()
-//    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-//    var resenias: List<Resenia> = mutableListOf(),
 
     ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    var resenias: List<Resenia> = mutableListOf()
 
 }
 

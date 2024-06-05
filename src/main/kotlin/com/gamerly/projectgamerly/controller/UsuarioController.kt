@@ -1,5 +1,6 @@
 package com.gamerly.projectgamerly.controller;
-
+import com.gamerly.projectgamerly.dtos.ReseniasDTO
+import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
 import com.gamerly.projectgamerly.dtos.CredencialesDTO
 import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
@@ -36,6 +37,15 @@ class UsuarioController {
         return usuarioService.getUsuario(idUsuario)
     }
 
+    @GetMapping("/comentarios/{idUsuario}")
+    fun comentariosUsuario(@PathVariable idUsuario: Long) : List<ReseniasDTO>{
+        return usuarioService.comentariosUsuario(idUsuario)
+    }
+
+    @GetMapping("/")
+    fun getAllUsers(): List<UsuarioDetalleDTO> {
+        return usuarioService.getAllUsers()
+        
     @DeleteMapping("/usuarios/{idUsuario}")
     fun deleteUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         return usuarioService.deleteUsuario(idUsuario)
@@ -45,7 +55,6 @@ class UsuarioController {
     fun excepcionGenerica(exception: Exception): ResponseEntity<HashMap<String, Any>> {
         val entity = hashMapOf<String, Any>()
         exception.message?.let { entity.put("message", it) }
-
         return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
     }
 }
