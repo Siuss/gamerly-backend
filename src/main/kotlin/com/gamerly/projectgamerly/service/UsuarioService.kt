@@ -35,7 +35,7 @@ class UsuarioService {
 //        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
 //    }
 
-    fun crearUsuario(user: UsuarioCreacionDTO) : Usuario  {
+    fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
         val usuarioRegistro = Usuario().apply {
             nombre = user.nombre
             fechaDeNacimiento = user.fechaNacimiento
@@ -47,7 +47,7 @@ class UsuarioService {
     }
 
 
-    fun comentariosUsuario(idUsuario: Long) : List<ReseniasDTO> {
+    fun comentariosUsuario(idUsuario: Long): List<ReseniasDTO> {
         val usuario = usuarioRepository.findById(idUsuario)
         val resenias = userRepository.findReseniasByUsuarioId(usuario.get().id)
         return resenias.map { resenia -> ReseniasDTO.fromResenias(usuario.get(), resenia) }
@@ -55,12 +55,11 @@ class UsuarioService {
 
     fun getAllUsers(): List<UsuarioDetalleDTO> {
         return usuarioRepository.findAll().map { UsuarioDetalleDTO(it) }
+    }
 
     fun deleteUsuario(idUsuario: Long): UsuarioDetalleDTO {
         val usuarioABorrar = getUsuario(idUsuario);
-
         usuarioRepository.deleteById(idUsuario);
-
         return usuarioABorrar;
     }
 }
