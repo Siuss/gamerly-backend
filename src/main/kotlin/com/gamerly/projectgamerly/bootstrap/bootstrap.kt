@@ -43,18 +43,18 @@ class Bootstrap: InitializingBean {
             "test@gmail.com",
             "usuarioFafa",
             listOf("lol", "terraria"),
-            setOf("viernes", "sabado"),
+            setOf("ViernesMañana", "SabadoTarde", "SabadoNoche"),
             "Argentina",
             setOf("PC", "PS4")
-            )
+        )
         usuario2 = Usuario(
-            "Michael",
-            "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/152.png",
-            LocalDate.of(1999, 12, 1),
+            "Usuario 2",
+            "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
+            LocalDate.now(),
             "test2@gmail.com",
-            "contrasenia",
+            "123",
             listOf("stardew valley", "overcooked"),
-            setOf("viernes", "sabado"),
+            setOf("MiercolesTarde", "MartesTarde"),
             "Argentina",
             setOf("PC")
         )
@@ -65,7 +65,7 @@ class Bootstrap: InitializingBean {
             "test1@gmail.com",
             "contrasenia",
             listOf("Fifa24", "WWE 2k23, ternaria","ETS2"),
-            setOf("miercoles", "martes"),
+            setOf("MiercolesNoche", "JuevesNoche"),
             "Argentina",
             setOf("PC", "PS4", "XBOX")
             )

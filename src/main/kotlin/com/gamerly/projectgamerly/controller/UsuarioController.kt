@@ -1,4 +1,6 @@
 package com.gamerly.projectgamerly.controller;
+
+import com.gamerly.projectgamerly.dtos.InputBusquedaDTO
 import com.gamerly.projectgamerly.dtos.ReseniasDTO
 import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
 import com.gamerly.projectgamerly.dtos.CredencialesDTO
@@ -21,16 +23,16 @@ class UsuarioController {
     fun crearUsuario(@RequestBody usuarioNuevo: UsuarioCreacionDTO) {
         usuarioService.crearUsuario(usuarioNuevo)
     }
-
+    
+    @GetMapping("/buscar")
+    fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto> {
+        return usuarioService.busquedaAvanzada(inputBusqueda)
+    }
+    
     @PostMapping("/login")
     fun loginUsuario(@RequestBody credenciales: CredencialesDTO): UsuarioLoginDTO {
         return usuarioService.login(credenciales)
     }
-
-//    @GetMapping("/buscar")
-//    fun busquedaAvanzada(@RequestParam(required = false) juegosEnComun: List<String>?,@RequestParam(required = false) puntaje: Long?): List<UsuarioBusquedaDto> {
-//        return usuarioService.busquedaAvanzada(juegosEnComun, puntaje)
-//    }
 
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {

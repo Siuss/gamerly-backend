@@ -27,9 +27,9 @@ class Usuario(
     var juegosPreferidos: List<String> = mutableListOf(),
 
     @ElementCollection
-    @CollectionTable(name = "usuario_dias_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
-    @Column(name = "dia_preferido")
-    var diasPreferidos: Set<String> = mutableSetOf(),
+    @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "dia_horario_preferido")
+    var diasHorariosPreferidos: Set<String> = mutableSetOf(),
 
     @Column(nullable = false)
     var nacionalidad: String = "",
@@ -38,9 +38,7 @@ class Usuario(
     @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "plataforma")
     var plataformas: Set<String> = mutableSetOf(),
-
-
-    ) {
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
@@ -51,7 +49,6 @@ class Usuario(
     fun addResenia(resenia: Resenia)  {
          resenias.add(resenia)
     }
-
 }
 
 

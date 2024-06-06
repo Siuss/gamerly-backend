@@ -3,6 +3,7 @@ package com.gamerly.projectgamerly.service
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.UserRepository
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -23,17 +24,30 @@ class UsuarioService {
         return UsuarioDetalleDTO(usuario)
     }
 
+    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
+        //TODO: cambiar juegos a lista de Int, resolver segun id
+        val diasHorarios = mutableListOf<String>()
+        inputBusqueda.dias?.forEach{ dia ->
+            inputBusqueda.horarios?.forEach { horario ->
+                diasHorarios.add(dia+horario)
+                println(dia+horario)
+            }
+        }
+        var usuariosFiltrados = listOf<Usuario>()
+        if (diasHorarios.isNotEmpty()) {
+            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.juegos, inputBusqueda.puntaje, diasHorarios)
+        } else {
+            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.juegos, inputBusqueda.puntaje, null)
+        }
+        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
+    }
+
     fun login(credenciales: CredencialesDTO): UsuarioLoginDTO {
         val usuario = usuarioRepository.findByEmailAndPassword(credenciales.email, credenciales.password).orElse(null)
             ?: throw Exception("Credenciales incorrectas");
 
         return UsuarioLoginDTO.from(usuario)
     }
-
-//    fun busquedaAvanzada(juegosEnComun: List<String>?, puntaje: Long?): List<UsuarioBusquedaDto>{
-//        val usuariosFiltrados = usuarioRepository.busquedaAvanzada(juegosEnComun, puntaje)
-//        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
-//    }
 
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
         val usuarioRegistro = Usuario().apply {

@@ -12,8 +12,8 @@ class UsuarioDetalleDTO() {
     lateinit var email: String
     lateinit var password: String
     lateinit var juegosPreferidos: List<String>
+    lateinit var diasHorariosPreferidos: Set<String>
     lateinit var plataformas: Set<String>
-    lateinit var diasPreferidos: Set<String>
     lateinit var nacionalidad: String
     var reputacion: Long = 0
     var resenias: Set<Resenia> = hashSetOf()
@@ -28,7 +28,7 @@ class UsuarioDetalleDTO() {
         this.email = usuario.email
         this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos
-        this.diasPreferidos = usuario.diasPreferidos
+        this.diasHorariosPreferidos = usuario.diasHorariosPreferidos
         this.plataformas = usuario.plataformas
         this.nacionalidad = usuario.nacionalidad
     }
