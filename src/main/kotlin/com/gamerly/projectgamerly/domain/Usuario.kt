@@ -3,25 +3,6 @@ package com.gamerly.projectgamerly.domain
 import jakarta.persistence.*
 import java.time.LocalDate
 
-//class Usuario(
-//	var id: Long,
-//	var nombre: String,
-//	var foto: String,
-//	var fechaDeNacimiento: LocalDate,
-//	var email: String,
-//	var password: String,
-//	var juegosPreferidos: List<String>,
-//	var diasPreferidos: List<String>,
-//	var reputacion: Long,
-//	var resenias: List<Resenia>
-//) {
-//
-//}
-//
-//
-
-
-
 @Entity
 @Table(name = "usuarios")
 class Usuario(
@@ -48,15 +29,26 @@ class Usuario(
     @ElementCollection
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
-    var diasHorariosPreferidos: List<String> = mutableListOf(),
+    var diasHorariosPreferidos: Set<String> = mutableSetOf(),
+
+    @Column(nullable = false)
+    var nacionalidad: String = "",
+
+    @ElementCollection
+    @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "plataforma")
+    var plataformas: Set<String> = mutableSetOf(),
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-    @Column(name = "resenias")
     var resenias: MutableList<Resenia> = mutableListOf()
+
+    fun addResenia(resenia: Resenia)  {
+         resenias.add(resenia)
+    }
 }
 
 
