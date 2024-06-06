@@ -7,13 +7,19 @@ import org.springframework.data.repository.query.Param
 
 interface UserRepository : CrudRepository<Usuario, Long>{
     @Query("""
-        SELECT u, AVG(r.puntaje)
+        SELECT u
         FROM Usuario u
         JOIN u.resenias r
         JOIN u.juegosPreferidos j
-        GROUP BY u, j
-        HAVING AVG(r.puntaje) > :puntaje
-        AND j IN :juegos
+        JOIN u.diasHorariosPreferidos dh
+        GROUP BY u, j, dh
+        HAVING (AVG(r.puntaje) > :puntaje OR :puntaje IS NULL)
+        AND (j IN :juegos OR :juegos IS NULL)
+        AND (dh IN :diasHorarios OR :diasHorarios IS NULL)
     """)
-    fun findUsuariosSegunFiltros(@Param("juegos") juegosEnComun: List<String>, @Param("puntaje") puntaje: Long): List<Usuario>
+    fun findUsuariosSegunFiltros(
+        @Param("juegos") juegosEnComun: List<String>?,
+        @Param("puntaje") puntaje: Long?,
+        @Param("diasHorarios") diasHorarios: List<String>?
+    ): List<Usuario>
 }
