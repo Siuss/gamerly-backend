@@ -27,12 +27,12 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         @Param("puntaje") puntaje: Long?,
         @Param("diasHorarios") diasHorarios: List<String>?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["juegosPreferidos", "diasPreferidos", "plataformas", "resenias"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias"])
     override fun findById(id: Long): Optional<Usuario>
 
     @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
     fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
   
-    @EntityGraph(attributePaths = ["juegosPreferidos", "diasPreferidos", "plataformas"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 }

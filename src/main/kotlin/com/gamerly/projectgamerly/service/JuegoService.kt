@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Juego
+import com.gamerly.projectgamerly.dtos.ComunidadDTO
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Service
@@ -24,5 +25,19 @@ class JuegoService {
                 it["platforms"]!!.split("||")
             )
         }
+    }
+
+    fun getAllComunidad() : List<ComunidadDTO> {
+        val communityList = infoFiltrada.map {
+            val juego = Juego(
+                it["name"]!!,
+                "",
+                it["platforms"]!!.split("||")
+            )
+            ComunidadDTO.fromComunidad(juego)
+        }
+        return communityList
+
+    }
 
 }
