@@ -20,7 +20,8 @@ class UsuarioLoginDTO {
             it.foto = usuario.foto
             it.email = usuario.email
             it.juegosPreferidos = usuario.juegosPreferidos
-            it.diasPreferidos = usuario.diasPreferidos
+//            it.diasPreferidos = usuario.diasPreferidos
+            it.diasPreferidos = usuario.diasHorariosPreferidos
             it.plataformas = usuario.plataformas
             it.nacionalidad = usuario.nacionalidad
         }
