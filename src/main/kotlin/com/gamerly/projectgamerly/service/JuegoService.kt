@@ -24,5 +24,5 @@ class JuegoService {
                 it["platforms"]!!.split("||")
             )
         }
-    }
+
 }
