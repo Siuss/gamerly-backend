@@ -43,7 +43,7 @@ class Bootstrap: InitializingBean {
             "test@gmail.com",
             "usuarioFafa",
             listOf("lol", "terraria"),
-            setOf("ViernesMañana", "SabadoTarde", "SabadoNoche"),
+            mutableSetOf("ViernesMañana", "SabadoTarde", "SabadoNoche"),
             "Argentina",
             setOf("PC", "PS4")
         )
@@ -54,7 +54,7 @@ class Bootstrap: InitializingBean {
             "test2@gmail.com",
             "123",
             listOf("stardew valley", "overcooked"),
-            setOf("MiercolesTarde", "MartesTarde"),
+            mutableSetOf("MiercolesTarde", "MartesTarde"),
             "Argentina",
             setOf("PC")
         )
@@ -65,7 +65,7 @@ class Bootstrap: InitializingBean {
             "test1@gmail.com",
             "contrasenia",
             listOf("Fifa24", "WWE 2k23, ternaria","ETS2"),
-            setOf("MiercolesNoche", "JuevesNoche"),
+            mutableSetOf("MiercolesNoche", "JuevesNoche"),
             "Argentina",
             setOf("PC", "PS4", "XBOX")
             )
