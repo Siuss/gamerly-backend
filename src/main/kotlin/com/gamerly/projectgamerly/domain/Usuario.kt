@@ -15,6 +15,13 @@ class Usuario(
     @Column(name = "fecha_de_nacimiento", nullable = false)
     var fechaDeNacimiento: LocalDate = LocalDate.now(),
 
+
+
+    @Column(name = "dia_favorito")
+    @Enumerated(EnumType.STRING)
+    var diaFavorito: DiaDeLaSemana,
+
+
     @Column(nullable = false, unique = true)
     var email: String = "",
 
@@ -31,6 +38,7 @@ class Usuario(
     @Column(name = "dia_horario_preferido")
     var diasHorariosPreferidos: Set<String> = mutableSetOf(),
 
+    //...buena idea toda la razon, estuve todo el dia asi jajajaja gracias stephy, mañana te molesto daleee, gracias nos vemooos igualmentee
     @Column(nullable = false)
     var nacionalidad: String = "",
 
@@ -42,7 +50,6 @@ class Usuario(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
-
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     var resenias: MutableList<Resenia> = mutableListOf()
 
