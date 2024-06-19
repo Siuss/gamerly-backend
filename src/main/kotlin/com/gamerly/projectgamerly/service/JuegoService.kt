@@ -13,7 +13,8 @@ class JuegoService {
     lateinit var juegoRepository: GameRepository
 
     fun getJuegosPorNombre(nombre: String): List<Juego> {
-        return juegoRepository.findJuegosByNombreContainingIgnoreCase(nombre)
+        val pageable = PageRequest.of(0, 5)
+        return juegoRepository.findJuegosByNombreContainingIgnoreCase(nombre, pageable).toList()
     }
 
     fun getJuegosConLimite(numero: Int?): List<Juego> {

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface GameRepository: JpaRepository<Juego, Long> {
     @EntityGraph(attributePaths = ["plataformas"])
-    fun findJuegosByNombreContainingIgnoreCase(nombre: String): MutableList<Juego>
+    fun findJuegosByNombreContainingIgnoreCase(nombre: String, pageable: Pageable): Page<Juego>
 
     @EntityGraph(attributePaths = ["plataformas"])
     override fun findAll(pageable: Pageable): Page<Juego>
