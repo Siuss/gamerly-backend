@@ -55,6 +55,44 @@ class Usuario(
     fun addResenia(resenia: Resenia)  {
          resenias.add(resenia)
     }
+
+    fun camposValidos(): Boolean {
+        return validateEmail() && validatePassword() && camposVacios() && validatePasswordMatch(password)
+
+    }
+
+    fun validateEmail(): Boolean {
+
+        if (!email.contains(".")) {
+            throw InvalidEmail("El email no es válido")
+        } else {
+            return true
+        }
+    }
+
+    fun validatePassword(): Boolean {
+        if (password.length < 8) {
+            throw InvalidPassword("La contraseña debe tener al menos 8 caracteres")
+        } else {
+            return true
+        }
+    }
+
+    fun camposVacios(): Boolean {
+        if (email.isEmpty() || password.isEmpty()) {
+            throw InvalidFields("Los campos no pueden estar vacíos")
+        } else {
+            return true
+        }
+    }
+
+    fun validatePasswordMatch(repeatPassword: String) : Boolean {
+        if (password == repeatPassword) {
+            return true
+        } else {
+            throw PasswordMismatch("Las contraseñas no coinciden")
+        }
+    }
 }
 
 

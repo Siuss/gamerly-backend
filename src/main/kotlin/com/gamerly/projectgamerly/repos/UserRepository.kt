@@ -36,4 +36,7 @@ interface UserRepository : CrudRepository<Usuario, Long>{
   
     @EntityGraph(attributePaths = ["juegosPreferidos", " horariosPreferidos","diaFavorito", "plataformas"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
+
+    @EntityGraph(attributePaths = ["juegosPreferidos", "plataformas"])
+    fun findByEmail(email: String): Optional<Usuario>
 }
