@@ -1,9 +1,11 @@
 package com.gamerly.projectgamerly.bootstrap
 
+import com.gamerly.projectgamerly.domain.HorariosFavoritos
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.repos.ReviewRepository
 import com.gamerly.projectgamerly.repos.UserRepository
+import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -40,21 +42,23 @@ class Bootstrap: InitializingBean {
             "Nanami",
             "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
             LocalDate.of(1999, 1, 1),
+            mutableListOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
             "test@gmail.com",
             "usuarioFafa",
-            listOf("lol", "terraria"),
-            mutableSetOf("ViernesMañana", "SabadoTarde", "SabadoNoche"),
+            mutableListOf("lol", "terraria"),
+            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf("PC", "PS4")
         )
         usuario2 = Usuario(
             "Usuario 2",
             "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
-            LocalDate.now(),
+            LocalDate.of(1999, 1, 1),
+            mutableListOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
             "test2@gmail.com",
             "123",
-            listOf("stardew valley", "overcooked"),
-            mutableSetOf("MiercolesTarde", "MartesTarde"),
+            mutableListOf("stardew valley", "overcooked"),
+            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf("PC")
         )
@@ -62,10 +66,11 @@ class Bootstrap: InitializingBean {
             "Nicolas",
             "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png",
             LocalDate.of(1999, 9, 1),
+            mutableListOf(DiaDeLaSemana.VIERNES,DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
             "test1@gmail.com",
             "contrasenia",
-            listOf("Fifa24", "WWE 2k23, ternaria","ETS2"),
-            mutableSetOf("MiercolesNoche", "JuevesNoche"),
+            mutableListOf("Fifa24", "WWE 2k23, ternaria","ETS2"),
+            mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
             setOf("PC", "PS4", "XBOX")
             )

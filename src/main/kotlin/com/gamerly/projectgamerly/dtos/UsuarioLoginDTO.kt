@@ -9,7 +9,7 @@ class UsuarioLoginDTO {
     lateinit var email: String
     lateinit var juegosPreferidos: List<String>
     lateinit var plataformas: Set<String>
-    lateinit var diasPreferidos: Set<String>
+//    lateinit var diasPreferidos: Set<String>
     lateinit var nacionalidad: String
     var reputacion: Long = 0
 
@@ -20,7 +20,7 @@ class UsuarioLoginDTO {
             it.foto = usuario.foto
             it.email = usuario.email
             it.juegosPreferidos = usuario.juegosPreferidos
-            it.diasPreferidos = usuario.diasHorariosPreferidos
+//            it.diasPreferidos = usuario.diasHorariosPreferidos
             it.plataformas = usuario.plataformas
             it.nacionalidad = usuario.nacionalidad
         }

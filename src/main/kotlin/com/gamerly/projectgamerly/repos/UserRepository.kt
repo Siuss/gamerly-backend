@@ -16,8 +16,9 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         FROM Usuario u
         JOIN u.resenias r
         JOIN u.juegosPreferidos j
-        JOIN u.diasHorariosPreferidos dh
-        GROUP BY u, j, dh
+        JOIN u.diaFavorito df
+        JOIN u.horariosPreferidos dh
+        GROUP BY u, j, df, dh
         HAVING (AVG(r.puntaje) > :puntaje OR :puntaje IS NULL)
         AND (j IN :juegos OR :juegos IS NULL)
         AND (dh IN :diasHorarios OR :diasHorarios IS NULL)
@@ -27,12 +28,12 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         @Param("puntaje") puntaje: Long?,
         @Param("diasHorarios") diasHorarios: List<String>?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
     override fun findById(id: Long): Optional<Usuario>
 
     @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
     fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
   
-    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", " horariosPreferidos","diaFavorito", "plataformas"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 }
