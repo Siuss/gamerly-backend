@@ -3,6 +3,8 @@ package com.gamerly.projectgamerly.service
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.UserRepository
+import com.gamerly.projectgamerly.utilities.PasswordMismatch
+import com.gamerly.projectgamerly.utilities.userNotFound
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -40,12 +42,23 @@ class UsuarioService {
     }
 
     fun login(credenciales: CredencialesDTO): UsuarioLoginDTO {
-        val usuario = usuarioRepository.findByEmailAndPassword(credenciales.email, credenciales.password).orElse(null)
-            ?: throw Exception("Credenciales incorrectas");
-
-        return UsuarioLoginDTO.from(usuario)
+        val usuarioCrendecial = Usuario().apply {
+            email = credenciales.email
+            password = credenciales.password
+            camposValidos()
+        }
+        val usuario = usuarioRepository.findByEmail(usuarioCrendecial.email)
+        if (usuario.isPresent) {
+            val usuarioEncontrado = usuario.get()
+            if (usuarioEncontrado.password == usuarioCrendecial.password) {
+                return UsuarioLoginDTO.from(usuarioEncontrado);
+            } else {
+                throw PasswordMismatch("Contraseña incorrecta")
+            }
+        } else {
+            throw userNotFound("Usuario no encontrado")
+        }
     }
-
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
         val usuarioRegistro = Usuario().apply {
             nombre = user.nombre
@@ -73,4 +86,6 @@ class UsuarioService {
         usuarioRepository.deleteById(idUsuario);
         return usuarioABorrar;
     }
+
+
 }
