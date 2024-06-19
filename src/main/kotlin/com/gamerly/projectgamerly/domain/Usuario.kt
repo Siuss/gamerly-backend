@@ -41,7 +41,6 @@ class Usuario(
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
     var horariosPreferidos: List<HorariosFavoritos> = mutableListOf(),
-    //para construir el docker primero necesitas en la terminal escribir docker compose up -d para levantarlo
     @Column(nullable = false)
     var nacionalidad: String = "",
 
