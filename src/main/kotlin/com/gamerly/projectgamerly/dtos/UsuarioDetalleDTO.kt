@@ -17,6 +17,7 @@ class UsuarioDetalleDTO() {
     lateinit var nacionalidad: String
     var reputacion: Long = 0
     var resenias: Set<Resenia> = hashSetOf()
+    var amigos: List<UsuarioDetalleDTO> = mutableListOf()
 
     constructor(
         usuario: Usuario
@@ -31,5 +32,6 @@ class UsuarioDetalleDTO() {
 //        this.diasHorariosPreferidos = usuario.diasHorariosPreferidos
         this.plataformas = usuario.plataformas
         this.nacionalidad = usuario.nacionalidad
+        this.amigos = usuario.amigos.map { amigo -> UsuarioDetalleDTO(amigo) }
     }
 }

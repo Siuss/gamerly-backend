@@ -70,6 +70,25 @@ class UsuarioService {
         return userRepository.save(usuarioRegistro)
     }
 
+    fun agregarAmigo(idUsuario: Long, idAmigo: Long): UsuarioDetalleDTO {
+        val usuario = usuarioRepository.findById(idUsuario).orElseThrow { Exception("Usuario con el id $idUsuario no encontrado") }
+        val amigo = usuarioRepository.findById(idAmigo).orElseThrow { Exception("Usuario con el id $idAmigo no encontrado") }
+
+        if (usuario.id == amigo.id) {
+            throw Exception("Un usuario no puede agregarse a sí mismo como amigo")
+        }
+
+        if (!usuario.amigos.contains(amigo)) {
+            usuario.amigos.add(amigo)
+            amigo.amigos.add(usuario)
+        }
+
+        usuarioRepository.save(usuario)
+        usuarioRepository.save(amigo)
+
+        return UsuarioDetalleDTO(usuario)  // Se asegura de retornar el DTO
+    }
+
 
     fun comentariosUsuario(idUsuario: Long): List<ReseniasDTO> {
         val usuario = usuarioRepository.findById(idUsuario)
