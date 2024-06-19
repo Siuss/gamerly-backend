@@ -15,12 +15,12 @@ class JuegoController {
     lateinit var juegoService: JuegoService
 
     @GetMapping("/listaJuegos/{nombre}")
-    fun traerJuegosPorNombre(@PathVariable(required = false) nombre: String): List<Juego> {
+    fun traerJuegosPorNombre(@PathVariable nombre: String): List<Juego> {
         return juegoService.getJuegosPorNombre(nombre)
     }
 
     @GetMapping("/listaJuegos")
-    fun traerJuegosConLimite(@RequestParam numero: Int): List<Juego> {
+    fun traerJuegosConLimite(@RequestParam(required = false) numero: Int?): List<Juego> {
         return juegoService.getJuegosConLimite(numero)
     }
 

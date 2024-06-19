@@ -16,9 +16,13 @@ class JuegoService {
         return juegoRepository.findJuegosByNombreContainingIgnoreCase(nombre)
     }
 
-    fun getJuegosConLimite(numero: Int): List<Juego> {
-        val pageable = PageRequest.of(0, numero)
-        return juegoRepository.findAll(pageable).toList()
+    fun getJuegosConLimite(numero: Int?): List<Juego> {
+        return if (numero != null) {
+            val pageable = PageRequest.of(0, numero)
+            juegoRepository.findAll(pageable).toList()
+        } else {
+            juegoRepository.findAll()
+        }
     }
 
     fun getAllComunidad() : List<ComunidadDTO> {

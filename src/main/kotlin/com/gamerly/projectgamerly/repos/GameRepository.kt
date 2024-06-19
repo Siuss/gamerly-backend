@@ -12,4 +12,7 @@ interface GameRepository: JpaRepository<Juego, Long> {
 
     @EntityGraph(attributePaths = ["plataformas"])
     override fun findAll(pageable: Pageable): Page<Juego>
+
+    @EntityGraph(attributePaths = ["plataformas"])
+    override fun findAll(): List<Juego>
 }
