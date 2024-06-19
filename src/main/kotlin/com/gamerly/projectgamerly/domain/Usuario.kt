@@ -1,6 +1,10 @@
 package com.gamerly.projectgamerly.domain
 
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
+import com.gamerly.projectgamerly.utils.InvalidEmail
+import com.gamerly.projectgamerly.utils.InvalidFields
+import com.gamerly.projectgamerly.utils.InvalidPassword
+import com.gamerly.projectgamerly.utils.PasswordMismatch
 import jakarta.persistence.*
 import java.time.LocalDate
 
