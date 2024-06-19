@@ -2,42 +2,30 @@ package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Juego
 import com.gamerly.projectgamerly.dtos.ComunidadDTO
-import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
-import org.springframework.core.io.ClassPathResource
+import com.gamerly.projectgamerly.repos.GameRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
-import java.io.File
 
 @Service
 class JuegoService {
-    var info = ClassPathResource("game_info.csv").file
-    var infoFiltrada = csvReader().readAllWithHeader(info).filter {
-        it["rating"]!!.toDouble() > 0
+    @Autowired
+    lateinit var juegoRepository: GameRepository
+
+    fun getJuegosPorNombre(nombre: String): List<Juego> {
+        return juegoRepository.findJuegosByNombreContainingIgnoreCase(nombre)
     }
 
-    fun getJuegos(nombre: String): List<Juego> {
-        val listaJuegos = infoFiltrada.filter {
-            it["name"]!!.lowercase().contains(nombre.lowercase())
-        }
-        return listaJuegos.map {
-            Juego(
-                it["name"]!!,
-                "",
-                it["platforms"]!!.split("||")
-            )
-        }
+    fun getJuegosConLimite(numero: Int): List<Juego> {
+        val pageable = PageRequest.of(0, numero)
+        return juegoRepository.findAll(pageable).toList()
     }
 
     fun getAllComunidad() : List<ComunidadDTO> {
-        val communityList = infoFiltrada.map {
-            val juego = Juego(
-                it["name"]!!,
-                "",
-                it["platforms"]!!.split("||")
-            )
-            ComunidadDTO.fromComunidad(juego)
+        val communityList = juegoRepository.findAll().map {
+            ComunidadDTO.fromComunidad(it)
         }
         return communityList
-
     }
 
 }

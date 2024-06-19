@@ -6,6 +6,7 @@ import com.gamerly.projectgamerly.service.JuegoService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -14,8 +15,13 @@ class JuegoController {
     lateinit var juegoService: JuegoService
 
     @GetMapping("/listaJuegos/{nombre}")
-    fun traerJuegos(@PathVariable(required = false) nombre: String): List<Juego> {
-        return juegoService.getJuegos(nombre)
+    fun traerJuegosPorNombre(@PathVariable(required = false) nombre: String): List<Juego> {
+        return juegoService.getJuegosPorNombre(nombre)
+    }
+
+    @GetMapping("/listaJuegos")
+    fun traerJuegosConLimite(@RequestParam numero: Int): List<Juego> {
+        return juegoService.getJuegosConLimite(numero)
     }
 
     @GetMapping("/comunidad")
