@@ -1,8 +1,10 @@
 package com.gamerly.projectgamerly.bootstrap
 
+import com.gamerly.projectgamerly.domain.Juego
 import com.gamerly.projectgamerly.domain.HorariosFavoritos
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
+import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.ReviewRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
@@ -17,12 +19,15 @@ class Bootstrap: InitializingBean {
     lateinit var usuarioRepository : UserRepository
     @Autowired
     lateinit var reseniaRepository : ReviewRepository
+    @Autowired
+    lateinit var juegoRepository : GameRepository
     lateinit var usuario1 :Usuario
     lateinit var usuario2 : Usuario
     lateinit var usuario3 : Usuario
     lateinit var resenia1 : Resenia
     lateinit var resenia2: Resenia
     lateinit var resenia3: Resenia
+    var listaJuegos = mutableListOf<Juego>()
 
     override fun afterPropertiesSet() {
         println("************************************************************************")
@@ -34,6 +39,7 @@ class Bootstrap: InitializingBean {
     fun init() {
         this.usuario()
         this.resenias()
+        this.juegos()
         this.obtenerResenias()
     }
 
@@ -105,6 +111,104 @@ class Bootstrap: InitializingBean {
         )
 
         reseniaRepository.saveAll(listOf(resenia1, resenia2))
+    }
+
+    fun juegos() {
+        listaJuegos.addAll(
+            listOf(
+                Juego(
+                    "FIFA 23",
+                    "https://images.igdb.com/igdb/image/upload/t_original/sci00g.webp",
+                    listOf("Windows", "PlayStation 4", "PlayStation 5", "Xbox Series X")
+                ),
+                Juego(
+                    "Counter-Strike: Global Offensive",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ark8i.webp",
+                    listOf("Linux", "Mac", "Windows", "PlayStation 3", "Xbox 360")
+                ),
+                Juego(
+                    "Euro Truck Simulator 2",
+                    "https://images.igdb.com/igdb/image/upload/t_original/scgqh4.webp",
+                    listOf("Linux", "Mac", "Windows")
+                ),
+                Juego(
+                    "Pummel Party",
+                    "https://images.igdb.com/igdb/image/upload/t_original/arqdt.webp",
+                    listOf("Nintendo Switch", "Windows", "PlayStation 4", "Xbox One")
+                ),
+                Juego(
+                    "Rocket League",
+                    "https://images.igdb.com/igdb/image/upload/t_original/k1hcu9flbu0tvheine15.webp",
+                    listOf("Linux", "Mac", "Nintendo Switch", "Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                ),
+                Juego(
+                    "Lethal Company",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ar1rug.webp",
+                    listOf("Windows")
+                ),
+                Juego(
+                    "Content Warning",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ar2v8v.webp",
+                    listOf("Windows")
+                ),
+                Juego(
+                    "Terraria: Journey's End",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ar2voa.webp",
+                    listOf("Android", "iOS", "Linux", "Mac", "Nintendo Switch", "PC (Microsoft Windows)", "PlayStation 4", "Xbox One", "Xbox Series X")
+                ),
+                Juego(
+                    "Overcooked!",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ar6xz.webp",
+                    listOf("Windows", "PlayStation 4", "Xbox One")
+                ),
+                Juego(
+                    "Astroneer",
+                    "https://images.igdb.com/igdb/image/upload/t_original/sci95s.webp",
+                    listOf("Nintendo Switch", "Windows", "PlayStation 4", "Xbox One")
+                ),
+                Juego(
+                    "Left 4 Dead 2",
+                    "https://images.igdb.com/igdb/image/upload/t_original/arq5o.webp",
+                    listOf("Linux", "Mac", "Windows", "Xbox 360")
+                ),
+                Juego(
+                    "Project Zomboid",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ihmtywjhagxtdzzf1wrw.webp",
+                    listOf("Linux", "Mac", "Windows")
+                ),
+                Juego(
+                    "Stardew Valley",
+                    "https://images.igdb.com/igdb/image/upload/t_original/sw7rtba7p1xs77klsime.webp",
+                    listOf("Android", "iOS", "Linux", "Mac", "Nintendo Switch", "Windows", "PlayStation 4", "PlayStation Vita", "Wii U", "Xbox One")
+                ),
+                Juego(
+                    "Deep Rock Galactic",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ar4nr.webp",
+                    listOf("Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                ),
+                Juego(
+                    "Among Us",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ar7tq.webp",
+                    listOf("Android", "iOS", "Nintendo Switch", "Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                ),
+                Juego(
+                    "Phasmophobia",
+                    "https://images.igdb.com/igdb/image/upload/t_original/ardfr.webp",
+                    listOf("Oculus Rift", "Windows", "PlayStation 5", "PlayStation VR2", "SteamVR", "Windows Mixed Reality", "Xbox Series X")
+                ),
+                Juego(
+                    "Dead by Daylight",
+                    "https://images.igdb.com/igdb/image/upload/t_original/sc6vlh.webp",
+                    listOf("Nintendo Switch", "Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                ),
+                Juego(
+                    "Sonic & All-Stars Racing Transformed",
+                    "https://images.igdb.com/igdb/image/upload/t_original/j679caufkftsns3n26df.webp",
+                    listOf("Android", "iOS", "Windows", "PlayStation 3", "PlayStation Vita", "Wii U", "Xbox 360")
+                )
+            )
+        )
+        juegoRepository.saveAll(listaJuegos)
     }
 
     fun obtenerResenias() {
