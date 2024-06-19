@@ -1,6 +1,10 @@
 package com.gamerly.projectgamerly.domain
 
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
+import com.gamerly.projectgamerly.utils.InvalidEmail
+import com.gamerly.projectgamerly.utils.InvalidFields
+import com.gamerly.projectgamerly.utils.InvalidPassword
+import com.gamerly.projectgamerly.utils.PasswordMismatch
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -37,7 +41,7 @@ class Usuario(
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
     var horariosPreferidos: List<HorariosFavoritos> = mutableListOf(),
-    //para construir el docker primero necesitas en la terminal escribir docker compose up -d para levantarlo
+
     @Column(nullable = false)
     var nacionalidad: String = "",
 
@@ -62,7 +66,6 @@ class Usuario(
     }
 
     fun validateEmail(): Boolean {
-
         if (!email.contains(".")) {
             throw InvalidEmail("El email no es válido")
         } else {

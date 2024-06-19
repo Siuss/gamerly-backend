@@ -73,8 +73,9 @@ class UsuarioService {
     fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarData): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario)
             .orElseThrow {
-                ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado")
-            }
+               userNotFound("Usuario con el id solicitado no existe")
+                 }
+
         usuarioEditado.nombre?.let { usuario.nombre = it }
         usuarioEditado.foto?.let { usuario.foto = it }
         usuarioEditado.nacionalidad?.let { usuario.nacionalidad = it }
