@@ -67,7 +67,7 @@ class Bootstrap: InitializingBean {
             listOf("Fifa24", "WWE 2k23, ternaria","ETS2"),
             mutableSetOf("MiercolesNoche", "JuevesNoche"),
             "Argentina",
-            setOf("PC", "PS4", "XBOX")
+            setOf("PC", "PS4", "XBOX", "Nintendo Switch")
             )
         usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3 ))
     }

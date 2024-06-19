@@ -60,6 +60,18 @@ class UsuarioService {
         return userRepository.save(usuarioRegistro)
     }
 
+    fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarData): UsuarioDetalleDTO {
+        val usuario = usuarioRepository.findById(idUsuario)
+            .orElseThrow {
+                ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado")
+            }
+        usuarioEditado.nombre?.let { usuario.nombre = it }
+        usuarioEditado.foto?.let { usuario.foto = it }
+        usuarioEditado.nacionalidad?.let { usuario.nacionalidad = it }
+        usuarioEditado.plataformas?.let { usuario.plataformas = it }
+        return UsuarioDetalleDTO(usuarioRepository.save(usuario))
+    }
+
 
     fun comentariosUsuario(idUsuario: Long): List<ReseniasDTO> {
         val usuario = usuarioRepository.findById(idUsuario)
@@ -76,4 +88,6 @@ class UsuarioService {
         usuarioRepository.deleteById(idUsuario);
         return usuarioABorrar;
     }
+
+
 }
