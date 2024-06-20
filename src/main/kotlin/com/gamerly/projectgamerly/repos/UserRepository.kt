@@ -24,19 +24,18 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         AND (dh IN :diasHorarios OR :diasHorarios IS NULL)
     """)
     fun findUsuariosSegunFiltros(
-        @Param("juegos") juegosEnComun: Set<String>?,
         @Param("puntaje") puntaje: Long?,
         @Param("diasHorarios") diasHorarios: List<String>?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
+    @EntityGraph(attributePaths = ["horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
     override fun findById(id: Long): Optional<Usuario>
 
     @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
     fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
   
-    @EntityGraph(attributePaths = ["juegosPreferidos", " horariosPreferidos","diaFavorito", "plataformas"])
+    @EntityGraph(attributePaths = [" horariosPreferidos","diaFavorito", "plataformas"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 
-    @EntityGraph(attributePaths = ["juegosPreferidos", "plataformas"])
+    @EntityGraph(attributePaths = ["plataformas"])
     fun findByEmail(email: String): Optional<Usuario>
 }
