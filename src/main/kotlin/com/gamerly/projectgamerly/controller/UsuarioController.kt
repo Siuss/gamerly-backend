@@ -54,10 +54,4 @@ class UsuarioController {
         return usuarioService.deleteUsuario(idUsuario)
     }
 
-    @ExceptionHandler(Exception::class)
-    fun excepcionGenerica(exception: Exception): ResponseEntity<HashMap<String, Any>> {
-        val entity = hashMapOf<String, Any>()
-        exception.message?.let { entity.put("message", it) }
-        return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
-    }
 }
