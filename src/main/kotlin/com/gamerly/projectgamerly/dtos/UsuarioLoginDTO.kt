@@ -14,15 +14,15 @@ class UsuarioLoginDTO {
     var reputacion: Long = 0
 
     companion object {
-        fun from(usuario: Usuario): UsuarioLoginDTO = UsuarioLoginDTO().also {
-            it.id = usuario.id
-            it.nombre = usuario.nombre
-            it.foto = usuario.foto
-            it.email = usuario.email
-            it.juegosPreferidos = usuario.juegosPreferidos
-//            it.diasPreferidos = usuario.diasHorariosPreferidos
-            it.plataformas = usuario.plataformas
-            it.nacionalidad = usuario.nacionalidad
+        fun from(usuario: Usuario): UsuarioLoginDTO = UsuarioLoginDTO().also { dto ->
+            dto.id = usuario.id
+            dto.nombre = usuario.nombre
+            dto.foto = usuario.foto
+            dto.email = usuario.email
+            dto.juegosPreferidos = usuario.juegosPreferidos.map { it.nombre }
+//            dto.diasPreferidos = usuario.diasHorariosPreferidos
+            dto.plataformas = usuario.plataformas
+            dto.nacionalidad = usuario.nacionalidad
         }
     }
 }
