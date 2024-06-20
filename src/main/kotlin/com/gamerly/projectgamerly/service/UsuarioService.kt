@@ -34,9 +34,9 @@ class UsuarioService {
         }
         var usuariosFiltrados = listOf<Usuario>()
         if (diasHorarios.isNotEmpty()) {
-            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.juegos?.toHashSet(), inputBusqueda.puntaje, diasHorarios)
+            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.puntaje, diasHorarios)
         } else {
-            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.juegos?.toHashSet(), inputBusqueda.puntaje, null)
+            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.puntaje, null)
         }
         return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
     }
