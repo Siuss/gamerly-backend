@@ -1,8 +1,10 @@
 package com.gamerly.projectgamerly.service
 
+import com.gamerly.projectgamerly.domain.HorariosFavoritos
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.UserRepository
+import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import com.gamerly.projectgamerly.utilities.PasswordMismatch
 import com.gamerly.projectgamerly.utilities.userNotFound
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,19 +27,14 @@ class UsuarioService {
 
     fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
         //TODO: cambiar juegos a lista de Int, resolver segun id
-        val diasHorarios = mutableListOf<String>()
-        inputBusqueda.dias?.forEach{ dia ->
-            inputBusqueda.horarios?.forEach { horario ->
-                diasHorarios.add(dia+horario)
-                println(dia+horario)
-            }
-        }
-        var usuariosFiltrados = listOf<Usuario>()
-        if (diasHorarios.isNotEmpty()) {
-            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.juegos?.toHashSet(), inputBusqueda.puntaje, diasHorarios)
-        } else {
-            usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(inputBusqueda.juegos?.toHashSet(), inputBusqueda.puntaje, null)
-        }
+        val diasEnum = inputBusqueda.dias?.map { DiaDeLaSemana.valueOf(it.uppercase()) }
+        val horariosEnum = inputBusqueda.horarios?.map { HorariosFavoritos.valueOf(it.uppercase()) }
+        val usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(
+            inputBusqueda.juegos?.toHashSet(),
+            inputBusqueda.puntaje,
+            diasEnum,
+            horariosEnum
+        )
         return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
     }
 

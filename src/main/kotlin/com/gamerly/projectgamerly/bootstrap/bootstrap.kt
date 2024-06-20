@@ -80,37 +80,37 @@ class Bootstrap: InitializingBean {
             "Argentina",
             setOf("PC", "PS4", "XBOX")
             )
-        usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3 ))
+        usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3))
     }
 
 
 
     fun resenias() {
-        val userEmisor1=usuarioRepository.findById(usuario1.id)
-        val user2Receptor=usuarioRepository.findById(usuario2.id)
-        val usuarioEmisor3=usuarioRepository.findById(usuario3.id)
+        val user1=usuarioRepository.findById(usuario1.id)
+        val user2=usuarioRepository.findById(usuario2.id)
+        val user3=usuarioRepository.findById(usuario3.id)
 
         resenia1 = Resenia(
-            userEmisor1.get().id,
-            user2Receptor.get().id,
+            user1.get().id,
+            user2.get().id,
             4,
             "Buen compañero"
         )
         resenia2 = Resenia(
-            user2Receptor.get().id,
-            userEmisor1.get().id,
+            user2.get().id,
+            user3.get().id,
             1,
             "mereces perma por manco"
         )
 
         resenia3= Resenia(
-            usuarioEmisor3.get().id,
-            user2Receptor.get().id,
+            user3.get().id,
+            user2.get().id,
             5,
             "Amigo pasame la receta para ganar en el fifa"
         )
 
-        reseniaRepository.saveAll(listOf(resenia1, resenia2))
+        reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3))
     }
 
     fun juegos() {
@@ -217,7 +217,11 @@ class Bootstrap: InitializingBean {
             usuarioRepository.save(it)
         }
         usuario2.also {
-            it.resenias = mutableListOf(resenia2, resenia3)
+            it.resenias = mutableListOf(resenia3)
+            usuarioRepository.save(it)
+        }
+        usuario3.also {
+            it.resenias = mutableListOf(resenia2)
             usuarioRepository.save(it)
         }
     }
