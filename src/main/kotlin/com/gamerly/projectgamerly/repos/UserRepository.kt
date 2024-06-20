@@ -20,7 +20,6 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         JOIN u.horariosPreferidos dh
         GROUP BY u, j, df, dh
         HAVING (AVG(r.puntaje) > :puntaje OR :puntaje IS NULL)
-        AND (j IN :juegos OR :juegos IS NULL)
         AND (dh IN :diasHorarios OR :diasHorarios IS NULL)
     """)
     fun findUsuariosSegunFiltros(
