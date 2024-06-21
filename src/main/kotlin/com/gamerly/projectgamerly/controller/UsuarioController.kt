@@ -54,4 +54,8 @@ class UsuarioController {
         return usuarioService.deleteUsuario(idUsuario)
     }
 
+    @GetMapping("/jugadoresPorJuego/{idJuego}")
+    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioDetalleDTO> {
+        return usuarioService.getUsuarioPorJuego(idJuego)
+    }
 }
