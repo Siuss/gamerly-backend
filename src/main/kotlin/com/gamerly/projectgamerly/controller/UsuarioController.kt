@@ -36,7 +36,7 @@ class UsuarioController {
 
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
-        return usuarioService.getUsuario(idUsuario)
+        return usuarioService.getUsuarioDetalle(idUsuario)
     }
 
     @GetMapping("/comentarios/{idUsuario}")
