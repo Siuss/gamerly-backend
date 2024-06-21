@@ -217,7 +217,7 @@ class Bootstrap: InitializingBean {
         resenia2 = Resenia(
             user3.get().id,
             1,
-            "mereces perma por manco"
+            "mereces perma por malardo"
         )
 
         resenia3= Resenia(
