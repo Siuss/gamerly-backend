@@ -36,7 +36,7 @@ interface UserRepository : CrudRepository<Usuario, Long>{
     @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
     fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
   
-    @EntityGraph(attributePaths = [" horariosPreferidos","diaFavorito", "plataformas"])
+    @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 
     @EntityGraph(attributePaths = ["plataformas"])
