@@ -17,8 +17,6 @@ import java.time.LocalTime
 class Resenia(
     @JoinColumn(name = "usuario_id")
     var idUsuarioEmisor: Long,
-    @JoinColumn(name = "usuario_id")
-    var idUsuarioReceptor: Long,
     @Column
     var puntaje: Int,
     @Column

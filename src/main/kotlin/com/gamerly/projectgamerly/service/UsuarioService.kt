@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.HorariosFavoritos
+import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.UserRepository
@@ -9,6 +10,8 @@ import com.gamerly.projectgamerly.utilities.PasswordMismatch
 import com.gamerly.projectgamerly.utilities.userNotFound
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Service
 class UsuarioService {
@@ -18,11 +21,12 @@ class UsuarioService {
     @Autowired
     lateinit var usuarioRepository: UserRepository
 
-    fun getUsuario(idUsuario: Long): UsuarioDetalleDTO {
+    fun getUsuarioDetalle(idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario).orElse(null)
             ?: throw Exception("Usuario con el id solicitado no existe");
+        val primerResenia = conversionReseniaDTO(usuario.resenias.first())
 
-        return UsuarioDetalleDTO(usuario)
+        return UsuarioDetalleDTO(usuario, primerResenia)
     }
 
     fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
@@ -53,30 +57,53 @@ class UsuarioService {
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
         val usuarioRegistro = Usuario().apply {
             nombre = user.nombre
-            fechaDeNacimiento = user.fechaNacimiento
+            fechaDeNacimiento = LocalDate.parse(
+                user.fechaNacimiento,
+                DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            )
             email = user.email
             password = user.password
         }
-        UsuarioCreacionDTO.fromUsuario(usuarioRegistro)
         return userRepository.save(usuarioRegistro)
     }
 
 
     fun comentariosUsuario(idUsuario: Long): List<ReseniasDTO> {
-        val usuario = usuarioRepository.findById(idUsuario)
-        val resenias = userRepository.findReseniasByUsuarioId(usuario.get().id)
-        return resenias.map { resenia -> ReseniasDTO.fromResenias(usuario.get(), resenia) }
+        val usuarioReceptor = usuarioRepository.findById(idUsuario).get()
+        val reseniasDTO = mutableListOf<ReseniasDTO>()
+        usuarioReceptor.resenias.forEach {
+            reseniasDTO.add(conversionReseniaDTO(it))
+        }
+        return reseniasDTO
+    }
+
+    fun conversionReseniaDTO(resenia: Resenia): ReseniasDTO {
+        val usuarioEmisor = usuarioRepository.findById(resenia.idUsuarioEmisor).get()
+        return ReseniasDTO.fromResenias(usuarioEmisor, resenia)
     }
 
     fun getAllUsers(): List<UsuarioDetalleDTO> {
-        return usuarioRepository.findAll().map { UsuarioDetalleDTO(it) }
+        val usuarios = usuarioRepository.findAll()
+        val usuariosDTO = mutableListOf<UsuarioDetalleDTO>()
+        usuarios.forEach {
+            val primerResenia = conversionReseniaDTO(it.resenias.first())
+            usuariosDTO.add(UsuarioDetalleDTO(it, primerResenia))
+        }
+        return usuariosDTO
     }
 
     fun deleteUsuario(idUsuario: Long): UsuarioDetalleDTO {
-        val usuarioABorrar = getUsuario(idUsuario);
+        val usuarioABorrar = getUsuarioDetalle(idUsuario);
         usuarioRepository.deleteById(idUsuario);
         return usuarioABorrar;
     }
 
+    fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaDto> {
+        val usuarios = usuarioRepository.findAllByjuegosPreferidos_Id(idJuego)
+            if(usuarios.isEmpty()){
+                throw Exception("No existen jugadores que jueguen al juego con el id solicitado");
 
+            }
+        return usuarios.map{UsuarioBusquedaDto(it)}
+    }
 }

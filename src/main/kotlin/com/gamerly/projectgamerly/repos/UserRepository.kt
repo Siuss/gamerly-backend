@@ -30,15 +30,18 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         @Param("dias") dias: List<DiaDeLaSemana>?,
         @Param("horarios") horarios: List<HorariosFavoritos>?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
     override fun findById(id: Long): Optional<Usuario>
 
-    @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
-    fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
+    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas", "diaFavorito", "resenias"])
+    override fun findAll(): MutableIterable<Usuario>
   
     @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 
     @EntityGraph(attributePaths = ["plataformas"])
     fun findByEmail(email: String): Optional<Usuario>
+
+    @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos","resenias"])
+    fun findAllByjuegosPreferidos_Id(juegoId: Long): List<Usuario>
 }

@@ -36,7 +36,7 @@ class UsuarioController {
 
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
-        return usuarioService.getUsuario(idUsuario)
+        return usuarioService.getUsuarioDetalle(idUsuario)
     }
 
     @GetMapping("/comentarios/{idUsuario}")
@@ -54,4 +54,8 @@ class UsuarioController {
         return usuarioService.deleteUsuario(idUsuario)
     }
 
+    @GetMapping("/jugadoresPorJuego/{idJuego}")
+    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaDto> {
+        return usuarioService.getUsuarioPorJuego(idJuego)
+    }
 }
