@@ -32,6 +32,7 @@ class UsuarioDetalleDTO() {
 //        this.diasHorariosPreferidos = usuario.diasHorariosPreferidos
         this.plataformas = usuario.plataformas
         this.nacionalidad = usuario.nacionalidad
+        this.reputacion = usuario.resenias.map { it.puntaje }.average().toLong()
         this.resenias = usuario.resenias.map { resenia -> ReseniasDTO.fromResenias(usuario, resenia) }
     }
 }
