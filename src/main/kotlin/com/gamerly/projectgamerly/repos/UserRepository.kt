@@ -26,7 +26,6 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         AND (hf IN :horarios OR :horarios IS NULL)
     """)
     fun findUsuariosSegunFiltros(
-        @Param("juegos") juegosEnComun: Set<String>?,
         @Param("puntaje") puntaje: Long?,
         @Param("dias") dias: List<DiaDeLaSemana>?,
         @Param("horarios") horarios: List<HorariosFavoritos>?
