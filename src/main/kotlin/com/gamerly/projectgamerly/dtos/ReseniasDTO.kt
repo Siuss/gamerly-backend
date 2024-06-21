@@ -10,9 +10,9 @@ class ReseniasDTO {
     lateinit var comentario: String
 
     companion object {
-        fun fromResenias(user : Usuario, resenia :Resenia) : ReseniasDTO = ReseniasDTO().also {
-            it.nombre = user.nombre
-            it.foto = user.foto
+        fun fromResenias(usuarioEmisor: Usuario, resenia: Resenia) : ReseniasDTO = ReseniasDTO().also {
+            it.nombre = usuarioEmisor.nombre
+            it.foto = usuarioEmisor.foto
             it.puntaje = resenia.puntaje
             it.comentario = resenia.comentario
         }
