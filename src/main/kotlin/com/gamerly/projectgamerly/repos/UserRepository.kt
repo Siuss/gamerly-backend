@@ -22,7 +22,6 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         JOIN u.horariosPreferidos hf
         GROUP BY u, j, df, hf
         HAVING (AVG(r.puntaje) > :puntaje OR :puntaje IS NULL)
-        AND (j IN :juegos OR :juegos IS NULL)
         AND (df IN :dias OR :dias IS NULL)
         AND (hf IN :horarios OR :horarios IS NULL)
     """)
@@ -32,15 +31,15 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         @Param("dias") dias: List<DiaDeLaSemana>?,
         @Param("horarios") horarios: List<HorariosFavoritos>?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
+    @EntityGraph(attributePaths = ["horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
     override fun findById(id: Long): Optional<Usuario>
 
     @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
     fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
   
-    @EntityGraph(attributePaths = ["juegosPreferidos", " horariosPreferidos","diaFavorito", "plataformas"])
+    @EntityGraph(attributePaths = [" horariosPreferidos","diaFavorito", "plataformas"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 
-    @EntityGraph(attributePaths = ["juegosPreferidos", "plataformas"])
+    @EntityGraph(attributePaths = ["plataformas"])
     fun findByEmail(email: String): Optional<Usuario>
 }

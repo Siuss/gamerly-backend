@@ -30,7 +30,6 @@ class UsuarioService {
         val diasEnum = inputBusqueda.dias?.map { DiaDeLaSemana.valueOf(it.uppercase()) }
         val horariosEnum = inputBusqueda.horarios?.map { HorariosFavoritos.valueOf(it.uppercase()) }
         val usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(
-            inputBusqueda.juegos?.toHashSet(),
             inputBusqueda.puntaje,
             diasEnum,
             horariosEnum
