@@ -9,6 +9,8 @@ import com.gamerly.projectgamerly.utilities.PasswordMismatch
 import com.gamerly.projectgamerly.utilities.userNotFound
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Service
 class UsuarioService {
@@ -53,11 +55,13 @@ class UsuarioService {
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
         val usuarioRegistro = Usuario().apply {
             nombre = user.nombre
-            fechaDeNacimiento = user.fechaNacimiento
+            fechaDeNacimiento = LocalDate.parse(
+                user.fechaNacimiento,
+                DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            )
             email = user.email
             password = user.password
         }
-        UsuarioCreacionDTO.fromUsuario(usuarioRegistro)
         return userRepository.save(usuarioRegistro)
     }
 
