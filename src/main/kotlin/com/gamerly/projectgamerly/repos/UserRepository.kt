@@ -35,9 +35,6 @@ interface UserRepository : CrudRepository<Usuario, Long>{
 
     @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas", "diaFavorito", "resenias"])
     override fun findAll(): MutableIterable<Usuario>
-
-    @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
-    fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
   
     @EntityGraph(attributePaths = ["horariosPreferidos", "diaFavorito", "plataformas"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>

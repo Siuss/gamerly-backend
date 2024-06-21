@@ -210,21 +210,18 @@ class Bootstrap: InitializingBean {
         val user3=usuarioRepository.findById(usuario3.id)
 
         resenia1 = Resenia(
-            user1.get().id,
             user2.get().id,
             4,
             "Buen compañero"
         )
         resenia2 = Resenia(
-            user2.get().id,
             user3.get().id,
             1,
             "mereces perma por manco"
         )
 
         resenia3= Resenia(
-            user3.get().id,
-            user2.get().id,
+            user1.get().id,
             5,
             "Amigo pasame la receta para ganar en el fifa"
         )
@@ -238,11 +235,11 @@ class Bootstrap: InitializingBean {
             usuarioRepository.save(it)
         }
         usuario2.also {
-            it.resenias = mutableListOf(resenia3)
+            it.resenias = mutableListOf(resenia2)
             usuarioRepository.save(it)
         }
         usuario3.also {
-            it.resenias = mutableListOf(resenia2)
+            it.resenias = mutableListOf(resenia3)
             usuarioRepository.save(it)
         }
     }
