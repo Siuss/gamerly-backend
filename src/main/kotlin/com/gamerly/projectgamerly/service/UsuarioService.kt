@@ -43,19 +43,14 @@ class UsuarioService {
         val usuarioCrendecial = Usuario().apply {
             email = credenciales.email
             password = credenciales.password
-            camposValidos()
+            camposVacios()
         }
-        val usuario = usuarioRepository.findByEmail(usuarioCrendecial.email)
-        if (usuario.isPresent) {
-            val usuarioEncontrado = usuario.get()
-            if (usuarioEncontrado.password == usuarioCrendecial.password) {
-                return UsuarioLoginDTO.from(usuarioEncontrado);
-            } else {
-                throw PasswordMismatch("Contraseña incorrecta")
-            }
-        } else {
-            throw userNotFound("Usuario no encontrado")
+        val usuario = usuarioRepository.findByEmailAndPassword(usuarioCrendecial.email, usuarioCrendecial.password)
+        if (!usuario.isPresent) {
+            throw userNotFound("Credenciales incorrectas")
         }
+
+        return UsuarioLoginDTO.from( usuario.get());
     }
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
         val usuarioRegistro = Usuario().apply {

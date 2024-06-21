@@ -156,10 +156,10 @@ class Bootstrap: InitializingBean {
             "Nanami",
             "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
             LocalDate.of(1999, 1, 1),
-            mutableListOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
+            mutableSetOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
             "test@gmail.com",
             "usuarioFafa",
-            mutableListOf(
+            mutableSetOf(
                 juegoRepository.findJuegoByNombre("League of Legends"),
                 juegoRepository.findJuegoByNombre("Terraria")
             ),
@@ -171,10 +171,10 @@ class Bootstrap: InitializingBean {
             "Usuario 2",
             "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
             LocalDate.of(1999, 1, 1),
-            mutableListOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
+            mutableSetOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
             "test2@gmail.com",
             "123",
-            mutableListOf(
+            mutableSetOf(
                 juegoRepository.findJuegoByNombre("Stardew Valley"),
                 juegoRepository.findJuegoByNombre("Content Warning"),
                 juegoRepository.findJuegoByNombre("Overcooked!")
@@ -187,10 +187,10 @@ class Bootstrap: InitializingBean {
             "Nicolas",
             "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png",
             LocalDate.of(1999, 9, 1),
-            mutableListOf(DiaDeLaSemana.VIERNES,DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
+            mutableSetOf(DiaDeLaSemana.VIERNES,DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
             "test1@gmail.com",
             "contrasenia",
-            mutableListOf(
+            mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
                 juegoRepository.findJuegoByNombre("WWE 2K23"),
                 juegoRepository.findJuegoByNombre("Terraria")
@@ -231,15 +231,15 @@ class Bootstrap: InitializingBean {
 
     fun obtenerResenias() {
         usuario1.also {
-            it.resenias = mutableListOf(resenia1)
+            it.resenias = mutableSetOf(resenia1)
             usuarioRepository.save(it)
         }
         usuario2.also {
-            it.resenias = mutableListOf(resenia2)
+            it.resenias = mutableSetOf(resenia2)
             usuarioRepository.save(it)
         }
         usuario3.also {
-            it.resenias = mutableListOf(resenia3)
+            it.resenias = mutableSetOf(resenia3)
             usuarioRepository.save(it)
         }
     }

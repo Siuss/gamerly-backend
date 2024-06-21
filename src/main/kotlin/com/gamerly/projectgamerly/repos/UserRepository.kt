@@ -36,7 +36,7 @@ interface UserRepository : CrudRepository<Usuario, Long>{
     @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas", "diaFavorito", "resenias"])
     override fun findAll(): MutableIterable<Usuario>
   
-    @EntityGraph(attributePaths = ["horariosPreferidos", "diaFavorito", "plataformas"])
+    @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 
     @EntityGraph(attributePaths = ["plataformas"])
