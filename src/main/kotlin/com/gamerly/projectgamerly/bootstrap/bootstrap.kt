@@ -12,6 +12,7 @@ import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.LocalTime
 
 @Service
 class Bootstrap: InitializingBean {
@@ -212,18 +213,28 @@ class Bootstrap: InitializingBean {
         resenia1 = Resenia(
             user2.get().id,
             4,
-            "Buen compañero"
+            "Buen compañero",
+            LocalDate.of(2024, 2, 1),
+            LocalTime.of(12,30)
         )
         resenia2 = Resenia(
             user3.get().id,
             1,
-            "mereces perma por malardo"
+            "mereces perma por malardo",
+            LocalDate.of(2024, 4, 1),
+            LocalTime.of(18,30)
         )
+
+     
+
+
 
         resenia3= Resenia(
             user1.get().id,
             5,
-            "Amigo pasame la receta para ganar en el fifa"
+            "Amigo pasame la receta para ganar en el fifa",
+            LocalDate.of(2024, 2, 21),
+            LocalTime.of(22,30)
         )
 
         reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3))
