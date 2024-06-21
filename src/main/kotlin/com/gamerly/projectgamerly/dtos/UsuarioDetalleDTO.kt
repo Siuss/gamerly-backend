@@ -28,7 +28,7 @@ class UsuarioDetalleDTO() {
         this.foto = usuario.foto
         this.email = usuario.email
         this.password = usuario.password
-        this.juegosPreferidos = usuario.juegosPreferidos
+        this.juegosPreferidos = usuario.juegosPreferidos.map { it.nombre }
 //        this.diasHorariosPreferidos = usuario.diasHorariosPreferidos
         this.plataformas = usuario.plataformas
         this.nacionalidad = usuario.nacionalidad

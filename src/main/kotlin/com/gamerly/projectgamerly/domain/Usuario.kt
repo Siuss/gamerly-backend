@@ -32,10 +32,10 @@ class Usuario(
     @Column(nullable = false)
     var password: String = "",
 
-    @ElementCollection
+    @ManyToMany
     @CollectionTable(name = "usuario_juegos_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "juego_preferido")
-    var juegosPreferidos: MutableList<String> = mutableListOf(),
+    var juegosPreferidos: MutableList<Juego> = mutableListOf(),
 
     @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
