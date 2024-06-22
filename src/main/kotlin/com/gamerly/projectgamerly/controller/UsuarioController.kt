@@ -58,5 +58,9 @@ class UsuarioController {
         val entity = hashMapOf<String, Any>()
         exception.message?.let { entity.put("message", it) }
         return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
+
+        @GetMapping("/jugadoresPorJuego/{idJuego}")
+    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioDetalleDTO> {
+        return usuarioService.getUsuarioPorJuego(idJuego)
     }
 }
