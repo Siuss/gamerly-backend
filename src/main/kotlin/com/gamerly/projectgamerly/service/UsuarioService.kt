@@ -4,6 +4,8 @@ import com.gamerly.projectgamerly.domain.HorariosFavoritos
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
+import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
+import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import com.gamerly.projectgamerly.utilities.PasswordMismatch
@@ -20,6 +22,8 @@ class UsuarioService {
 
     @Autowired
     lateinit var usuarioRepository: UserRepository
+    @Autowired
+    lateinit var juegoRepository: GameRepository
 
     fun getUsuarioDetalle(idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario).orElse(null)
@@ -45,15 +49,21 @@ class UsuarioService {
         val usuarioCrendecial = Usuario().apply {
             email = credenciales.email
             password = credenciales.password
-            camposVacios()
+            camposValidos()
         }
-        val usuario = usuarioRepository.findByEmailAndPassword(usuarioCrendecial.email, usuarioCrendecial.password)
-        if (!usuario.isPresent) {
-            throw userNotFound("Credenciales incorrectas")
+        val usuario = usuarioRepository.findByEmail(usuarioCrendecial.email)
+        if (usuario.isPresent) {
+            val usuarioEncontrado = usuario.get()
+            if (usuarioEncontrado.password == usuarioCrendecial.password) {
+                return UsuarioLoginDTO.from(usuarioEncontrado);
+            } else {
+                throw PasswordMismatch("Contraseña incorrecta")
+            }
+        } else {
+            throw userNotFound("Usuario no encontrado")
         }
-
-        return UsuarioLoginDTO.from( usuario.get());
     }
+
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
         val usuarioRegistro = Usuario().apply {
             nombre = user.nombre
@@ -65,6 +75,34 @@ class UsuarioService {
             password = user.password
         }
         return userRepository.save(usuarioRegistro)
+    }
+
+    fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
+        val usuario = usuarioRepository.findById(idUsuario)
+            .orElseThrow {
+                userNotFound("Usuario con el id solicitado no existe")
+            }
+
+        usuarioEditado.nombre?.let { usuario.nombre = it }
+        usuarioEditado.foto?.let { usuario.foto = it }
+        usuarioEditado.nacionalidad?.let { usuario.nacionalidad = it }
+        usuarioEditado.plataformas?.let { usuario.plataformas = it }
+
+        if (usuarioEditado.fechaNacimiento != null) {
+            val fechaNacimiento = LocalDate.parse(
+                usuarioEditado.fechaNacimiento,
+                DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            )
+            fechaNacimiento.let { usuario.fechaDeNacimiento = it }
+        }
+
+        if (usuarioEditado.juegos != null) {
+            val juegos = usuarioEditado.juegos!!.map { juegoRepository.findJuegoByNombre(it) }.toSet()
+            juegos.let { usuario.juegosPreferidos = it }
+        }
+
+        val primerResenia = conversionReseniaDTO(usuario.resenias.first())
+        return UsuarioDetalleDTO(usuarioRepository.save(usuario), primerResenia)
     }
 
 

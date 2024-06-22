@@ -41,6 +41,7 @@ class Usuario(
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
     var horariosPreferidos: List<HorariosFavoritos> = mutableListOf(),
+
     @Column(nullable = false)
     var nacionalidad: String = "",
 

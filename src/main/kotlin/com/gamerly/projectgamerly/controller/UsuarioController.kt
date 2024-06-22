@@ -1,12 +1,6 @@
 package com.gamerly.projectgamerly.controller;
 
-import com.gamerly.projectgamerly.dtos.InputBusquedaDTO
-import com.gamerly.projectgamerly.dtos.ReseniasDTO
-import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
-import com.gamerly.projectgamerly.dtos.CredencialesDTO
-import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
-import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
-import com.gamerly.projectgamerly.dtos.UsuarioLoginDTO
+import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -52,6 +46,18 @@ class UsuarioController {
     @DeleteMapping("/usuarios/{idUsuario}")
     fun deleteUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         return usuarioService.deleteUsuario(idUsuario)
+    }
+
+    @PatchMapping("/editar/{idUsuario}")
+    fun editarUsuarioDatos(@PathVariable idUsuario: Long, @RequestBody usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
+        return usuarioService.editarUsuario(idUsuario, usuarioEditado)
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun excepcionGenerica(exception: Exception): ResponseEntity<HashMap<String, Any>> {
+        val entity = hashMapOf<String, Any>()
+        exception.message?.let { entity.put("message", it) }
+        return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
     }
 
     @GetMapping("/jugadoresPorJuego/{idJuego}")
