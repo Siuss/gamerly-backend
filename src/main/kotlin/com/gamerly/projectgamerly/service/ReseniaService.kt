@@ -28,7 +28,7 @@ class ReseniaService() {
         }
         val nuevaResenia = Resenia(
             usuario.get().id,
-            idUsuarioReceptor,
+            //idUsuarioReceptor,
             reseniaBody.puntaje,
             reseniaBody.comentario,
             LocalDate.now(),
