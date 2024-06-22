@@ -2,7 +2,7 @@ package com.gamerly.projectgamerly.dtos
 
 import com.gamerly.projectgamerly.domain.Usuario
 
-class UsuarioBusquedaDTO() {
+class UsuarioBusquedaDto() {
     var id : Long = 0
     var nombre: String = ""
     var foto: String = ""

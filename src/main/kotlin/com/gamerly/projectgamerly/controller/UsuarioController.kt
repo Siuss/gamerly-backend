@@ -19,7 +19,7 @@ class UsuarioController {
     }
     
     @GetMapping("/buscar")
-    fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDTO> {
+    fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto> {
         return usuarioService.busquedaAvanzada(inputBusqueda)
     }
     
@@ -61,7 +61,7 @@ class UsuarioController {
     }
 
     @GetMapping("/jugadoresPorJuego/{idJuego}")
-    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaDTO> {
+    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaDto> {
         return usuarioService.getUsuarioPorJuego(idJuego)
     }
 }

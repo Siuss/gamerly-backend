@@ -4,6 +4,8 @@ import com.gamerly.projectgamerly.domain.HorariosFavoritos
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
+import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
+import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import com.gamerly.projectgamerly.utilities.PasswordMismatch
@@ -20,6 +22,8 @@ class UsuarioService {
 
     @Autowired
     lateinit var usuarioRepository: UserRepository
+    @Autowired
+    lateinit var juegoRepository: GameRepository
 
     fun getUsuarioDetalle(idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario).orElse(null)
@@ -29,7 +33,7 @@ class UsuarioService {
         return UsuarioDetalleDTO(usuario, primerResenia)
     }
 
-    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDTO>{
+    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
         //TODO: cambiar juegos a lista de Int, resolver segun id
         val diasEnum = inputBusqueda.dias?.map { DiaDeLaSemana.valueOf(it.uppercase()) }
         val horariosEnum = inputBusqueda.horarios?.map { HorariosFavoritos.valueOf(it.uppercase()) }
@@ -38,7 +42,7 @@ class UsuarioService {
             diasEnum,
             horariosEnum
         )
-        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDTO(usuario) }
+        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
     }
 
     fun login(credenciales: CredencialesDTO): UsuarioLoginDTO {
@@ -84,6 +88,19 @@ class UsuarioService {
         usuarioEditado.nacionalidad?.let { usuario.nacionalidad = it }
         usuarioEditado.plataformas?.let { usuario.plataformas = it }
 
+        if (usuarioEditado.fechaNacimiento != null) {
+            val fechaNacimiento = LocalDate.parse(
+                usuarioEditado.fechaNacimiento,
+                DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            )
+            fechaNacimiento.let { usuario.fechaDeNacimiento = it }
+        }
+
+        if (usuarioEditado.juegos != null) {
+            val juegos = usuarioEditado.juegos!!.map { juegoRepository.findJuegoByNombre(it) }.toSet()
+            juegos.let { usuario.juegosPreferidos = it }
+        }
+
         val primerResenia = conversionReseniaDTO(usuario.resenias.first())
         return UsuarioDetalleDTO(usuarioRepository.save(usuario), primerResenia)
     }
@@ -119,12 +136,12 @@ class UsuarioService {
         return usuarioABorrar;
     }
 
-    fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaDTO> {
+    fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaDto> {
         val usuarios = usuarioRepository.findAllByjuegosPreferidos_Id(idJuego)
             if(usuarios.isEmpty()){
                 throw Exception("No existen jugadores que jueguen al juego con el id solicitado");
 
             }
-        return usuarios.map{UsuarioBusquedaDTO(it)}
+        return usuarios.map{UsuarioBusquedaDto(it)}
     }
 }
