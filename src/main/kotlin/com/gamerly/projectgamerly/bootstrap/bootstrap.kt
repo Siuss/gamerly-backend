@@ -206,9 +206,9 @@ class Bootstrap: InitializingBean {
 
 
     fun resenias() {
-        val user1=usuarioRepository.findById(usuario1.id)
-        val user2=usuarioRepository.findById(usuario2.id)
-        val user3=usuarioRepository.findById(usuario3.id)
+        val user1= usuarioRepository.findById(usuario1.id).get()
+        val user2= usuarioRepository.findById(usuario2.id).get()
+        val user3= usuarioRepository.findById(usuario3.id).get()
 
         resenia1 = Resenia(
             usuario2.id,
@@ -217,6 +217,8 @@ class Bootstrap: InitializingBean {
             LocalDate.of(2024, 2, 1),
             LocalTime.of(12,30)
         )
+        user1.addResenia(resenia1)
+
         resenia2 = Resenia(
             usuario3.id,
             1,
@@ -224,6 +226,8 @@ class Bootstrap: InitializingBean {
             LocalDate.of(2024, 4, 1),
             LocalTime.of(18,30)
         )
+        user2.addResenia(resenia2)
+
         resenia3= Resenia(
             usuario1.id,
             5,
@@ -231,8 +235,10 @@ class Bootstrap: InitializingBean {
             LocalDate.of(2024, 2, 21),
             LocalTime.of(22,30)
         )
+        user3.addResenia(resenia3)
 
         reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3))
+        usuarioRepository.saveAll(listOf(user1, user2, user3))
     }
 
     fun obtenerResenias() {
