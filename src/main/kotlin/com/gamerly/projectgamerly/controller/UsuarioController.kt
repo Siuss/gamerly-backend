@@ -19,7 +19,7 @@ class UsuarioController {
     }
     
     @GetMapping("/buscar")
-    fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto> {
+    fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDTO> {
         return usuarioService.busquedaAvanzada(inputBusqueda)
     }
     
@@ -49,7 +49,7 @@ class UsuarioController {
     }
 
     @PatchMapping("/editar/{idUsuario}")
-    fun editarUsuarioDatos(@PathVariable idUsuario: Long, @RequestBody usuarioEditado: UsuarioEditarData): UsuarioDetalleDTO {
+    fun editarUsuarioDatos(@PathVariable idUsuario: Long, @RequestBody usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
         return usuarioService.editarUsuario(idUsuario, usuarioEditado)
     }
 
@@ -58,9 +58,10 @@ class UsuarioController {
         val entity = hashMapOf<String, Any>()
         exception.message?.let { entity.put("message", it) }
         return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
+    }
 
-        @GetMapping("/jugadoresPorJuego/{idJuego}")
-    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioDetalleDTO> {
+    @GetMapping("/jugadoresPorJuego/{idJuego}")
+    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaDTO> {
         return usuarioService.getUsuarioPorJuego(idJuego)
     }
 }

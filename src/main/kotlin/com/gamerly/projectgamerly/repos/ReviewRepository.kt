@@ -7,6 +7,5 @@ import java.util.Optional
 
 
 interface ReviewRepository : CrudRepository<Resenia, Long>{
-
-
+    fun findReseniaByIdUsuarioEmisor(idUsuarioEmisor: Long): Resenia?
 }

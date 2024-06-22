@@ -211,26 +211,21 @@ class Bootstrap: InitializingBean {
         val user3=usuarioRepository.findById(usuario3.id)
 
         resenia1 = Resenia(
-            user2.get().id,
+            usuario2.id,
             4,
             "Buen compañero",
             LocalDate.of(2024, 2, 1),
             LocalTime.of(12,30)
         )
         resenia2 = Resenia(
-            user3.get().id,
+            usuario3.id,
             1,
             "mereces perma por malardo",
             LocalDate.of(2024, 4, 1),
             LocalTime.of(18,30)
         )
-
-     
-
-
-
         resenia3= Resenia(
-            user1.get().id,
+            usuario1.id,
             5,
             "Amigo pasame la receta para ganar en el fifa",
             LocalDate.of(2024, 2, 21),

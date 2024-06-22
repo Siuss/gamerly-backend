@@ -1,8 +1,6 @@
 package com.gamerly.projectgamerly.dtos
 
-import com.gamerly.projectgamerly.domain.Usuario
-
-class UsuarioEditarData() {
+class UsuarioEditarDTO() {
     var nombre: String? = null
     var foto: String? = null
     var nacionalidad: String? = null

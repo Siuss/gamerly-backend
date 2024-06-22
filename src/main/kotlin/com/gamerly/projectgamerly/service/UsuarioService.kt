@@ -29,7 +29,7 @@ class UsuarioService {
         return UsuarioDetalleDTO(usuario, primerResenia)
     }
 
-    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
+    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDTO>{
         //TODO: cambiar juegos a lista de Int, resolver segun id
         val diasEnum = inputBusqueda.dias?.map { DiaDeLaSemana.valueOf(it.uppercase()) }
         val horariosEnum = inputBusqueda.horarios?.map { HorariosFavoritos.valueOf(it.uppercase()) }
@@ -38,7 +38,7 @@ class UsuarioService {
             diasEnum,
             horariosEnum
         )
-        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
+        return usuariosFiltrados.map{usuario -> UsuarioBusquedaDTO(usuario) }
     }
 
     fun login(credenciales: CredencialesDTO): UsuarioLoginDTO {
@@ -73,17 +73,19 @@ class UsuarioService {
         return userRepository.save(usuarioRegistro)
     }
 
-    fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarData): UsuarioDetalleDTO {
+    fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario)
             .orElseThrow {
-               userNotFound("Usuario con el id solicitado no existe")
-                 }
+                userNotFound("Usuario con el id solicitado no existe")
+            }
 
         usuarioEditado.nombre?.let { usuario.nombre = it }
         usuarioEditado.foto?.let { usuario.foto = it }
         usuarioEditado.nacionalidad?.let { usuario.nacionalidad = it }
         usuarioEditado.plataformas?.let { usuario.plataformas = it }
-        return UsuarioDetalleDTO(usuarioRepository.save(usuario))
+
+        val primerResenia = conversionReseniaDTO(usuario.resenias.first())
+        return UsuarioDetalleDTO(usuarioRepository.save(usuario), primerResenia)
     }
 
 
@@ -117,12 +119,12 @@ class UsuarioService {
         return usuarioABorrar;
     }
 
-    fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaDto> {
+    fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaDTO> {
         val usuarios = usuarioRepository.findAllByjuegosPreferidos_Id(idJuego)
             if(usuarios.isEmpty()){
                 throw Exception("No existen jugadores que jueguen al juego con el id solicitado");
 
             }
-        return usuarios.map{UsuarioBusquedaDto(it)}
+        return usuarios.map{UsuarioBusquedaDTO(it)}
     }
 }

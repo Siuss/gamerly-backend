@@ -20,22 +20,22 @@ class ReseniaService() {
     @Autowired lateinit var usuarioRepository : UserRepository
 
     @Transactional()
-    fun crearResenia(reseniaBody: ReseniaCreacionDTO, idUsuario : Long, idUsuarioReceptor : Long): Resenia {
-        val usuario = usuarioRepository.findById(idUsuario)
-        val existingResenia = reseniaRepository.findAll().find { it.idUsuarioEmisor == idUsuario }
+    fun crearResenia(reseniaBody: ReseniaCreacionDTO, idUsuarioEmisor : Long, idUsuarioReceptor : Long): Resenia {
+        val usuarioReceptor = usuarioRepository.findById(idUsuarioReceptor).get()
+        val existingResenia = reseniaRepository.findReseniaByIdUsuarioEmisor(idUsuarioEmisor)
         if (existingResenia != null) {
+            println(existingResenia.comentario)
             throw ReseniaException("Ya has dejado una reseña a este usuario")
         }
         val nuevaResenia = Resenia(
-            usuario.get().id,
-            idUsuarioReceptor,
+            idUsuarioEmisor,
             reseniaBody.puntaje,
             reseniaBody.comentario,
             LocalDate.now(),
             LocalTime.now()
         )
-        usuario.get().resenias.add(nuevaResenia)
-        usuarioRepository.save(usuario.get())
+        usuarioReceptor.resenias.add(nuevaResenia)
+        usuarioRepository.save(usuarioReceptor)
         return reseniaRepository.save(nuevaResenia)
     }
 }
