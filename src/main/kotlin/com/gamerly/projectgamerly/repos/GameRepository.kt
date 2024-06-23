@@ -15,4 +15,6 @@ interface GameRepository: JpaRepository<Juego, Long> {
 
     @EntityGraph(attributePaths = ["plataformas"])
     override fun findAll(): List<Juego>
+
+    fun findJuegoByNombre(nombre: String): Juego
 }

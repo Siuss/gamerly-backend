@@ -24,7 +24,7 @@ class Usuario(
     @CollectionTable(name = "usuario_dia_favorito", joinColumns = [JoinColumn(name = "usuario_id")])
     @Enumerated(EnumType.STRING)
     @Column(name = "dia_favorito")
-    var diaFavorito: List<DiaDeLaSemana> = mutableListOf(),
+    var diaFavorito: MutableSet<DiaDeLaSemana> = mutableSetOf(),
 
     @Column(nullable = false, unique = true)
     var email: String = "",
@@ -32,15 +32,16 @@ class Usuario(
     @Column(nullable = false)
     var password: String = "",
 
-    @ElementCollection
+    @ManyToMany
     @CollectionTable(name = "usuario_juegos_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "juego_preferido")
-    var juegosPreferidos: MutableList<String> = mutableListOf(),
+    var juegosPreferidos: Set<Juego> = mutableSetOf(),
 
     @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
     var horariosPreferidos: List<HorariosFavoritos> = mutableListOf(),
+
     @Column(nullable = false)
     var nacionalidad: String = "",
 
@@ -61,7 +62,7 @@ class Usuario(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-    var resenias: MutableList<Resenia> = mutableListOf()
+    var resenias: MutableSet<Resenia> = mutableSetOf()
 
     fun addResenia(resenia: Resenia)  {
          resenias.add(resenia)

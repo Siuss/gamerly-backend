@@ -1,7 +1,9 @@
 package com.gamerly.projectgamerly.repos
 
+import com.gamerly.projectgamerly.domain.HorariosFavoritos
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
+import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
@@ -17,26 +19,29 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         JOIN u.resenias r
         JOIN u.juegosPreferidos j
         JOIN u.diaFavorito df
-        JOIN u.horariosPreferidos dh
-        GROUP BY u, j, df, dh
+        JOIN u.horariosPreferidos hf
+        GROUP BY u, j, df, hf
         HAVING (AVG(r.puntaje) > :puntaje OR :puntaje IS NULL)
-        AND (j IN :juegos OR :juegos IS NULL)
-        AND (dh IN :diasHorarios OR :diasHorarios IS NULL)
+        AND (df IN :dias OR :dias IS NULL)
+        AND (hf IN :horarios OR :horarios IS NULL)
     """)
     fun findUsuariosSegunFiltros(
-        @Param("juegos") juegosEnComun: Set<String>?,
         @Param("puntaje") puntaje: Long?,
-        @Param("diasHorarios") diasHorarios: List<String>?
+        @Param("dias") dias: List<DiaDeLaSemana>?,
+        @Param("horarios") horarios: List<HorariosFavoritos>?
     ): List<Usuario>
     @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
     override fun findById(id: Long): Optional<Usuario>
 
-    @Query("SELECT r FROM Resenia r WHERE r.idUsuarioReceptor = :userId")
-    fun findReseniasByUsuarioId(@Param("userId") userId: Long): List<Resenia>
+    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas", "diaFavorito", "resenias"])
+    override fun findAll(): MutableIterable<Usuario>
   
-    @EntityGraph(attributePaths = ["juegosPreferidos", " horariosPreferidos","diaFavorito", "plataformas"])
+    @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 
-    @EntityGraph(attributePaths = ["juegosPreferidos", "plataformas"])
+    @EntityGraph(attributePaths = ["plataformas"])
     fun findByEmail(email: String): Optional<Usuario>
+
+    @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos","resenias"])
+    fun findAllByjuegosPreferidos_Id(juegoId: Long): List<Usuario>
 }
