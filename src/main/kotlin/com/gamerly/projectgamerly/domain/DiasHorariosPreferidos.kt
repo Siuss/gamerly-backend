@@ -4,18 +4,19 @@ import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import jakarta.persistence.*
 
 @Entity
-//@Table(name = "diasHorarios")
+@Table(name = "dia_horario")
 data class DíasHorariosPreferidos(
+
     @Enumerated(EnumType.STRING)
-    val diaDeLaSemana: DiaDeLaSemana,
+     val diaDeLaSemana: DiaDeLaSemana,
 
     @Enumerated(EnumType.STRING)
     val horarioFavorito: HorariosFavoritos,
 
-    @ManyToOne
-    val usuario: Usuario // Relación con la entidad Usuario
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
+
+    
 }
