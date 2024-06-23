@@ -17,7 +17,7 @@ class UsuarioDetalleDTO() {
     lateinit var plataformas: Set<String>
     lateinit var nacionalidad: String
     var reputacion: Long = 0
-    var amigos: List<UsuarioDetalleDTO> = mutableListOf()
+    var amigos: List<AgregarAmigoDTO> = mutableListOf()
     lateinit var resenias: ReseniasDTO
 
     constructor(
@@ -35,6 +35,7 @@ class UsuarioDetalleDTO() {
         this.plataformas = usuario.plataformas
         this.nacionalidad = usuario.nacionalidad
         this.amigos = emptyList()
+//        this.amigos = usuario.amigos.map { AgregarAmigoDTO(it.id, it.id) }
         this.reputacion = usuario.resenias.map { it.puntaje }.average().toLong()
         this.resenias = resenia
     }

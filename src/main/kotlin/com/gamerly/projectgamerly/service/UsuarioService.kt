@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import org.springframework.transaction.annotation.Transactional
+import org.hibernate.Hibernate
 
 @Service
 class UsuarioService {
@@ -81,8 +83,8 @@ class UsuarioService {
         }
         return userRepository.save(usuarioRegistro)
     }
-
-    fun agregarAmigo(idUsuario: Long, idAmigo: Long): UsuarioDetalleDTO {
+    @Transactional
+    fun agregarAmigo(idUsuario: Long, idAmigo: Long): AgregarAmigoDTO {
         val usuario = usuarioRepository.findById(idUsuario)
             .orElseThrow { Exception("Usuario con el id $idUsuario no encontrado") }
         val amigo = usuarioRepository.findById(idAmigo)
@@ -100,8 +102,7 @@ class UsuarioService {
         usuarioRepository.save(usuario)
         usuarioRepository.save(amigo)
 
-        // Devolvemos el detalle actualizado del usuario
-        return UsuarioDetalleDTO(usuario, conversionReseniaDTO(usuario.resenias.first()))
+        return AgregarAmigoDTO(usuario.id, amigo.id)
     }
 
 
