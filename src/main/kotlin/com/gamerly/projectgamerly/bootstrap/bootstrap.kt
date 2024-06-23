@@ -198,7 +198,7 @@ class Bootstrap: InitializingBean {
             ),
             mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
-            setOf("PC", "PS4", "XBOX")
+            setOf("PC", "PS4", "XBOX", "Nintendo Switch")
             )
         usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3))
     }
@@ -206,38 +206,39 @@ class Bootstrap: InitializingBean {
 
 
     fun resenias() {
-        val user1=usuarioRepository.findById(usuario1.id)
-        val user2=usuarioRepository.findById(usuario2.id)
-        val user3=usuarioRepository.findById(usuario3.id)
+        val user1= usuarioRepository.findById(usuario1.id).get()
+        val user2= usuarioRepository.findById(usuario2.id).get()
+        val user3= usuarioRepository.findById(usuario3.id).get()
 
         resenia1 = Resenia(
-            user2.get().id,
+            usuario2.id,
             4,
             "Buen compañero",
             LocalDate.of(2024, 2, 1),
             LocalTime.of(12,30)
         )
+        user1.addResenia(resenia1)
+
         resenia2 = Resenia(
-            user3.get().id,
+            usuario3.id,
             1,
             "mereces perma por malardo",
             LocalDate.of(2024, 4, 1),
             LocalTime.of(18,30)
         )
-
-     
-
-
+        user2.addResenia(resenia2)
 
         resenia3= Resenia(
-            user1.get().id,
+            usuario1.id,
             5,
             "Amigo pasame la receta para ganar en el fifa",
             LocalDate.of(2024, 2, 21),
             LocalTime.of(22,30)
         )
+        user3.addResenia(resenia3)
 
         reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3))
+        usuarioRepository.saveAll(listOf(user1, user2, user3))
     }
 
     fun obtenerResenias() {

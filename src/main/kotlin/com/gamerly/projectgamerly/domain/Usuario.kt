@@ -41,6 +41,7 @@ class Usuario(
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
     var horariosPreferidos: List<HorariosFavoritos> = mutableListOf(),
+
     @Column(nullable = false)
     var nacionalidad: String = "",
 
@@ -48,6 +49,14 @@ class Usuario(
     @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "plataforma")
     var plataformas: Set<String> = mutableSetOf(),
+
+    @ManyToMany
+    @JoinTable(
+        name = "amigos",
+        joinColumns = [JoinColumn(name = "usuario_id")],
+        inverseJoinColumns = [JoinColumn(name = "amigo_id")]
+    )
+    var amigos: MutableList<Usuario> = mutableListOf()
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
