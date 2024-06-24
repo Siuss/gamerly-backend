@@ -8,10 +8,10 @@ data class Juego(
     val nombre: String,
     @Column
     val imagen: String,
-    @ElementCollection
+    @ElementCollection(targetClass = Plataformas::class)
     @CollectionTable(name = "plataformas")
     @Column
-    val plataformas: List<String> = mutableListOf()
+    val plataformas: List<Plataformas> = mutableListOf()
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

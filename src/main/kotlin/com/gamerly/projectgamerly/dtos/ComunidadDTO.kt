@@ -13,7 +13,7 @@ class ComunidadDTO {
             val comunidadDTO = ComunidadDTO()
             comunidadDTO.foto = "https://www.google.com/search?q=${juego.nombre}+game&tbm=isch"
             comunidadDTO.juego = juego.nombre
-            comunidadDTO.plataforma = juego.plataformas.joinToString(", ")
+            comunidadDTO.plataforma = juego.plataformas.map { it.nombre }.joinToString(", ")
             return comunidadDTO
         }
     }
