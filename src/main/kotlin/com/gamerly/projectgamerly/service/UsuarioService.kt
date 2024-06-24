@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.HorariosFavoritos
+import com.gamerly.projectgamerly.domain.Plataformas
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
@@ -105,10 +106,6 @@ class UsuarioService {
         return AgregarAmigoDTO(usuario.id, amigo.id)
     }
 
-
-
-
-
     fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario)
             .orElseThrow {
@@ -118,7 +115,6 @@ class UsuarioService {
         usuarioEditado.nombre?.let { usuario.nombre = it }
         usuarioEditado.foto?.let { usuario.foto = it }
         usuarioEditado.nacionalidad?.let { usuario.nacionalidad = it }
-        usuarioEditado.plataformas?.let { usuario.plataformas = it }
 
         if (usuarioEditado.fechaNacimiento != null) {
             val fechaNacimiento = LocalDate.parse(
@@ -131,6 +127,13 @@ class UsuarioService {
         if (usuarioEditado.juegos != null) {
             val juegos = usuarioEditado.juegos!!.map { juegoRepository.findJuegoByNombre(it) }.toSet()
             juegos.let { usuario.juegosPreferidos = it }
+        }
+
+        if (usuarioEditado.plataformas != null) {
+            val plataformas = usuarioEditado.plataformas!!.map {
+                Plataformas.valueOf(it.uppercase().replace(" ", ""))
+            }.toSet()
+            plataformas.let { usuario.plataformas = it }
         }
 
         val primerResenia = conversionReseniaDTO(usuario.resenias.first())

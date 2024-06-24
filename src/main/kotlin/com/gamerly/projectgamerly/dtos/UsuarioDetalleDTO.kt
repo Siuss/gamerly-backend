@@ -32,7 +32,7 @@ class UsuarioDetalleDTO() {
         this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos.map { it.nombre }
 //        this.diasHorariosPreferidos = usuario.diasHorariosPreferidos
-        this.plataformas = usuario.plataformas
+        this.plataformas = usuario.plataformas.map { it.nombre }.toSet()
         this.nacionalidad = usuario.nacionalidad
         this.amigos = emptyList()
 //        this.amigos = usuario.amigos.map { AgregarAmigoDTO(it.id, it.id) }
