@@ -50,7 +50,7 @@ class Usuario(
     @Column(name = "plataforma")
     var plataformas: Set<String> = mutableSetOf(),
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "amigos",
         joinColumns = [JoinColumn(name = "usuario_id")],

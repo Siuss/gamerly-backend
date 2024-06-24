@@ -33,10 +33,13 @@ class UsuarioService {
     }
 
     fun getUsuarioDetalle(idUsuario: Long): UsuarioDetalleDTO {
-        val usuario = usuarioRepository.findById(idUsuario).orElse(null)
-            ?: throw Exception("Usuario con el id solicitado no existe");
-        val primerResenia = conversionReseniaDTO(usuario.resenias.first())
-
+       val usuario = usuarioRepository.findById(idUsuario).orElse(null)
+            ?: throw Exception("Usuario con el id solicitado no existe")
+        val primerResenia = if (usuario.resenias.isNotEmpty()) {
+            conversionReseniaDTO(usuario.resenias.first())
+        } else {
+            ReseniasDTO()
+        }
         return UsuarioDetalleDTO(usuario, primerResenia)
     }
 

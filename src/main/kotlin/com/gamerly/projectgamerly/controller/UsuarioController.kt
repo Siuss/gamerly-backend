@@ -66,9 +66,12 @@ class UsuarioController {
     }
 
     @PostMapping("/agregar-amigo")
-    fun agregarAmigo(@RequestBody agregarAmigoDTO: AgregarAmigoDTO): ResponseEntity<Any> {
+    fun agregarAmigo(
+        @RequestParam("idUsuario") idUsuario: Long,
+        @RequestParam("idAmigo") idAmigo: Long
+    ): ResponseEntity<Any> {
         try {
-            val usuarioDetalle = usuarioService.agregarAmigo(agregarAmigoDTO.idUsuario, agregarAmigoDTO.idAmigo)
+            val usuarioDetalle = usuarioService.agregarAmigo(idUsuario, idAmigo)
             return ResponseEntity.ok(usuarioDetalle)
         } catch (ex: Exception) {
             val entity = hashMapOf<String, Any>()
@@ -76,4 +79,5 @@ class UsuarioController {
             return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
         }
     }
+
 }
