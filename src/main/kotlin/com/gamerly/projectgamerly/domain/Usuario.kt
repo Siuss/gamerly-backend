@@ -45,10 +45,10 @@ class Usuario(
     @Column(nullable = false)
     var nacionalidad: String = "",
 
-    @ElementCollection
+    @ElementCollection(targetClass = Plataformas::class)
     @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "plataforma")
-    var plataformas: Set<String> = mutableSetOf(),
+    var plataformas: Set<Plataformas> = mutableSetOf(),
 
     @ManyToMany
     @JoinTable(

@@ -8,7 +8,6 @@ class UsuarioLoginDTO {
     lateinit var foto: String
     lateinit var email: String
     lateinit var juegosPreferidos: List<String>
-    lateinit var plataformas: Set<String>
 //    lateinit var diasPreferidos: Set<String>
     lateinit var nacionalidad: String
     var reputacion: Long = 0
@@ -21,7 +20,6 @@ class UsuarioLoginDTO {
             dto.email = usuario.email
             dto.juegosPreferidos = usuario.juegosPreferidos.map { it.nombre }
 //            dto.diasPreferidos = usuario.diasHorariosPreferidos
-            dto.plataformas = usuario.plataformas
             dto.nacionalidad = usuario.nacionalidad
         }
     }
