@@ -1,9 +1,6 @@
 package com.gamerly.projectgamerly.bootstrap
 
-import com.gamerly.projectgamerly.domain.Juego
-import com.gamerly.projectgamerly.domain.HorariosFavoritos
-import com.gamerly.projectgamerly.domain.Resenia
-import com.gamerly.projectgamerly.domain.Usuario
+import com.gamerly.projectgamerly.domain.*
 import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.ReviewRepository
 import com.gamerly.projectgamerly.repos.UserRepository
@@ -50,102 +47,207 @@ class Bootstrap: InitializingBean {
                 Juego(
                     "FIFA 23",
                     "https://images.igdb.com/igdb/image/upload/t_original/sci00g.webp",
-                    listOf("Windows", "PlayStation 4", "PlayStation 5", "Xbox Series X")
+                    listOf(
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.PLAYSTATION5,
+                        Plataformas.XBOXSERIESX
+                    )
                 ),
                 Juego(
                     "Counter-Strike: Global Offensive",
                     "https://images.igdb.com/igdb/image/upload/t_original/ark8i.webp",
-                    listOf("Linux", "Mac", "Windows", "PlayStation 3", "Xbox 360")
+                    listOf(
+                        Plataformas.LINUX,
+                        Plataformas.MAC,
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "League of Legends",
                     "https://images.igdb.com/igdb/image/upload/t_original/sclnve.webp",
-                    listOf("Mac", "Windows")
+                    listOf(
+                        Plataformas.MAC,
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "Euro Truck Simulator 2",
                     "https://images.igdb.com/igdb/image/upload/t_original/scgqh4.webp",
-                    listOf("Linux", "Mac", "Windows")
+                    listOf(
+                        Plataformas.LINUX,
+                        Plataformas.MAC,
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "Pummel Party",
                     "https://images.igdb.com/igdb/image/upload/t_original/arqdt.webp",
-                    listOf("Nintendo Switch", "Windows", "PlayStation 4", "Xbox One")
+                    listOf(
+                        Plataformas.NINTENDOSWITCH,
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.XBOXONE
+                    )
                 ),
                 Juego(
                     "Rocket League",
                     "https://images.igdb.com/igdb/image/upload/t_original/k1hcu9flbu0tvheine15.webp",
-                    listOf("Linux", "Mac", "Nintendo Switch", "Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                    listOf(
+                        Plataformas.LINUX,
+                        Plataformas.MAC,
+                        Plataformas.NINTENDOSWITCH,
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.PLAYSTATION5,
+                        Plataformas.XBOXONE,
+                        Plataformas.XBOXSERIESX
+                    )
                 ),
                 Juego(
                     "Lethal Company",
                     "https://images.igdb.com/igdb/image/upload/t_original/ar1rug.webp",
-                    listOf("Windows")
+                    listOf(
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "Content Warning",
                     "https://images.igdb.com/igdb/image/upload/t_original/ar2v8v.webp",
-                    listOf("Windows")
+                    listOf(
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "Terraria",
                     "https://images.igdb.com/igdb/image/upload/t_original/ar2voa.webp",
-                    listOf("Android", "iOS", "Linux", "Mac", "Nintendo Switch", "PC (Microsoft Windows)", "PlayStation 4", "Xbox One", "Xbox Series X")
+                    listOf(
+                        Plataformas.ANDROID,
+                        Plataformas.IOS,
+                        Plataformas.LINUX,
+                        Plataformas.MAC,
+                        Plataformas.NINTENDOSWITCH,
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.XBOXONE,
+                        Plataformas.XBOXSERIESX
+                    )
                 ),
                 Juego(
                     "Overcooked!",
                     "https://images.igdb.com/igdb/image/upload/t_original/ar6xz.webp",
-                    listOf("Windows", "PlayStation 4", "Xbox One")
+                    listOf(
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.XBOXONE
+                    )
                 ),
                 Juego(
                     "Astroneer",
                     "https://images.igdb.com/igdb/image/upload/t_original/sci95s.webp",
-                    listOf("Nintendo Switch", "Windows", "PlayStation 4", "Xbox One")
+                    listOf(
+                        Plataformas.NINTENDOSWITCH,
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.XBOXONE
+                    )
                 ),
                 Juego(
                     "Left 4 Dead 2",
                     "https://images.igdb.com/igdb/image/upload/t_original/arq5o.webp",
-                    listOf("Linux", "Mac", "Windows", "Xbox 360")
+                    listOf(
+                        Plataformas.LINUX,
+                        Plataformas.MAC,
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "Project Zomboid",
                     "https://images.igdb.com/igdb/image/upload/t_original/ihmtywjhagxtdzzf1wrw.webp",
-                    listOf("Linux", "Mac", "Windows")
+                    listOf(
+                        Plataformas.LINUX,
+                        Plataformas.MAC,
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "Stardew Valley",
                     "https://images.igdb.com/igdb/image/upload/t_original/sw7rtba7p1xs77klsime.webp",
-                    listOf("Android", "iOS", "Linux", "Mac", "Nintendo Switch", "Windows", "PlayStation 4", "PlayStation Vita", "Wii U", "Xbox One")
+                    listOf(
+                        Plataformas.ANDROID,
+                        Plataformas.IOS,
+                        Plataformas.LINUX,
+                        Plataformas.MAC,
+                        Plataformas.NINTENDOSWITCH,
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.XBOXONE
+                    )
                 ),
                 Juego(
                     "Deep Rock Galactic",
                     "https://images.igdb.com/igdb/image/upload/t_original/ar4nr.webp",
-                    listOf("Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                    listOf(
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.PLAYSTATION5,
+                        Plataformas.XBOXONE,
+                        Plataformas.XBOXSERIESX
+                    )
                 ),
                 Juego(
                     "Among Us",
                     "https://images.igdb.com/igdb/image/upload/t_original/ar7tq.webp",
-                    listOf("Android", "iOS", "Nintendo Switch", "Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                    listOf(
+                        Plataformas.ANDROID,
+                        Plataformas.IOS,
+                        Plataformas.NINTENDOSWITCH,
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.PLAYSTATION5,
+                        Plataformas.XBOXONE,
+                        Plataformas.XBOXSERIESX
+                    )
                 ),
                 Juego(
                     "Phasmophobia",
                     "https://images.igdb.com/igdb/image/upload/t_original/ardfr.webp",
-                    listOf("Oculus Rift", "Windows", "PlayStation 5", "PlayStation VR2", "SteamVR", "Windows Mixed Reality", "Xbox Series X")
+                    listOf(
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION5,
+                        Plataformas.XBOXSERIESX)
                 ),
                 Juego(
                     "Dead by Daylight",
                     "https://images.igdb.com/igdb/image/upload/t_original/sc6vlh.webp",
-                    listOf("Nintendo Switch", "Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                    listOf(
+                        Plataformas.NINTENDOSWITCH,
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.PLAYSTATION5,
+                        Plataformas.XBOXONE,
+                        Plataformas.XBOXSERIESX
+                    )
                 ),
                 Juego(
                     "Sonic & All-Stars Racing Transformed",
                     "https://images.igdb.com/igdb/image/upload/t_original/j679caufkftsns3n26df.webp",
-                    listOf("Android", "iOS", "Windows", "PlayStation 3", "PlayStation Vita", "Wii U", "Xbox 360")
+                    listOf(
+                        Plataformas.ANDROID,
+                        Plataformas.IOS,
+                        Plataformas.WINDOWS
+                    )
                 ),
                 Juego(
                     "WWE 2K23",
                     "https://images.igdb.com/igdb/image/upload/t_original/sckovg.webp",
-                    listOf("Windows", "PlayStation 4", "PlayStation 5", "Xbox One", "Xbox Series X")
+                    listOf(
+                        Plataformas.WINDOWS,
+                        Plataformas.PLAYSTATION4,
+                        Plataformas.PLAYSTATION5,
+                        Plataformas.XBOXONE,
+                        Plataformas.XBOXSERIESX
+                    )
                 )
             )
         )
@@ -166,7 +268,10 @@ class Bootstrap: InitializingBean {
             ),
             mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
-            setOf("PC", "PS4")
+            setOf(
+                Plataformas.WINDOWS,
+                Plataformas.PLAYSTATION4
+            )
         )
         usuario2 = Usuario(
             "Usuario 2",
@@ -182,7 +287,9 @@ class Bootstrap: InitializingBean {
             ),
             mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
-            setOf("PC")
+            setOf(
+                Plataformas.WINDOWS
+            )
         )
         usuario3 = Usuario(
             "Nicolas",
@@ -198,8 +305,13 @@ class Bootstrap: InitializingBean {
             ),
             mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
-            setOf("PC", "PS4", "XBOX", "Nintendo Switch")
+            setOf(
+                Plataformas.NINTENDOSWITCH,
+                Plataformas.WINDOWS,
+                Plataformas.PLAYSTATION4,
+                Plataformas.XBOXONE
             )
+        )
         usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3))
     }
 

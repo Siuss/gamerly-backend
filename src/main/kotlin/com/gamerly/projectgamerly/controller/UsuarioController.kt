@@ -64,4 +64,20 @@ class UsuarioController {
     fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaDto> {
         return usuarioService.getUsuarioPorJuego(idJuego)
     }
+
+    @PostMapping("/agregar-amigo")
+    fun agregarAmigo(
+        @RequestParam("idUsuario") idUsuario: Long,
+        @RequestParam("idAmigo") idAmigo: Long
+    ): ResponseEntity<Any> {
+        try {
+            val usuarioDetalle = usuarioService.agregarAmigo(idUsuario, idAmigo)
+            return ResponseEntity.ok(usuarioDetalle)
+        } catch (ex: Exception) {
+            val entity = hashMapOf<String, Any>()
+            entity["message"] = ex.message ?: "Error al agregar amigo"
+            return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
+        }
+    }
+
 }

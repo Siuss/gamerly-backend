@@ -30,10 +30,10 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         @Param("dias") dias: List<DiaDeLaSemana>?,
         @Param("horarios") horarios: List<HorariosFavoritos>?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito" ,"resenias"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito","resenias", "amigos"])
     override fun findById(id: Long): Optional<Usuario>
 
-    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas", "diaFavorito", "resenias"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas", "diaFavorito", "resenias" ,"amigos"])
     override fun findAll(): MutableIterable<Usuario>
   
     @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos"])
@@ -44,4 +44,5 @@ interface UserRepository : CrudRepository<Usuario, Long>{
 
     @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos","resenias"])
     fun findAllByjuegosPreferidos_Id(juegoId: Long): List<Usuario>
+
 }
