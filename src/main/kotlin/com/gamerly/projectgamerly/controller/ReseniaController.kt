@@ -9,12 +9,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = ["*"])
 class ReseniaController {
     @Autowired
     lateinit var reseniaService: ReseniaService
 
-    @PostMapping("/crear-Reseña/{idUsuarioEmisor}/{idUsuarioReceptor}")
+    @PostMapping("/crear-resenia/{idUsuarioEmisor}/{idUsuarioReceptor}")
     fun crearResenia(@PathVariable idUsuarioEmisor : Long, @PathVariable idUsuarioReceptor : Long, @RequestBody reseniaBody: ReseniaCreacionDTO): ReseniaCreacionDTO {
         return ReseniaCreacionDTO.fromResenia(reseniaService.crearResenia(reseniaBody, idUsuarioEmisor, idUsuarioReceptor))
     }

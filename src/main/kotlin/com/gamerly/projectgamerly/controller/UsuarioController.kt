@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = ["*"])
 class UsuarioController {
     @Autowired
     lateinit var usuarioService: UsuarioService
@@ -30,7 +30,10 @@ class UsuarioController {
 
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
-        return usuarioService.getUsuarioDetalle(idUsuario)
+        val usuario = usuarioService.getUsuario(idUsuario)
+        val primerResenia = usuarioService.conversionReseniaDTO(usuario.resenias.first())
+
+        return UsuarioDetalleDTO(usuario, primerResenia)
     }
 
     @GetMapping("/comentarios/{idUsuario}")
@@ -44,8 +47,8 @@ class UsuarioController {
     }
 
     @DeleteMapping("/usuarios/{idUsuario}")
-    fun deleteUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
-        return usuarioService.deleteUsuario(idUsuario)
+    fun deleteUsuario(@PathVariable idUsuario: Long): UsuarioLoginDTO {
+        return UsuarioLoginDTO.from(usuarioService.deleteUsuario(idUsuario))
     }
 
     @PatchMapping("/editar/{idUsuario}")
@@ -65,19 +68,9 @@ class UsuarioController {
         return usuarioService.getUsuarioPorJuego(idJuego)
     }
 
-    @PostMapping("/agregar-amigo")
-    fun agregarAmigo(
-        @RequestParam("idUsuario") idUsuario: Long,
-        @RequestParam("idAmigo") idAmigo: Long
-    ): ResponseEntity<Any> {
-        try {
-            val usuarioDetalle = usuarioService.agregarAmigo(idUsuario, idAmigo)
-            return ResponseEntity.ok(usuarioDetalle)
-        } catch (ex: Exception) {
-            val entity = hashMapOf<String, Any>()
-            entity["message"] = ex.message ?: "Error al agregar amigo"
-            return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
-        }
+    // Trae los amigos de un usuario a partir del id del usuario
+    @GetMapping("/amigos/{idUsuario}")
+    fun getAmigosDelUsuario(@PathVariable idUsuario: Long): List<AmigoDTO> {
+        return usuarioService.getAmigosDelUsuario(idUsuario).map{AmigoDTO.from(it)}
     }
-
 }

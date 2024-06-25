@@ -39,6 +39,7 @@ class Bootstrap: InitializingBean {
         this.usuario()
         this.resenias()
         this.obtenerResenias()
+        this.agregarAmigos()
     }
 
     fun juegos() {
@@ -266,7 +267,10 @@ class Bootstrap: InitializingBean {
                 juegoRepository.findJuegoByNombre("League of Legends"),
                 juegoRepository.findJuegoByNombre("Terraria")
             ),
-            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf(
                 Plataformas.WINDOWS,
@@ -285,7 +289,10 @@ class Bootstrap: InitializingBean {
                 juegoRepository.findJuegoByNombre("Content Warning"),
                 juegoRepository.findJuegoByNombre("Overcooked!")
             ),
-            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf(
                 Plataformas.WINDOWS
@@ -303,7 +310,10 @@ class Bootstrap: InitializingBean {
                 juegoRepository.findJuegoByNombre("WWE 2K23"),
                 juegoRepository.findJuegoByNombre("Terraria")
             ),
-            mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
             setOf(
                 Plataformas.NINTENDOSWITCH,
@@ -366,5 +376,12 @@ class Bootstrap: InitializingBean {
             it.resenias = mutableSetOf(resenia3)
             usuarioRepository.save(it)
         }
+    }
+
+    fun agregarAmigos(){
+        usuario1.amigos = mutableSetOf(usuario2)
+        usuario2.amigos = mutableSetOf(usuario1)
+        usuarioRepository.save(usuario1)
+        usuarioRepository.save(usuario2)
     }
 }

@@ -36,12 +36,30 @@ class Usuario(
     @ManyToMany
     @CollectionTable(name = "usuario_juegos_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "juego_preferido")
-    var juegosPreferidos: Set<Juego> = mutableSetOf(),
+    var juegosPreferidos: MutableSet<Juego> = mutableSetOf(),
+
+    @OneToMany
+    @CollectionTable(name = "usuario_solicitud_enviada", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "solicitud_enviada")
+    var solicitudesEnviadas: MutableSet<Solicitud> = mutableSetOf(),
+
+    @OneToMany
+    @CollectionTable(name = "usuario_solicitud_recibida", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "solicitud_recibida")
+    var solicitudesRecibidas: MutableSet<Solicitud> = mutableSetOf(),
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "amigos",
+        joinColumns = [JoinColumn(name = "usuario_id")],
+        inverseJoinColumns = [JoinColumn(name = "amigo_id")]
+    )
+    var amigos: MutableSet<Usuario> = mutableSetOf(),
 
     @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
-    var horariosPreferidos: List<HorariosFavoritos> = mutableListOf(),
+    var horariosPreferidos: MutableSet<HorariosFavoritos> = mutableSetOf(),
 
     @Column(nullable = false)
     var nacionalidad: String = "",
@@ -51,17 +69,10 @@ class Usuario(
     @Column(name = "plataforma")
     var plataformas: Set<Plataformas> = mutableSetOf(),
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "amigos",
-        joinColumns = [JoinColumn(name = "usuario_id")],
-        inverseJoinColumns = [JoinColumn(name = "amigo_id")]
-    )
-    var amigos: MutableList<Usuario> = mutableListOf(),
-
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinColumn(name = "usuario_id")
     var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf()
+
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
