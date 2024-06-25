@@ -1,6 +1,5 @@
 package com.gamerly.projectgamerly.dtos
 
-import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.domain.DiaHorarioPreferido
 import java.time.LocalDate
@@ -14,7 +13,6 @@ class UsuarioDetalleDTO() {
     lateinit var email: String
     lateinit var password: String
     lateinit var juegosPreferidos: List<String>
-    /** Se completa el atributo lista 'diasHorariosPreferidos' */
     lateinit var diasHorariosPreferidos: List<DiaHorarioPreferido>
     lateinit var plataformas: Set<String>
     lateinit var nacionalidad: String
@@ -33,7 +31,6 @@ class UsuarioDetalleDTO() {
         this.email = usuario.email
         this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos.map { it.nombre }
-        /** Se completa el atributo lista 'diasHorariosPreferidos' */
         this.diasHorariosPreferidos = usuario.diasHorariosPreferidos
         this.plataformas = usuario.plataformas.map { it.nombre }.toSet()
         this.nacionalidad = usuario.nacionalidad
