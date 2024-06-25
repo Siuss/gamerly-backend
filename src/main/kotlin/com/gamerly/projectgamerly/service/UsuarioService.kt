@@ -80,6 +80,7 @@ class UsuarioService {
             )
             email = user.email
             password = user.password
+            discord = user.discord
         }
         return userRepository.save(usuarioRegistro)
     }

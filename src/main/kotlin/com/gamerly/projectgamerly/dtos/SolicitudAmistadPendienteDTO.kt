@@ -8,6 +8,7 @@ class SolicitudAmistadPendienteDTO {
     var nombre: String = ""
     var foto: String = ""
     var mensaje: String = ""
+    var discord: String = ""
 
     companion object {
         fun from(solicitud: Solicitud): SolicitudAmistadPendienteDTO = SolicitudAmistadPendienteDTO().also { dto ->
@@ -16,6 +17,7 @@ class SolicitudAmistadPendienteDTO {
             dto.nombre = solicitud.usuarioReceptor.nombre
             dto.foto = solicitud.usuarioCreador.foto
             dto.mensaje = solicitud.mensaje
+            dto.discord = solicitud.usuarioCreador.discord
         }
     }
 }
