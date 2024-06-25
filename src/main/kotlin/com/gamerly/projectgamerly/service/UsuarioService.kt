@@ -33,15 +33,11 @@ class UsuarioService {
         return ReseniasDTO.fromResenias(usuarioEmisor, resenia)
     }
 
-    fun getUsuarioDetalle(idUsuario: Long): UsuarioDetalleDTO {
-       val usuario = usuarioRepository.findById(idUsuario).orElse(null)
-            ?: throw Exception("Usuario con el id solicitado no existe")
-        val primerResenia = if (usuario.resenias.isNotEmpty()) {
-            conversionReseniaDTO(usuario.resenias.first())
-        } else {
-            ReseniasDTO()
-        }
-        return UsuarioDetalleDTO(usuario, primerResenia)
+    fun getUsuario(idUsuario: Long): Usuario {
+        val usuario = usuarioRepository.findById(idUsuario).orElse(null)
+            ?: throw Exception("Usuario con el id solicitado no existe");
+
+        return usuario
     }
 
     fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
@@ -60,7 +56,7 @@ class UsuarioService {
         val usuarioCrendecial = Usuario().apply {
             email = credenciales.email
             password = credenciales.password
-            camposValidos()
+            //FIXME: camposValidos() cuando te intentas loguear con la contrasenia 123 esta validacion falla
         }
         val usuario = usuarioRepository.findByEmail(usuarioCrendecial.email)
         if (usuario.isPresent) {
@@ -87,27 +83,6 @@ class UsuarioService {
         }
         return userRepository.save(usuarioRegistro)
     }
-    @Transactional
-    fun agregarAmigo(idUsuario: Long, idAmigo: Long): AgregarAmigoDTO {
-        val usuario = usuarioRepository.findById(idUsuario)
-            .orElseThrow { Exception("Usuario con el id $idUsuario no encontrado") }
-        val amigo = usuarioRepository.findById(idAmigo)
-            .orElseThrow { Exception("Usuario con el id $idAmigo no encontrado") }
-
-        if (usuario.id == amigo.id) {
-            throw Exception("Un usuario no puede agregarse a sí mismo como amigo")
-        }
-
-        if (!usuario.amigos.contains(amigo)) {
-            usuario.amigos.add(amigo)
-            amigo.amigos.add(usuario)
-        }
-
-        usuarioRepository.save(usuario)
-        usuarioRepository.save(amigo)
-
-        return AgregarAmigoDTO(usuario.id, amigo.id)
-    }
 
     fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario)
@@ -128,7 +103,7 @@ class UsuarioService {
         }
 
         if (usuarioEditado.juegos != null) {
-            val juegos = usuarioEditado.juegos!!.map { juegoRepository.findJuegoByNombre(it) }.toSet()
+            val juegos = usuarioEditado.juegos!!.map { juegoRepository.findJuegoByNombre(it) }.toMutableSet()
             juegos.let { usuario.juegosPreferidos = it }
         }
 
@@ -165,8 +140,8 @@ class UsuarioService {
         return usuariosDTO
     }
 
-    fun deleteUsuario(idUsuario: Long): UsuarioDetalleDTO {
-        val usuarioABorrar = getUsuarioDetalle(idUsuario);
+    fun deleteUsuario(idUsuario: Long): Usuario {
+        val usuarioABorrar = getUsuario(idUsuario);
         usuarioRepository.deleteById(idUsuario);
         return usuarioABorrar;
     }
@@ -174,9 +149,15 @@ class UsuarioService {
     fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaDto> {
         val usuarios = usuarioRepository.findAllByjuegosPreferidos_Id(idJuego)
             if(usuarios.isEmpty()){
-                throw Exception("No existen jugadores que jueguen al juego con el id solicitado");
+                throw userNotFound("No existen jugadores que jueguen al juego con el id solicitado");
 
             }
         return usuarios.map{UsuarioBusquedaDto(it)}
+    }
+
+    fun getAmigosDelUsuario(idUsuario: Long): List<Usuario> {
+        val usuario = getUsuario(idUsuario)
+        println(usuario.amigos)
+        return usuario.amigos.map{getUsuario(it.id)}
     }
 }
