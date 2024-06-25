@@ -14,6 +14,8 @@ class Usuario(
     @Column(nullable = false)
     var nombre: String = "",
 
+    var discord: String = "",
+
     @Column(nullable = false)
     var foto: String = "",
 
