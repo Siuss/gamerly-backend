@@ -5,7 +5,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "dia_horario")
-data class DíasHorariosPreferidos(
+data class DiaHorarioPreferido(
 
     @Enumerated(EnumType.STRING)
      val diaDeLaSemana: DiaDeLaSemana,

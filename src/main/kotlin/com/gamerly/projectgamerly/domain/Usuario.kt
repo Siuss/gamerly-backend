@@ -5,6 +5,7 @@ import com.gamerly.projectgamerly.utils.InvalidEmail
 import com.gamerly.projectgamerly.utils.InvalidFields
 import com.gamerly.projectgamerly.utils.InvalidPassword
 import com.gamerly.projectgamerly.utils.PasswordMismatch
+import com.gamerly.projectgamerly.domain.DiaHorarioPreferido
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -56,7 +57,11 @@ class Usuario(
         joinColumns = [JoinColumn(name = "usuario_id")],
         inverseJoinColumns = [JoinColumn(name = "amigo_id")]
     )
-    var amigos: MutableList<Usuario> = mutableListOf()
+    var amigos: MutableList<Usuario> = mutableListOf(),
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "usuario_id")
+    var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf()
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,6 +109,10 @@ class Usuario(
         } else {
             throw PasswordMismatch("Las contraseñas no coinciden")
         }
+    }
+
+    fun addDiaHorarioPreferido(diaHorario: DiaHorarioPreferido) {
+        diasHorariosPreferidos.add(diaHorario)
     }
 }
 
