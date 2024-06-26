@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin(origins = ["*"])
 class ReseniaController {
     @Autowired
+    private lateinit var usuarioService: UsuarioService
+
+    @Autowired
     lateinit var reseniaService: ReseniaService
 
     @PostMapping("/crear-resenia/{idUsuarioEmisor}/{idUsuarioReceptor}")
@@ -19,6 +22,11 @@ class ReseniaController {
         return ReseniaCreacionDTO.fromResenia(reseniaService.crearResenia(reseniaBody, idUsuarioEmisor, idUsuarioReceptor))
     }
 
+    @GetMapping("/resenias/{idUsuario}")
+    fun getResenia(@PathVariable idUsuario : Long): List<ReseniasDTO> {
+        val resenias = reseniaService.getResenias(idUsuario)
+        return resenias.map{ReseniasDTO.fromResenias(usuarioService.getUsuario(it.idUsuarioEmisor), it)}
+    }
 }
 
 

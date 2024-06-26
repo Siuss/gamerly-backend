@@ -16,6 +16,8 @@ import java.time.LocalTime
 
 @Service
 class ReseniaService() {
+    @Autowired
+    private lateinit var usuarioService: UsuarioService
     @Autowired lateinit var reseniaRepository : ReviewRepository
     @Autowired lateinit var usuarioRepository : UserRepository
 
@@ -39,5 +41,10 @@ class ReseniaService() {
         usuarioReceptor.addResenia(nuevaResenia)
         usuarioRepository.save(usuarioReceptor)
         return reseniaRepository.save(nuevaResenia)
+    }
+
+    fun getResenias(idUsuario: Long): MutableSet<Resenia> {
+        val usuario = usuarioService.getUsuario(idUsuario)
+        return usuario.resenias
     }
 }

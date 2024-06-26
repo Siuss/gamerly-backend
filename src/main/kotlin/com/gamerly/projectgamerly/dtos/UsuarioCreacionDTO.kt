@@ -9,4 +9,5 @@ class UsuarioCreacionDTO {
     lateinit var email: String
     lateinit var discord: String
     lateinit var password: String
+    lateinit var nacionalidad: String
 }
