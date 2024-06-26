@@ -15,8 +15,6 @@ class Usuario(
     @Column(nullable = false)
     var nombre: String = "",
 
-    var discord: String = "",
-
     @Column(nullable = false)
     var foto: String = "",
 
@@ -50,7 +48,7 @@ class Usuario(
     @Column(name = "solicitud_recibida")
     var solicitudesRecibidas: MutableSet<Solicitud> = mutableSetOf(),
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
         name = "amigos",
         joinColumns = [JoinColumn(name = "usuario_id")],
@@ -73,9 +71,11 @@ class Usuario(
 
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinColumn(name = "usuario_id")
-    var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf()
+    var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf(),
 
-) {
+    @Column(nullable = false)
+    var  discord: String = ""
+) {//donde
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
@@ -93,7 +93,7 @@ class Usuario(
     }
 
     fun addResenia(resenia: Resenia)  {
-         resenias.add(resenia)
+        resenias.add(resenia)
     }
 
     fun camposValidos(): Boolean {

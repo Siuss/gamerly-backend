@@ -112,7 +112,7 @@ class UsuarioService {
             val plataformas = usuarioEditado.plataformas!!.map {
                 Plataformas.valueOf(it.uppercase().replace(" ", ""))
             }.toSet()
-            plataformas.let { usuario.plataformas = it }
+            plataformas.let { usuario.plataformas = it }//dale
         }
 
         val primerResenia = conversionReseniaDTO(usuario.resenias.first())
@@ -129,7 +129,7 @@ class UsuarioService {
         return reseniasDTO
     }
 
-
+//hice el pull
 
     fun getAllUsers(): List<UsuarioDetalleDTO> {
         val usuarios = usuarioRepository.findAll()

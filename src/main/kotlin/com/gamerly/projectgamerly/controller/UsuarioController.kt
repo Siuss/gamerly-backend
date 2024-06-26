@@ -17,12 +17,12 @@ class UsuarioController {
     fun crearUsuario(@RequestBody usuarioNuevo: UsuarioCreacionDTO) {
         usuarioService.crearUsuario(usuarioNuevo)
     }
-    
+
     @GetMapping("/buscar")
     fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto> {
         return usuarioService.busquedaAvanzada(inputBusqueda)
     }
-    
+
     @PostMapping("/login")
     fun loginUsuario(@RequestBody credenciales: CredencialesDTO): UsuarioLoginDTO {
         return usuarioService.login(credenciales)
@@ -31,9 +31,13 @@ class UsuarioController {
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioService.getUsuario(idUsuario)
-        val primerResenia = usuarioService.conversionReseniaDTO(usuario.resenias.first())
 
-        return UsuarioDetalleDTO(usuario, primerResenia)
+        val primerResenia = usuario.resenias.firstOrNull()
+        if(primerResenia != null) {
+            val primerReseniaDTO = usuarioService.conversionReseniaDTO(primerResenia)
+            return UsuarioDetalleDTO(usuario, primerReseniaDTO)
+        }
+        return UsuarioDetalleDTO(usuario, null)
     }
 
     @GetMapping("/comentarios/{idUsuario}")
