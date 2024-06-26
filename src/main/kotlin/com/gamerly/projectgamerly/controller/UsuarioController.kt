@@ -68,7 +68,7 @@ class UsuarioController {
     }
 
     @GetMapping("/jugadoresPorJuego/{idJuego}")
-    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaDto> {
+    fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaJuegosDTO> {
         return usuarioService.getUsuarioPorJuego(idJuego)
     }
 
