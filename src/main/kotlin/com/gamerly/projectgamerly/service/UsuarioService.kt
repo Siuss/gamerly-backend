@@ -147,13 +147,13 @@ class UsuarioService {
         return usuarioABorrar;
     }
 
-    fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaDto> {
+    fun getUsuarioPorJuego(idJuego: Long): List<UsuarioBusquedaJuegosDTO> {
         val usuarios = usuarioRepository.findAllByjuegosPreferidos_Id(idJuego)
             if(usuarios.isEmpty()){
                 throw userNotFound("No existen jugadores que jueguen al juego con el id solicitado");
 
             }
-        return usuarios.map{UsuarioBusquedaDto(it)}
+        return usuarios.map{UsuarioBusquedaJuegosDTO(it)}
     }
 
     fun getAmigosDelUsuario(idUsuario: Long): List<Usuario> {
