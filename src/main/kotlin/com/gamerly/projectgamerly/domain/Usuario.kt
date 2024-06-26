@@ -14,8 +14,6 @@ class Usuario(
     @Column(nullable = false)
     var nombre: String = "",
 
-    var discord: String = "",
-
     @Column(nullable = false)
     var foto: String = "",
 
@@ -49,7 +47,7 @@ class Usuario(
     @Column(name = "solicitud_recibida")
     var solicitudesRecibidas: MutableSet<Solicitud> = mutableSetOf(),
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
         name = "amigos",
         joinColumns = [JoinColumn(name = "usuario_id")],
@@ -65,10 +63,10 @@ class Usuario(
     @Column(nullable = false)
     var nacionalidad: String = "",
 
-    @ElementCollection(targetClass = Plataformas::class)
+    @ElementCollection
     @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "plataforma")
-    var plataformas: Set<Plataformas> = mutableSetOf(),
+    var plataformas: Set<String> = mutableSetOf()
 
 ) {
     @Id
@@ -78,7 +76,7 @@ class Usuario(
     var resenias: MutableSet<Resenia> = mutableSetOf()
 
     fun addResenia(resenia: Resenia)  {
-         resenias.add(resenia)
+        resenias.add(resenia)
     }
 
     fun camposValidos(): Boolean {
