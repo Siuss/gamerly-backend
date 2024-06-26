@@ -61,7 +61,7 @@ class Usuario(
     @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
-    var horariosPreferidos: MutableSet<HorariosFavoritos> = mutableSetOf(),
+    var horariosPreferidos: MutableList<HorariosFavoritos> = mutableListOf(),
 
     @Column(nullable = false)
     var nacionalidad: String = "",
@@ -81,6 +81,16 @@ class Usuario(
     val id: Long = 0
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     var resenias: MutableSet<Resenia> = mutableSetOf()
+
+    init {
+        generarDiasHorariosPreferidos()
+    }
+
+    private fun generarDiasHorariosPreferidos() {
+        diaFavorito.zip(horariosPreferidos).forEach { (dia, horario) ->
+            diasHorariosPreferidos.add(DiaHorarioPreferido(dia, horario))
+        }
+    }
 
     fun addResenia(resenia: Resenia)  {
          resenias.add(resenia)
@@ -122,10 +132,6 @@ class Usuario(
         } else {
             throw PasswordMismatch("Las contraseñas no coinciden")
         }
-    }
-
-    fun addDiaHorarioPreferido(diaHorario: DiaHorarioPreferido) {
-        diasHorariosPreferidos.add(diaHorario)
     }
 }
 
