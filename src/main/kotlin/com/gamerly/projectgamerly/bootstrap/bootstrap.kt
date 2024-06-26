@@ -271,7 +271,7 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableSetOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
+            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf(
                 Plataformas.WINDOWS,
@@ -294,7 +294,7 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableSetOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
+            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf(
                 Plataformas.WINDOWS
@@ -316,7 +316,7 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableSetOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
+            mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
             setOf(
                 Plataformas.NINTENDOSWITCH,
