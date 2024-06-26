@@ -5,6 +5,7 @@ import com.gamerly.projectgamerly.utils.InvalidEmail
 import com.gamerly.projectgamerly.utils.InvalidFields
 import com.gamerly.projectgamerly.utils.InvalidPassword
 import com.gamerly.projectgamerly.utils.PasswordMismatch
+import com.gamerly.projectgamerly.domain.DiaHorarioPreferido
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -58,7 +59,7 @@ class Usuario(
     @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "dia_horario_preferido")
-    var horariosPreferidos: MutableSet<HorariosFavoritos> = mutableSetOf(),
+    var horariosPreferidos: MutableList<HorariosFavoritos> = mutableListOf(),
 
     @Column(nullable = false)
     var nacionalidad: String = "",
@@ -68,12 +69,26 @@ class Usuario(
     @Column(name = "plataforma")
     var plataformas: Set<String> = mutableSetOf()
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "usuario_id")
+    var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf()
+
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     var resenias: MutableSet<Resenia> = mutableSetOf()
+
+    init {
+        generarDiasHorariosPreferidos()
+    }
+
+    private fun generarDiasHorariosPreferidos() {
+        diaFavorito.zip(horariosPreferidos).forEach { (dia, horario) ->
+            diasHorariosPreferidos.add(DiaHorarioPreferido(dia, horario))
+        }
+    }
 
     fun addResenia(resenia: Resenia)  {
         resenias.add(resenia)

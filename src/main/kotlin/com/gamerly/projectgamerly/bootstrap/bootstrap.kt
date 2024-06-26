@@ -269,7 +269,7 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableSetOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
+            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf("PC", "PS4")
         )
@@ -288,7 +288,7 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableSetOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
+            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf("PC")
         )
@@ -307,7 +307,7 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableSetOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
+            mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
             setOf("PC", "PS4", "XBOX", "Nintendo Switch")
         )
