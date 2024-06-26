@@ -271,7 +271,10 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
-            setOf("PC", "PS4")
+            setOf(
+                Plataformas.WINDOWS,
+                Plataformas.PLAYSTATION4
+            )
         )
         usuario2 = Usuario(
             "Usuario 2",
@@ -290,7 +293,9 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
-            setOf("PC")
+            setOf(
+                Plataformas.WINDOWS
+            )
         )
         usuario3 = Usuario(
             "Nicolas",
@@ -309,7 +314,12 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
-            setOf("PC", "PS4", "XBOX", "Nintendo Switch")
+            setOf(
+                Plataformas.WINDOWS,
+                Plataformas.PLAYSTATION4,
+                Plataformas.XBOXONE,
+                Plataformas.NINTENDOSWITCH
+            )
         )
         usuario1.amigos.add(usuario2)
         usuario2.amigos.add(usuario1)

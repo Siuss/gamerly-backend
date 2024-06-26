@@ -64,16 +64,18 @@ class Usuario(
     @Column(nullable = false)
     var nacionalidad: String = "",
 
-    @ElementCollection
+    @ElementCollection(targetClass = Plataformas::class)
     @CollectionTable(name = "usuario_plataformas", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "plataforma")
-    var plataformas: Set<String> = mutableSetOf()
+    var plataformas: Set<Plataformas> = mutableSetOf(),
 
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinColumn(name = "usuario_id")
-    var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf()
+    var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf(),
 
-) {
+    @Column(nullable = false)
+    var  discord: String = ""
+) {//donde
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
