@@ -14,7 +14,7 @@ class UsuarioDetalleDTO() {
     lateinit var password: String
     lateinit var juegosPreferidos: List<String>
 
-    lateinit var diasHorariosPreferidos: List<DiaHorarioPreferido>
+    lateinit var diasHorariosPreferidos: Set<DiaHorarioPreferido>
     lateinit var plataformas: Set<String>
     lateinit var nacionalidad: String
     var reputacion: Long = 0
@@ -38,7 +38,7 @@ class UsuarioDetalleDTO() {
         this.nacionalidad = usuario.nacionalidad
         this.amigos = emptyList()
 //        this.amigos = usuario.amigos.map { AgregarAmigoDTO(it.id, it.id) }
-        this.reputacion = usuario.resenias.map { it.puntaje }.average().toLong()
+        this.reputacion = usuario.calculoPuntaje()
         if(resenia != null){
             this.resenias = resenia
         }

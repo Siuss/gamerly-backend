@@ -18,31 +18,30 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         FROM Usuario u
         JOIN u.resenias r
         JOIN u.juegosPreferidos j
-        JOIN u.diaFavorito df
-        JOIN u.horariosPreferidos hf
-        GROUP BY u, j, df, hf
+        JOIN u.diasHorariosPreferidos dh
+        GROUP BY u, j, dh
         HAVING (AVG(r.puntaje) > :puntaje OR :puntaje IS NULL)
-        AND (df IN :dias OR :dias IS NULL)
-        AND (hf IN :horarios OR :horarios IS NULL)
+        AND (dh.diaDeLaSemana IN :dias OR :dias IS NULL)
+        AND (dh.horarioFavorito IN :horarios OR :horarios IS NULL)
     """)
     fun findUsuariosSegunFiltros(
         @Param("puntaje") puntaje: Long?,
         @Param("dias") dias: List<DiaDeLaSemana>?,
         @Param("horarios") horarios: List<HorariosFavoritos>?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas","diaFavorito","resenias", "amigos"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias", "amigos"])
     override fun findById(id: Long): Optional<Usuario>
 
-    @EntityGraph(attributePaths = ["juegosPreferidos", "horariosPreferidos", "plataformas", "diaFavorito", "resenias" ,"amigos"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias" ,"amigos"])
     override fun findAll(): MutableIterable<Usuario>
   
-    @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos"])
+    @EntityGraph(attributePaths = ["diasHorariosPreferidos", "plataformas", "juegosPreferidos"])
     fun findByEmailAndPassword(email: String, password: String): Optional<Usuario>
 
     @EntityGraph(attributePaths = ["plataformas", "juegosPreferidos"])
     fun findByEmail(email: String): Optional<Usuario>
 
-    @EntityGraph(attributePaths = ["horariosPreferidos","diaFavorito", "plataformas", "juegosPreferidos","resenias"])
+    @EntityGraph(attributePaths = ["diasHorariosPreferidos", "plataformas", "juegosPreferidos","resenias"])
     fun findAllByjuegosPreferidos_Id(juegoId: Long): List<Usuario>
 
 }

@@ -8,7 +8,7 @@ import jakarta.persistence.*
 data class DiaHorarioPreferido(
 
     @Enumerated(EnumType.STRING)
-     val diaDeLaSemana: DiaDeLaSemana,
+    val diaDeLaSemana: DiaDeLaSemana,
 
     @Enumerated(EnumType.STRING)
     val horarioFavorito: HorariosFavoritos,

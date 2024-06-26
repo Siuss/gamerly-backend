@@ -16,6 +16,6 @@ class UsuarioBusquedaDto() {
         this.nombre = usuario.nombre
         this.foto = usuario.foto
         this.email = usuario.email
-        this.puntaje = usuario.resenias.map { it.puntaje }.average().toLong()
+        this.puntaje = usuario.calculoPuntaje()
     }
 }

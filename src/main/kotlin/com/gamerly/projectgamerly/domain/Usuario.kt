@@ -21,12 +21,6 @@ class Usuario(
     @Column(name = "fecha_de_nacimiento", nullable = false)
     var fechaDeNacimiento: LocalDate = LocalDate.now(),
 
-    @ElementCollection(targetClass = DiaDeLaSemana::class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "usuario_dia_favorito", joinColumns = [JoinColumn(name = "usuario_id")])
-    @Enumerated(EnumType.STRING)
-    @Column(name = "dia_favorito")
-    var diaFavorito: MutableSet<DiaDeLaSemana> = mutableSetOf(),
-
     @Column(nullable = false, unique = true)
     var email: String = "",
 
@@ -56,11 +50,6 @@ class Usuario(
     )
     var amigos: MutableSet<Usuario> = mutableSetOf(),
 
-    @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
-    @Column(name = "dia_horario_preferido")
-    var horariosPreferidos: MutableList<HorariosFavoritos> = mutableListOf(),
-
     @Column(nullable = false)
     var nacionalidad: String = "",
 
@@ -69,20 +58,31 @@ class Usuario(
     @Column(name = "plataforma")
     var plataformas: Set<Plataformas> = mutableSetOf(),
 
+    /*@ElementCollection(targetClass = DiaDeLaSemana::class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "usuario_dia_favorito", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dia_favorito")
+    var diaFavorito: MutableSet<DiaDeLaSemana> = mutableSetOf(),
+
+    @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
+    @Column(name = "dia_horario_preferido")
+    var horariosPreferidos: MutableList<HorariosFavoritos> = mutableListOf(),*/
+
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-    @JoinColumn(name = "usuario_id")
-    var diasHorariosPreferidos: MutableList<DiaHorarioPreferido> = mutableListOf(),
+    @JoinColumn(name = "diasHorariosPreferidos")
+    var diasHorariosPreferidos: MutableSet<DiaHorarioPreferido> = mutableSetOf(),
 
     @Column(nullable = false)
-    var  discord: String = ""
-) {//donde
+    var discord: String = ""
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
-    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     var resenias: MutableSet<Resenia> = mutableSetOf()
 
-    init {
+    /*init {
         generarDiasHorariosPreferidos()
     }
 
@@ -90,10 +90,18 @@ class Usuario(
         diaFavorito.zip(horariosPreferidos).forEach { (dia, horario) ->
             diasHorariosPreferidos.add(DiaHorarioPreferido(dia, horario))
         }
-    }
+    }*/
 
     fun addResenia(resenia: Resenia)  {
         resenias.add(resenia)
+    }
+
+    fun calculoPuntaje(): Long {
+        if (resenias.isNotEmpty()) {
+            return resenias.map { it.puntaje }.average().toLong()
+        } else {
+            return 0
+        }
     }
 
     fun camposValidos(): Boolean {

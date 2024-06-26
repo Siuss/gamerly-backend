@@ -18,7 +18,7 @@ class UsuarioBusquedaJuegosDTO() {
         this.nombre = usuario.nombre
         this.foto = usuario.foto
         this.email = usuario.email
-        this.puntaje = usuario.resenias.map { it.puntaje }.average().toLong()
+        this.puntaje = usuario.calculoPuntaje()
         this.juegosPreferidos = usuario.juegosPreferidos.map { it.nombre }
         this.plataformas = usuario.plataformas.map { it.nombre }.toSet()
     }

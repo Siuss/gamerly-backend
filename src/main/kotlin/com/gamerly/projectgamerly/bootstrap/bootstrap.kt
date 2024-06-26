@@ -22,9 +22,15 @@ class Bootstrap: InitializingBean {
     lateinit var usuario1: Usuario
     lateinit var usuario2: Usuario
     lateinit var usuario3: Usuario
+    lateinit var usuario4: Usuario
+    lateinit var usuario5: Usuario
+    lateinit var usuario6: Usuario
     lateinit var resenia1: Resenia
     lateinit var resenia2: Resenia
     lateinit var resenia3: Resenia
+    lateinit var resenia4: Resenia
+    lateinit var resenia5: Resenia
+    lateinit var resenia6: Resenia
     var listaJuegos = mutableListOf<Juego>()
 
     override fun afterPropertiesSet() {
@@ -38,7 +44,6 @@ class Bootstrap: InitializingBean {
         this.juegos()
         this.usuario()
         this.resenias()
-        this.obtenerResenias()
     }
 
     fun juegos() {
@@ -258,10 +263,9 @@ class Bootstrap: InitializingBean {
         usuario1 = Usuario(
             "Nanami",
             "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
-            LocalDate.of(1999, 1, 1),
-            mutableSetOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
-            "test@gmail.com",
-            "usuarioFafa",
+            LocalDate.of(1999, 1, 5),
+            "test1@gmail.com",
+            "1234",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("League of Legends"),
                 juegoRepository.findJuegoByNombre("Terraria")
@@ -269,20 +273,26 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf(
                 Plataformas.WINDOWS,
                 Plataformas.PLAYSTATION4
-            )
+            ),
+            mutableSetOf(
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.TARDE),
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.DOMINGO, HorariosFavoritos.TARDE),
+                DiaHorarioPreferido(DiaDeLaSemana.DOMINGO, HorariosFavoritos.NOCHE)
+            ),
+            "Nanami09"
         )
+
         usuario2 = Usuario(
-            "Usuario 2",
+            "NicolasMar",
             "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
-            LocalDate.of(1999, 1, 1),
-            mutableSetOf(DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
+            LocalDate.of(2001, 7, 1),
             "test2@gmail.com",
-            "123",
+            "1234",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Stardew Valley"),
                 juegoRepository.findJuegoByNombre("Content Warning"),
@@ -291,19 +301,25 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableListOf(HorariosFavoritos.NOCHE, HorariosFavoritos.TARDE),
             "Argentina",
             setOf(
                 Plataformas.WINDOWS
-            )
+            ),
+            mutableSetOf(
+                DiaHorarioPreferido(DiaDeLaSemana.VIERNES, HorariosFavoritos.TARDE),
+                DiaHorarioPreferido(DiaDeLaSemana.VIERNES, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.TARDE),
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.NOCHE),
+            ),
+            "NicoMar"
         )
+
         usuario3 = Usuario(
-            "Nicolas",
+            "Cirr",
             "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png",
-            LocalDate.of(1999, 9, 1),
-            mutableSetOf(DiaDeLaSemana.VIERNES,DiaDeLaSemana.SABADO, DiaDeLaSemana.DOMINGO),
-            "test1@gmail.com",
-            "contrasenia",
+            LocalDate.of(1998, 9, 27),
+            "test3@gmail.com",
+            "1234",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
                 juegoRepository.findJuegoByNombre("WWE 2K23"),
@@ -312,18 +328,115 @@ class Bootstrap: InitializingBean {
             mutableSetOf(),
             mutableSetOf(),
             mutableSetOf(),
-            mutableListOf(HorariosFavoritos.MAÑANA, HorariosFavoritos.NOCHE),
             "Argentina",
             setOf(
                 Plataformas.WINDOWS,
                 Plataformas.PLAYSTATION4,
                 Plataformas.XBOXONE,
                 Plataformas.NINTENDOSWITCH
-            )
+            ),
+            mutableSetOf(
+                DiaHorarioPreferido(DiaDeLaSemana.VIERNES, HorariosFavoritos.MAÑANA),
+                DiaHorarioPreferido(DiaDeLaSemana.VIERNES, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.DOMINGO, HorariosFavoritos.NOCHE),
+            ),
+            "cirrformarotom"
         )
+
+        usuario4 = Usuario(
+            "Playxel",
+            "https://www.fieremostre.it/wp-content/uploads/2023/09/gaming-computer-table-video-game-room-with-neon-lighting-purple-color.jpg",
+            LocalDate.of(1985, 11, 2),
+            "test4@gmail.com",
+            "1234",
+            mutableSetOf(
+                juegoRepository.findJuegoByNombre("FIFA 23"),
+                juegoRepository.findJuegoByNombre("Astroneer"),
+                juegoRepository.findJuegoByNombre("Left 4 Dead 2")
+            ),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(),
+            "Argentina",
+            setOf(
+                Plataformas.WINDOWS,
+                Plataformas.XBOXONE,
+                Plataformas.XBOXSERIESX
+            ),
+            mutableSetOf(
+                DiaHorarioPreferido(DiaDeLaSemana.LUNES, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.MARTES, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.MIERCOLES, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.JUEVES, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.VIERNES, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.NOCHE),
+                DiaHorarioPreferido(DiaDeLaSemana.DOMINGO, HorariosFavoritos.NOCHE),
+            ),
+            "PlayExEl"
+        )
+
+        usuario5 = Usuario(
+            "ElVendeHumo",
+            "https://media.wired.com/photos/593277b144db296121d6b56f/master/w_1600%2Cc_limit/conorclarke_03.jpg",
+            LocalDate.of(1996, 3, 29),
+            "test5@gmail.com",
+            "1234",
+            mutableSetOf(
+                juegoRepository.findJuegoByNombre("Counter-Strike: Global Offensive"),
+                juegoRepository.findJuegoByNombre("Rocket League"),
+                juegoRepository.findJuegoByNombre("Terraria"),
+                juegoRepository.findJuegoByNombre("Among Us")
+            ),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(),
+            "Argentina",
+            setOf(
+                Plataformas.LINUX,
+                Plataformas.ANDROID
+            ),
+            mutableSetOf(
+                DiaHorarioPreferido(DiaDeLaSemana.LUNES, HorariosFavoritos.MAÑANA),
+                DiaHorarioPreferido(DiaDeLaSemana.MARTES, HorariosFavoritos.MAÑANA),
+                DiaHorarioPreferido(DiaDeLaSemana.MIERCOLES, HorariosFavoritos.TARDE)
+            ),
+            "elvendehumo123"
+        )
+
+        usuario6 = Usuario(
+            "omnimrgus",
+            "https://i.ytimg.com/vi/Mc-bUk5z5p4/mqdefault.jpg",
+            LocalDate.of(2005, 5, 15),
+            "test6@gmail.com",
+            "1234",
+            mutableSetOf(
+                juegoRepository.findJuegoByNombre("Content Warning"),
+                juegoRepository.findJuegoByNombre("Deep Rock Galactic"),
+                juegoRepository.findJuegoByNombre("Among Us")
+            ),
+            mutableSetOf(),
+            mutableSetOf(),
+            mutableSetOf(),
+            "Argentina",
+            setOf(
+                Plataformas.WINDOWS
+            ),
+            mutableSetOf(
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.MAÑANA),
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.TARDE),
+                DiaHorarioPreferido(DiaDeLaSemana.SABADO, HorariosFavoritos.NOCHE)
+            ),
+            "noonecansaveu"
+        )
+
         usuario1.amigos.add(usuario2)
         usuario2.amigos.add(usuario1)
-        usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3))
+        usuario3.amigos.add(usuario4)
+        usuario3.amigos.add(usuario5)
+        usuario4.amigos.add(usuario3)
+        usuario5.amigos.add(usuario3)
+        usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6))
     }
 
 
@@ -332,6 +445,9 @@ class Bootstrap: InitializingBean {
         val user1= usuarioRepository.findById(usuario1.id).get()
         val user2= usuarioRepository.findById(usuario2.id).get()
         val user3= usuarioRepository.findById(usuario3.id).get()
+        val user4= usuarioRepository.findById(usuario4.id).get()
+        val user5= usuarioRepository.findById(usuario5.id).get()
+        val user6= usuarioRepository.findById(usuario6.id).get()
 
         resenia1 = Resenia(
             usuario2.id,
@@ -340,46 +456,54 @@ class Bootstrap: InitializingBean {
             LocalDate.of(2024, 2, 1),
             LocalTime.of(12,30)
         )
-        //user1.addResenia(resenia1)
+        user1.addResenia(resenia1)
 
         resenia2 = Resenia(
             usuario3.id,
-            1,
-            "mereces perma por malardo",
+            3,
+            "Ni me gustó ni me disgustó",
             LocalDate.of(2024, 4, 1),
             LocalTime.of(18,30)
         )
         user2.addResenia(resenia2)
 
-        resenia3= Resenia(
+        resenia3 = Resenia(
             usuario1.id,
             5,
-            "Amigo pasame la receta para ganar en el fifa",
+            "Pasame la receta para ganar en el fifa",
             LocalDate.of(2024, 2, 21),
             LocalTime.of(22,30)
         )
         user3.addResenia(resenia3)
 
-        reseniaRepository.saveAll(listOf(resenia2, resenia3))
-        //reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3))
-        usuarioRepository.saveAll(listOf(user1, user2, user3))
-    }
+        resenia4 = Resenia(
+            usuario6.id,
+            2,
+            "Esta mal pero no tan mal",
+            LocalDate.of(2024, 1, 3),
+            LocalTime.of(12,30)
+        )
+        user4.addResenia(resenia1)
 
-    fun obtenerResenias() {
-        /*
-        usuario1.also {
-             it.resenias = mutableSetOf(resenia1)
-             usuarioRepository.save(it)
-         }
+        resenia5 = Resenia(
+            usuario4.id,
+            4,
+            "Me cayo bien",
+            LocalDate.of(2024, 5, 7),
+            LocalTime.of(18,30)
+        )
+        user5.addResenia(resenia2)
 
-         */
-        usuario2.also {
-            it.resenias = mutableSetOf(resenia2)
-            usuarioRepository.save(it)
-        }
-        usuario3.also {
-            it.resenias = mutableSetOf(resenia3)
-            usuarioRepository.save(it)
-        }
+        resenia6 = Resenia(
+            usuario4.id,
+            1,
+            "Juega para atras, muy toxico",
+            LocalDate.of(2024, 2, 17),
+            LocalTime.of(22,30)
+        )
+        user6.addResenia(resenia3)
+
+        reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3, resenia4, resenia5, resenia6))
+        usuarioRepository.saveAll(listOf(user1, user2, user3, user4, user5, user6))
     }
 }
