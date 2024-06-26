@@ -77,4 +77,10 @@ class UsuarioController {
     fun getAmigosDelUsuario(@PathVariable idUsuario: Long): List<AmigoDTO> {
         return usuarioService.getAmigosDelUsuario(idUsuario).map{AmigoDTO.from(it)}
     }
+
+    // Borrar un amigo del usuario
+    @PostMapping("/{idUsuario}/amigos/{idAmigo}")
+    fun deleteAmigoDelUsuario(@PathVariable idUsuario: Long, @PathVariable idAmigo: Long):AmigoDTO {
+        return AmigoDTO.from(usuarioService.deleteAmigoDelUsuario(idUsuario, idAmigo))
+    }
 }

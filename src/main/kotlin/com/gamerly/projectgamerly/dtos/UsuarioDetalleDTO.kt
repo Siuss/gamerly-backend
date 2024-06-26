@@ -8,6 +8,7 @@ import java.time.Period
 class UsuarioDetalleDTO() {
     var id : Long = 0
     lateinit var nombre: String
+    lateinit var discord: String
     lateinit var foto: String
     var edad: Int = 0
     lateinit var email: String
@@ -27,6 +28,7 @@ class UsuarioDetalleDTO() {
     ) : this() {
         this.id = usuario.id
         this.nombre = usuario.nombre
+        this.discord = usuario.discord
         this.edad = Period.between(usuario.fechaDeNacimiento, LocalDate.now()).years
         this.foto = usuario.foto
         this.email = usuario.email

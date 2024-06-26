@@ -158,7 +158,20 @@ class UsuarioService {
 
     fun getAmigosDelUsuario(idUsuario: Long): List<Usuario> {
         val usuario = getUsuario(idUsuario)
-        println(usuario.amigos)
+
         return usuario.amigos.map{getUsuario(it.id)}
+    }
+
+    fun deleteAmigoDelUsuario(idUsuario: Long, idAmigo: Long): Usuario{
+        val usuario = getUsuario(idUsuario)
+        val amigo = getUsuario(idAmigo)
+
+        usuario.amigos = usuario.amigos.filter{ it.id != amigo.id }.toMutableSet()
+        amigo.amigos = usuario.amigos.filter{ it.id != usuario.id }.toMutableSet()
+
+        usuarioRepository.save(usuario)
+        usuarioRepository.save(amigo)
+
+        return amigo
     }
 }
