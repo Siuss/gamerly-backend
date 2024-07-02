@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @CrossOrigin(origins = ["*"])
@@ -27,6 +28,16 @@ class ReseniaController {
         val resenias = reseniaService.getResenias(idUsuario)
         return resenias.map{ReseniasDTO.fromResenias(usuarioService.getUsuario(it.idUsuarioEmisor), it)}
     }
+
+    @GetMapping("/{idUsuarioReceptor}/tiene-resenia-de/{idUsuarioCreador}")
+    fun getResenia(@PathVariable idUsuarioReceptor : Long, @PathVariable idUsuarioCreador : Long): Boolean {
+        if(reseniaService.tieneReseniaDe(idUsuarioReceptor, idUsuarioCreador)){
+            return true
+        }else {
+            return false
+        }
+    }
+
 }
 
 

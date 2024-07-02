@@ -47,4 +47,9 @@ class ReseniaService() {
         val usuario = usuarioService.getUsuario(idUsuario)
         return usuario.resenias
     }
+
+    fun tieneReseniaDe(idUsuarioReceptor: Long, idUsuarioCreador: Long): Boolean {
+        val usuarioReceptor = usuarioService.getUsuario(idUsuarioReceptor)
+        return usuarioReceptor.resenias.any{it.idUsuarioEmisor == idUsuarioCreador}
+    }
 }
