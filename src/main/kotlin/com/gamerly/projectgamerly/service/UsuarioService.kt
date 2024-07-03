@@ -56,7 +56,7 @@ class UsuarioService {
         val usuarioCrendecial = Usuario().apply {
             email = credenciales.email
             password = credenciales.password
-            //FIXME: camposValidos() cuando te intentas loguear con la contrasenia 123 esta validacion falla
+            tokenNotificaciones = credenciales.tokenNotificaciones
         }
         val usuario = usuarioRepository.findByEmail(usuarioCrendecial.email)
         if (usuario.isPresent) {

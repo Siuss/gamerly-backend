@@ -27,6 +27,9 @@ class Usuario(
     @Column(nullable = false)
     var password: String = "",
 
+    @Column(nullable = false)
+    var tokenNotificaciones: String = "",
+
     @ManyToMany
     @CollectionTable(name = "usuario_juegos_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
     @Column(name = "juego_preferido")

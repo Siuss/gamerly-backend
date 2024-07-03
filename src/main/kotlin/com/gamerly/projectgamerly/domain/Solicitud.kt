@@ -7,9 +7,9 @@ class Solicitud(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    @OneToOne
+    @ManyToOne()
     var usuarioCreador: Usuario,
-    @OneToOne
+    @ManyToOne()
     var usuarioReceptor: Usuario,
     @Column
     var mensaje: String

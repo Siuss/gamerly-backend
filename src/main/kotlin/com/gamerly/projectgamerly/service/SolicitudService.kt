@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.HorariosFavoritos
+import com.gamerly.projectgamerly.domain.Notificacion
 import com.gamerly.projectgamerly.domain.Solicitud
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-
+import io.github.jav.exposerversdk.examples.ExampleExpoServer
 @Service
 class SolicitudService {
+    @Autowired
+    private lateinit var notificacionService: NotificacionService
+
     @Autowired
     private lateinit var solicitudRepository: SolicitudRepository
 
@@ -48,6 +52,10 @@ class SolicitudService {
 
         usuarioAmigo.solicitudesRecibidas.add(nuevaSolicitud)
         usuarioRepository.save(usuarioAmigo)
+
+        // Se envia notificacion de expo
+        val notificacion = Notificacion(usuarioAmigo.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado una solicitud de amistad", "$mensaje\nDiscrod: ${usuarioCreador.discord}")
+        notificacionService.enviarNotificacion(notificacion)
     }
 
     fun tieneSolicitudDeAmistadPendiente(idCreador: Long, idAmigo: Long): Solicitud {

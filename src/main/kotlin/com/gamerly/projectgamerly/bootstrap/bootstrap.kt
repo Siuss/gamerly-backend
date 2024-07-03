@@ -265,7 +265,8 @@ class Bootstrap: InitializingBean {
             "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
             LocalDate.of(1999, 1, 5),
             "test1@gmail.com",
-            "1234",
+            "123",
+            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("League of Legends"),
                 juegoRepository.findJuegoByNombre("Terraria")
@@ -292,7 +293,8 @@ class Bootstrap: InitializingBean {
             "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
             LocalDate.of(2001, 7, 1),
             "test2@gmail.com",
-            "1234",
+            "123",
+            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Stardew Valley"),
                 juegoRepository.findJuegoByNombre("Content Warning"),
@@ -319,7 +321,8 @@ class Bootstrap: InitializingBean {
             "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png",
             LocalDate.of(1998, 9, 27),
             "test3@gmail.com",
-            "1234",
+            "123",
+            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
                 juegoRepository.findJuegoByNombre("WWE 2K23"),
@@ -349,7 +352,8 @@ class Bootstrap: InitializingBean {
             "https://www.fieremostre.it/wp-content/uploads/2023/09/gaming-computer-table-video-game-room-with-neon-lighting-purple-color.jpg",
             LocalDate.of(1985, 11, 2),
             "test4@gmail.com",
-            "1234",
+            "123",
+            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
                 juegoRepository.findJuegoByNombre("Astroneer"),
@@ -381,7 +385,8 @@ class Bootstrap: InitializingBean {
             "https://media.wired.com/photos/593277b144db296121d6b56f/master/w_1600%2Cc_limit/conorclarke_03.jpg",
             LocalDate.of(1996, 3, 29),
             "test5@gmail.com",
-            "1234",
+            "123",
+            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Counter-Strike: Global Offensive"),
                 juegoRepository.findJuegoByNombre("Rocket League"),
@@ -409,7 +414,8 @@ class Bootstrap: InitializingBean {
             "https://i.ytimg.com/vi/Mc-bUk5z5p4/mqdefault.jpg",
             LocalDate.of(2005, 5, 15),
             "test6@gmail.com",
-            "1234",
+            "123",
+            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Content Warning"),
                 juegoRepository.findJuegoByNombre("Deep Rock Galactic"),
