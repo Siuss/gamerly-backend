@@ -62,6 +62,8 @@ class UsuarioService {
         if (usuario.isPresent) {
             val usuarioEncontrado = usuario.get()
             if (usuarioEncontrado.password == usuarioCrendecial.password) {
+                usuarioEncontrado.tokenNotificaciones = credenciales.tokenNotificaciones
+                usuarioRepository.save(usuarioEncontrado)
                 return UsuarioLoginDTO.from(usuarioEncontrado);
             } else {
                 throw PasswordMismatch("Contraseña incorrecta")
