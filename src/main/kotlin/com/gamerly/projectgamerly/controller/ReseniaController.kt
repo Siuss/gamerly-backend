@@ -23,8 +23,14 @@ class ReseniaController {
         return ReseniaCreacionDTO.fromResenia(reseniaService.crearResenia(reseniaBody, idUsuarioEmisor, idUsuarioReceptor))
     }
 
+    @GetMapping("/resenias-pendientes/{idUsuario}")
+    fun getReseniasPendientes(@PathVariable idUsuario : Long): List<ReseniaPendienteDTO> {
+        val resenias = reseniaService.getReseniasPendientes(idUsuario)
+        return resenias.map{ReseniaPendienteDTO.fromResenia(usuarioService.getUsuario(it.idUsuarioEmisor), it)}
+    }
+
     @GetMapping("/resenias/{idUsuario}")
-    fun getResenia(@PathVariable idUsuario : Long): List<ReseniasDTO> {
+    fun getResenias(@PathVariable idUsuario : Long): List<ReseniasDTO> {
         val resenias = reseniaService.getResenias(idUsuario)
         return resenias.map{ReseniasDTO.fromResenias(usuarioService.getUsuario(it.idUsuarioEmisor), it)}
     }

@@ -42,7 +42,7 @@ class ReseniaService() {
             LocalDate.now(),
             LocalTime.now()
         )
-        usuarioReceptor.addResenia(nuevaResenia)
+        usuarioReceptor.addReseniaPendiente(nuevaResenia)
         usuarioRepository.save(usuarioReceptor)
 
         val notificacion = Notificacion(usuarioReceptor.tokenNotificaciones, "${usuarioCreador.nombre} desea dejarte una reseña", "Es cierto que jugaron juntos?")
@@ -53,6 +53,12 @@ class ReseniaService() {
     fun getResenias(idUsuario: Long): MutableSet<Resenia> {
         val usuario = usuarioService.getUsuario(idUsuario)
         return usuario.resenias
+    }
+
+    fun getReseniasPendientes(idUsuario: Long): MutableSet<Resenia> {
+        val usuario = usuarioService.getUsuario(idUsuario)
+        println(usuario)
+        return usuario.reseniasPendientes
     }
 
     fun tieneReseniaDe(idUsuarioReceptor: Long, idUsuarioCreador: Long): Boolean {

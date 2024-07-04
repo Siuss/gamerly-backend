@@ -82,8 +82,12 @@ class Usuario(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     var resenias: MutableSet<Resenia> = mutableSetOf()
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    var reseniasPendientes: MutableSet<Resenia> = mutableSetOf()
 
     /*init {
         generarDiasHorariosPreferidos()
@@ -96,6 +100,10 @@ class Usuario(
     }*/
 
     fun addResenia(resenia: Resenia)  {
+        resenias.add(resenia)
+    }
+
+    fun addReseniaPendiente(resenia: Resenia)  {
         resenias.add(resenia)
     }
 
