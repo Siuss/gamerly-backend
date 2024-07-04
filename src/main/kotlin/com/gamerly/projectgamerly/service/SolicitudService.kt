@@ -54,7 +54,7 @@ class SolicitudService {
         usuarioRepository.save(usuarioAmigo)
 
         // Se envia notificacion de expo
-        val notificacion = Notificacion(usuarioAmigo.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado una solicitud de amistad", "$mensaje\nDiscrod: ${usuarioCreador.discord}")
+        val notificacion = Notificacion(usuarioAmigo.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado una solicitud de amistad", "$mensaje\nDiscord: ${usuarioCreador.discord}")
         notificacionService.enviarNotificacion(notificacion)
     }
 

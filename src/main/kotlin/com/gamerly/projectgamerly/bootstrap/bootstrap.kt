@@ -266,7 +266,7 @@ class Bootstrap: InitializingBean {
             LocalDate.of(1999, 1, 5),
             "test1@gmail.com",
             "123",
-            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
+            "ExponentPushToken[V7baJvCPhSPqloakKk6M6o]",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("League of Legends"),
                 juegoRepository.findJuegoByNombre("Terraria")
