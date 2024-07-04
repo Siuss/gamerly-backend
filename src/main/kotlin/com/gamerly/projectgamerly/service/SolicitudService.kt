@@ -54,7 +54,7 @@ class SolicitudService {
         usuarioRepository.save(usuarioAmigo)
 
         // Se envia notificacion de expo
-        val notificacion = Notificacion(usuarioAmigo.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado una solicitud de amistad", "$mensaje\nDiscord: ${usuarioCreador.discord}")
+        val notificacion = Notificacion(usuarioAmigo.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado una solicitud de amistad", "$mensaje\n\nDiscord: ${usuarioCreador.discord}")
         notificacionService.enviarNotificacion(notificacion)
     }
 
@@ -96,7 +96,8 @@ class SolicitudService {
 
         solicitudRepository.delete(solicitudEncontrada)
 
-        // TODO: Mandar notificaciones push a los usuarios
+        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuarioCreador.nombre} ha aceptado tu solicitud de amistad")
+        notificacionService.enviarNotificacion(notificacion)
 
         return solicitudEncontrada
     }
@@ -122,7 +123,8 @@ class SolicitudService {
 
         solicitudRepository.delete(solicitudEncontrada)
 
-        // TODO: Mandar notificaciones push a los usuarios
+        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuarioCreador.nombre} ha rechazado tu solicitud de amistad")
+        notificacionService.enviarNotificacion(notificacion)
 
         return solicitudEncontrada
     }

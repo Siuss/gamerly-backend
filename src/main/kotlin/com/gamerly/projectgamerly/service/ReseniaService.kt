@@ -1,5 +1,6 @@
 package com.gamerly.projectgamerly.service
 
+import com.gamerly.projectgamerly.domain.Notificacion
 import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
@@ -20,12 +21,15 @@ class ReseniaService() {
     private lateinit var usuarioService: UsuarioService
     @Autowired lateinit var reseniaRepository : ReviewRepository
     @Autowired lateinit var usuarioRepository : UserRepository
+    @Autowired lateinit var notificacionService : NotificacionService
+
 
     @Transactional()
     fun crearResenia(reseniaBody: ReseniaCreacionDTO, idUsuarioEmisor : Long, idUsuarioReceptor : Long): Resenia {
         if (idUsuarioReceptor == idUsuarioEmisor) {
             throw ReseniaException("No se puede dejar una reseña a si mismo")
         }
+        val usuarioCreador = usuarioRepository.findById(idUsuarioEmisor).get()
         val usuarioReceptor = usuarioRepository.findById(idUsuarioReceptor).get()
         val existingResenia = usuarioReceptor.resenias.find { it.idUsuarioEmisor == idUsuarioEmisor }
         if (existingResenia != null) {
@@ -40,6 +44,9 @@ class ReseniaService() {
         )
         usuarioReceptor.addResenia(nuevaResenia)
         usuarioRepository.save(usuarioReceptor)
+
+        val notificacion = Notificacion(usuarioReceptor.tokenNotificaciones, "${usuarioCreador.nombre} desea dejarte una reseña", "Es cierto que jugaron juntos?")
+        notificacionService.enviarNotificacion(notificacion)
         return reseniaRepository.save(nuevaResenia)
     }
 

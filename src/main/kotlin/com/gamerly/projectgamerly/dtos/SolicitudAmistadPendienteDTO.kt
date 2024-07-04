@@ -14,7 +14,7 @@ class SolicitudAmistadPendienteDTO {
         fun from(solicitud: Solicitud): SolicitudAmistadPendienteDTO = SolicitudAmistadPendienteDTO().also { dto ->
             dto.idSolicitud = solicitud.id
             dto.idUsuario = solicitud.usuarioCreador.id
-            dto.nombre = solicitud.usuarioReceptor.nombre
+            dto.nombre = solicitud.usuarioCreador.nombre
             dto.foto = solicitud.usuarioCreador.foto
             dto.mensaje = solicitud.mensaje
             dto.discord = solicitud.usuarioCreador.discord
