@@ -119,8 +119,8 @@ class UsuarioService {
             plataformas.let { usuario.plataformas = it }//dale
         }
 
-        val primerResenia = conversionReseniaDTO(usuario.resenias.first())
-        return UsuarioDetalleDTO(usuarioRepository.save(usuario), primerResenia)
+        val reseniasDto = usuario.resenias.map{conversionReseniaDTO(it)}
+        return UsuarioDetalleDTO(usuarioRepository.save(usuario), reseniasDto)
     }
 
 
@@ -139,8 +139,8 @@ class UsuarioService {
         val usuarios = usuarioRepository.findAll()
         val usuariosDTO = mutableListOf<UsuarioDetalleDTO>()
         usuarios.forEach {
-            val primerResenia = conversionReseniaDTO(it.resenias.first())
-            usuariosDTO.add(UsuarioDetalleDTO(it, primerResenia))
+            val reseniasDto = it.resenias.map{conversionReseniaDTO(it)}
+            usuariosDTO.add(UsuarioDetalleDTO(it, reseniasDto))
         }
         return usuariosDTO
     }

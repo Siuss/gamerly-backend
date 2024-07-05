@@ -22,6 +22,11 @@ class NotificacionService {
         val notificacionExpo = ExpoPushMessage()
         notificacionExpo.addTo(notificacion.tokenReceptor)
         notificacionExpo.title = notificacion.titulo
+        notificacionExpo.subtitle = notificacion.titulo
+
+        if(notificacion.data !== null){
+            notificacionExpo.data = notificacion.data
+        }
         
         if(notificacion.mensaje != null) {
             notificacionExpo.body = notificacion.mensaje

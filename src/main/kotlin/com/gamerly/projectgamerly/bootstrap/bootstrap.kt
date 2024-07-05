@@ -31,6 +31,7 @@ class Bootstrap: InitializingBean {
     lateinit var resenia4: Resenia
     lateinit var resenia5: Resenia
     lateinit var resenia6: Resenia
+    lateinit var resenia7: Resenia
     var listaJuegos = mutableListOf<Juego>()
 
     override fun afterPropertiesSet() {
@@ -509,7 +510,16 @@ class Bootstrap: InitializingBean {
         )
         user6.addResenia(resenia3)
 
-        reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3, resenia4, resenia5, resenia6))
+        resenia7 = Resenia(
+            usuario4.id,
+            5,
+            "Me encanto jugar con el, siempre fue muy paciente y educado",
+            LocalDate.of(2024, 2, 17),
+            LocalTime.of(22,30)
+        )
+        user3.addReseniaPendiente(resenia7)
+
+        reseniaRepository.saveAll(listOf(resenia1, resenia2, resenia3, resenia4, resenia5, resenia6, resenia7))
         usuarioRepository.saveAll(listOf(user1, user2, user3, user4, user5, user6))
     }
 }

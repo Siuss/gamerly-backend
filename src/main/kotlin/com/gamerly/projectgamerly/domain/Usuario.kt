@@ -104,7 +104,11 @@ class Usuario(
     }
 
     fun addReseniaPendiente(resenia: Resenia)  {
-        resenias.add(resenia)
+        reseniasPendientes.add(resenia)
+    }
+
+    fun removeReseniaPendienteById(reseniaId: Long)  {
+        reseniasPendientes.removeIf{it.id == reseniaId}
     }
 
     fun calculoPuntaje(): Long {

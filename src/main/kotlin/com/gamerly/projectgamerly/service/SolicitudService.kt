@@ -9,7 +9,9 @@ import com.gamerly.projectgamerly.repos.SolicitudRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import com.gamerly.projectgamerly.utilities.userNotFound
+import com.gamerly.projectgamerly.utils.Ruta
 import com.gamerly.projectgamerly.utils.SolicitudNotFound
+import com.gamerly.projectgamerly.utils.TipoNotificacion
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -53,8 +55,12 @@ class SolicitudService {
         usuarioAmigo.solicitudesRecibidas.add(nuevaSolicitud)
         usuarioRepository.save(usuarioAmigo)
 
-        // Se envia notificacion de expo
-        val notificacion = Notificacion(usuarioAmigo.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado una solicitud de amistad", "$mensaje\n\nDiscord: ${usuarioCreador.discord}")
+        val dataNotificacion: MutableMap<String, Any> = mutableMapOf("ruta" to Ruta.SOLICITUDES_PENDIENTES, "tipo" to TipoNotificacion.NUEVA_SOLICITUD_AMISTAD)
+
+        val notificacion = Notificacion(usuarioAmigo.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado una solicitud de amistad", "$mensaje\n\nDiscord: ${usuarioCreador.discord}").apply {
+            data = dataNotificacion
+        }
+
         notificacionService.enviarNotificacion(notificacion)
     }
 
@@ -96,7 +102,11 @@ class SolicitudService {
 
         solicitudRepository.delete(solicitudEncontrada)
 
-        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuarioCreador.nombre} ha aceptado tu solicitud de amistad")
+        val dataNotificacion: MutableMap<String, Any> = mutableMapOf("ruta" to Ruta.AMIGOS, "tipo" to TipoNotificacion.SOLICITUD_AMISTAD_ACEPTADA)
+
+        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuarioReceptor.nombre} ha aceptado tu solicitud de amistad").apply{
+            data = dataNotificacion
+        }
         notificacionService.enviarNotificacion(notificacion)
 
         return solicitudEncontrada
@@ -123,7 +133,11 @@ class SolicitudService {
 
         solicitudRepository.delete(solicitudEncontrada)
 
-        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuarioCreador.nombre} ha rechazado tu solicitud de amistad")
+        val dataNotificacion: MutableMap<String, Any> = mutableMapOf("ruta" to Ruta.AMIGOS, "tipo" to TipoNotificacion.SOLICITUD_AMISTAD_RECHAZADA)
+
+        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuarioCreador.nombre} ha rechazado tu solicitud de amistad").apply {
+            data = dataNotificacion
+        }
         notificacionService.enviarNotificacion(notificacion)
 
         return solicitudEncontrada

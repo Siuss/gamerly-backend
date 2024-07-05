@@ -2,16 +2,16 @@ package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Notificacion
 import com.gamerly.projectgamerly.domain.Resenia
-import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.ReviewRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.utilities.ReseniaException
+import com.gamerly.projectgamerly.utils.ReseniaPendienteNotFound
+import com.gamerly.projectgamerly.utils.Ruta
+import com.gamerly.projectgamerly.utils.TipoNotificacion
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -45,7 +45,10 @@ class ReseniaService() {
         usuarioReceptor.addReseniaPendiente(nuevaResenia)
         usuarioRepository.save(usuarioReceptor)
 
-        val notificacion = Notificacion(usuarioReceptor.tokenNotificaciones, "${usuarioCreador.nombre} desea dejarte una reseña", "Es cierto que jugaron juntos?")
+        val dataNotificacion: MutableMap<String, Any> = mutableMapOf("ruta" to Ruta.RESENIAS_PENDIENTES, "tipo" to TipoNotificacion.NUEVA_SOLICITUD_AMISTAD)
+        val notificacion = Notificacion(usuarioReceptor.tokenNotificaciones, "${usuarioCreador.nombre} desea dejarte una reseña", "Es cierto que jugaron juntos?").apply{
+            data = dataNotificacion
+        }
         notificacionService.enviarNotificacion(notificacion)
         return reseniaRepository.save(nuevaResenia)
     }
@@ -64,5 +67,51 @@ class ReseniaService() {
     fun tieneReseniaDe(idUsuarioReceptor: Long, idUsuarioCreador: Long): Boolean {
         val usuarioReceptor = usuarioService.getUsuario(idUsuarioReceptor)
         return usuarioReceptor.resenias.any{it.idUsuarioEmisor == idUsuarioCreador}
+    }
+
+    @Transactional
+    fun aceptarReseniaPendiente(idResenia: Long, idUsuarioLogueado: Long): Resenia{
+        val usuario = usuarioService.getUsuario(idUsuarioLogueado)
+        val reseniaPendiente = usuario.reseniasPendientes.find{resenia -> resenia.id == idResenia}
+
+        if(reseniaPendiente == null){
+            throw ReseniaPendienteNotFound("Reseña con el id solicitado no existe")
+        }
+
+        val resenia = reseniaRepository.findById(idResenia)
+
+        usuario.removeReseniaPendienteById(idResenia)
+        usuario.addResenia(resenia.get())
+
+        val usuarioCreador = usuarioService.getUsuario(reseniaPendiente.idUsuarioEmisor)
+
+        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuario.nombre} ha aceptado tu reseña")
+        notificacionService.enviarNotificacion(notificacion)
+
+        return resenia.get()
+    }
+
+    @Transactional
+    fun rechazarReseniaPendiente(idResenia: Long, idUsuarioLogueado: Long): Resenia{
+        val usuario = usuarioService.getUsuario(idUsuarioLogueado)
+        val reseniaPendiente = usuario.reseniasPendientes.find{resenia -> resenia.id == idResenia}
+
+        if(reseniaPendiente == null){
+            throw ReseniaPendienteNotFound("Reseña con el id solicitado no existe")
+        }
+
+        val resenia = reseniaRepository.findById(idResenia)
+        usuario.removeReseniaPendienteById(idResenia)
+
+        val usuarioCreador = usuarioService.getUsuario(reseniaPendiente.idUsuarioEmisor)
+
+        val dataNotificacion: MutableMap<String, Any> = mutableMapOf("ruta" to Ruta.MI_PERFIL, "tipo" to TipoNotificacion.RECHAZAR_RESENIA)
+
+        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuario.nombre} ha rechazado tu reseña").apply {
+            data = dataNotificacion
+        }
+        notificacionService.enviarNotificacion(notificacion)
+
+        return resenia.get()
     }
 }

@@ -31,13 +31,7 @@ class UsuarioController {
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioService.getUsuario(idUsuario)
-
-        val primerResenia = usuario.resenias.firstOrNull()
-        if(primerResenia != null) {
-            val primerReseniaDTO = usuarioService.conversionReseniaDTO(primerResenia)
-            return UsuarioDetalleDTO(usuario, primerReseniaDTO)
-        }
-        return UsuarioDetalleDTO(usuario, null)
+        return UsuarioDetalleDTO(usuario, usuario.resenias.map{usuarioService.conversionReseniaDTO(it)})
     }
 
     @GetMapping("/comentarios/{idUsuario}")

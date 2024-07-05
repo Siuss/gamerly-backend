@@ -44,6 +44,18 @@ class ReseniaController {
         }
     }
 
+
+    @PostMapping("/resenias/{idResenia}/aceptar/{idUsuarioLogueado}")
+    fun aceptarSolicitud(@PathVariable idResenia: Long, @PathVariable idUsuarioLogueado: Long): ReseniaSolicitudDTO {
+        val resenia = reseniaService.aceptarReseniaPendiente(idResenia, idUsuarioLogueado)
+        return ReseniaSolicitudDTO.from(resenia);
+    }
+
+    @PostMapping("/resenias/{idResenia}/rechazar/{idUsuarioLogueado}")
+    fun rechazarSolicitud(@PathVariable idResenia: Long, @PathVariable idUsuarioLogueado: Long): ReseniaSolicitudDTO {
+        val resenia = reseniaService.rechazarReseniaPendiente(idResenia, idUsuarioLogueado)
+        return ReseniaSolicitudDTO.from(resenia);
+    }
 }
 
 

@@ -20,11 +20,11 @@ class UsuarioDetalleDTO() {
     lateinit var nacionalidad: String
     var reputacion: Long = 0
     var amigos: List<AgregarAmigoDTO> = mutableListOf()
-    var resenias: ReseniasDTO? = null
+    var resenias: List<ReseniasDTO> = mutableListOf()
 
     constructor(
         usuario: Usuario,
-        resenia: ReseniasDTO?
+        resenias: List<ReseniasDTO>
     ) : this() {
         this.id = usuario.id
         this.nombre = usuario.nombre
@@ -41,9 +41,8 @@ class UsuarioDetalleDTO() {
         this.amigos = emptyList()
 //        this.amigos = usuario.amigos.map { AgregarAmigoDTO(it.id, it.id) }
         this.reputacion = usuario.calculoPuntaje()
-        if(resenia != null){
-            this.resenias = resenia
-        }
+        this.resenias = resenias
+
 
     }
 }
