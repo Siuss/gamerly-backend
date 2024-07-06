@@ -8,6 +8,7 @@ class UsuarioBusquedaDto() {
     var foto: String = ""
     var email: String = ""
     var puntaje: Long = 0
+    var plataforma: String = ""
 
     constructor(
         usuario: Usuario
@@ -17,5 +18,6 @@ class UsuarioBusquedaDto() {
         this.foto = usuario.foto
         this.email = usuario.email
         this.puntaje = usuario.calculoPuntaje()
+        this.plataforma = usuario.plataformas.toList().get(0).nombre
     }
 }

@@ -18,9 +18,9 @@ class UsuarioController {
         usuarioService.crearUsuario(usuarioNuevo)
     }
 
-    @GetMapping("/buscar")
-    fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto> {
-        return usuarioService.busquedaAvanzada(inputBusqueda)
+    @PostMapping("/buscar/{idJuego}")
+    fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO, @PathVariable idJuego: Long): List<UsuarioBusquedaDto> {
+        return usuarioService.busquedaAvanzada(inputBusqueda, idJuego)
     }
 
     @PostMapping("/login")

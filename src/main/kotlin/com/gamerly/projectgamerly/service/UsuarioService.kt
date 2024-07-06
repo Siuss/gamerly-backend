@@ -40,15 +40,19 @@ class UsuarioService {
         return usuario
     }
 
-    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO): List<UsuarioBusquedaDto>{
-        //TODO: cambiar juegos a lista de Int, resolver segun id
-        val diasEnum = inputBusqueda.dias?.map { DiaDeLaSemana.valueOf(it.uppercase()) }
-        val horariosEnum = inputBusqueda.horarios?.map { HorariosFavoritos.valueOf(it.uppercase()) }
-        val usuariosFiltrados = usuarioRepository.findUsuariosSegunFiltros(
-            inputBusqueda.puntaje,
-            diasEnum,
-            horariosEnum
+    fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO, idJuego: Long ): List<UsuarioBusquedaDto>{
+
+        val usuarios = usuarioRepository.findUsuariosSegunFiltros(
+            inputBusqueda.resenia,
+            inputBusqueda.dias,
+            inputBusqueda.momentos,
+            inputBusqueda.nombre,
         )
+
+       val usuarioConDetalle = usuarios.map {getUsuario(it.id)}
+
+        val usuariosFiltrados = usuarioConDetalle.filter{usuario -> usuario.juegosPreferidos.any { juego -> juego.id == idJuego }}
+
         return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
     }
 

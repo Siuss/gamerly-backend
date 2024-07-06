@@ -20,14 +20,16 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         JOIN u.juegosPreferidos j
         JOIN u.diasHorariosPreferidos dh
         GROUP BY u, j, dh
-        HAVING (AVG(r.puntaje) > :puntaje OR :puntaje IS NULL)
+        HAVING (AVG(r.puntaje) >= :puntaje OR :puntaje IS NULL)
         AND (dh.diaDeLaSemana IN :dias OR :dias IS NULL)
         AND (dh.horarioFavorito IN :horarios OR :horarios IS NULL)
+        AND (u.nombre LIKE %:nombre% OR :nombre IS NULL)
     """)
     fun findUsuariosSegunFiltros(
         @Param("puntaje") puntaje: Long?,
         @Param("dias") dias: List<DiaDeLaSemana>?,
-        @Param("horarios") horarios: List<HorariosFavoritos>?
+        @Param("horarios") horarios: List<HorariosFavoritos>?,
+        @Param("nombre") nombre: String?
     ): List<Usuario>
     @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias", "amigos", "reseniasPendientes"])
     override fun findById(id: Long): Optional<Usuario>
