@@ -1,9 +1,6 @@
 package com.gamerly.projectgamerly.service
 
-import com.gamerly.projectgamerly.domain.HorariosFavoritos
-import com.gamerly.projectgamerly.domain.Plataformas
-import com.gamerly.projectgamerly.domain.Resenia
-import com.gamerly.projectgamerly.domain.Usuario
+import com.gamerly.projectgamerly.domain.*
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
 import com.gamerly.projectgamerly.repos.GameRepository
@@ -22,11 +19,12 @@ import org.hibernate.Hibernate
 class UsuarioService {
     @Autowired
     private lateinit var userRepository: UserRepository
-
     @Autowired
     lateinit var usuarioRepository: UserRepository
     @Autowired
     lateinit var juegoRepository: GameRepository
+    @Autowired
+    lateinit var notificacionService: NotificacionService
 
     fun conversionReseniaDTO(resenia: Resenia): ReseniasDTO {
         val usuarioEmisor = usuarioRepository.findById(resenia.idUsuarioEmisor).get()
@@ -174,11 +172,19 @@ class UsuarioService {
         val usuario = getUsuario(idUsuario)
         val amigo = getUsuario(idAmigo)
 
+        if(usuario.amigos.all { it.id != idAmigo }){
+            return usuario
+        }
+
+
         usuario.amigos = usuario.amigos.filter{ it.id != amigo.id }.toMutableSet()
         amigo.amigos = usuario.amigos.filter{ it.id != usuario.id }.toMutableSet()
 
         usuarioRepository.save(usuario)
         usuarioRepository.save(amigo)
+
+        val notificacion = Notificacion(amigo.tokenNotificaciones, "${usuario.nombre} y tu ya no son amigos")
+        notificacionService.enviarNotificacion(notificacion)
 
         return amigo
     }
