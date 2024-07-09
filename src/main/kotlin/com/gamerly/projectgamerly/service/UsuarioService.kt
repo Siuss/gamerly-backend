@@ -2,18 +2,18 @@ package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.*
 import com.gamerly.projectgamerly.dtos.*
-import com.gamerly.projectgamerly.dtos.UsuarioBusquedaDto
 import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.UserRepository
-import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
+import com.gamerly.projectgamerly.utilities.InvalidEmail
 import com.gamerly.projectgamerly.utilities.PasswordMismatch
 import com.gamerly.projectgamerly.utilities.userNotFound
+import com.gamerly.projectgamerly.utils.UserNotFound
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import org.springframework.transaction.annotation.Transactional
-import org.hibernate.Hibernate
+import java.util.*
 
 @Service
 class UsuarioService {
@@ -25,6 +25,8 @@ class UsuarioService {
     lateinit var juegoRepository: GameRepository
     @Autowired
     lateinit var notificacionService: NotificacionService
+    @Autowired
+    lateinit var emailService: EmailService
 
     fun conversionReseniaDTO(resenia: Resenia): ReseniasDTO {
         val usuarioEmisor = usuarioRepository.findById(resenia.idUsuarioEmisor).get()
@@ -38,6 +40,19 @@ class UsuarioService {
         return usuario
     }
 
+    fun getUsuarioPorEmail(email: String): Usuario {
+        val usuario = usuarioRepository.findByEmail(email).orElse(null)
+            ?: throw Exception("Usuario con el email solicitado no existe");
+
+        return usuario
+    }
+
+    fun getUsuarioPorTokenRecuperacion(token: String): Usuario {
+        val usuario = usuarioRepository.findByTokenRecuperacion(token).orElse(null)
+            ?: throw UserNotFound("Usuario con el email token no existe");
+        return usuario
+    }
+
     fun busquedaAvanzada(inputBusqueda: InputBusquedaDTO, idJuego: Long ): List<UsuarioBusquedaDto>{
 
         val usuarios = usuarioRepository.findUsuariosSegunFiltros(
@@ -47,7 +62,7 @@ class UsuarioService {
             inputBusqueda.nombre,
         )
 
-       val usuarioConDetalle = usuarios.map {getUsuario(it.id)}
+        val usuarioConDetalle = usuarios.map {getUsuario(it.id)}
 
         val usuariosFiltrados = usuarioConDetalle.filter{usuario -> usuario.juegosPreferidos.any { juego -> juego.id == idJuego }}
 
@@ -76,6 +91,12 @@ class UsuarioService {
     }
 
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
+        val usuario = usuarioRepository.findByEmail(user.email).orElse(null)
+
+        if(usuario != null){
+            throw InvalidEmail("Ya existe un usuario registrado con ese email")
+        }
+
         val usuarioRegistro = Usuario().apply {
             nombre = user.nombre
             fechaDeNacimiento = LocalDate.parse(
@@ -187,5 +208,39 @@ class UsuarioService {
         notificacionService.enviarNotificacion(notificacion)
 
         return amigo
+    }
+
+    fun solicitarClave(email: String): String{
+        val usuario = getUsuarioPorEmail(email)
+
+        val number: Int = Random().nextInt(999999)
+        val tokenRecuperacion = String.format("%06d", number)
+
+        usuario.tokenRecuperacion = tokenRecuperacion
+        usuario.fechaRecuperacionClave = LocalDateTime.now()
+
+        usuarioRepository.save(usuario)
+
+        emailService.enviarMail(email,
+            "Gamerly - Se ha solicitado una renovacion de contraseña",
+            "En caso que no seas quien la ha solicitado por favor desestima este mensaje.\r\n\r\nTu codigo de verificacion es: $tokenRecuperacion"
+        )
+
+        return email
+    }
+
+    fun verificarTokenDeRecuperacion(token: String): Usuario {
+        val usuario = getUsuarioPorTokenRecuperacion(token)
+        usuario.tokenRecuperacion = null
+        usuario.fechaRecuperacionClave = null
+        return usuario
+    }
+
+    fun nuevaClave(email: String, contrasenia: String): Usuario{
+        val usuario = getUsuarioPorEmail(email)
+        usuario.password = contrasenia
+        usuarioRepository.save(usuario)
+
+        return usuario
     }
 }

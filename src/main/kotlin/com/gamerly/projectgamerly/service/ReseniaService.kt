@@ -60,7 +60,6 @@ class ReseniaService() {
 
     fun getReseniasPendientes(idUsuario: Long): MutableSet<Resenia> {
         val usuario = usuarioService.getUsuario(idUsuario)
-        println(usuario)
         return usuario.reseniasPendientes
     }
 
@@ -85,7 +84,11 @@ class ReseniaService() {
 
         val usuarioCreador = usuarioService.getUsuario(reseniaPendiente.idUsuarioEmisor)
 
-        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuario.nombre} ha aceptado tu reseña")
+        val dataNotificacion: MutableMap<String, Any> = mutableMapOf("ruta" to Ruta.MI_PERFIL, "tipo" to TipoNotificacion.ACEPTAR_RESENIA)
+
+        val notificacion = Notificacion(usuarioCreador.tokenNotificaciones, "${usuario.nombre} ha aceptado tu reseña").apply {
+            data = dataNotificacion
+        }
         notificacionService.enviarNotificacion(notificacion)
 
         return resenia.get()

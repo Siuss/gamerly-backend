@@ -34,6 +34,9 @@ interface UserRepository : CrudRepository<Usuario, Long>{
     @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias", "amigos", "reseniasPendientes"])
     override fun findById(id: Long): Optional<Usuario>
 
+    @EntityGraph(attributePaths = ["juegosPreferidos", "plataformas"])
+    fun findByTokenRecuperacion(token: String): Optional<Usuario>
+
     @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias" ,"amigos"])
     override fun findAll(): MutableIterable<Usuario>
   
@@ -45,5 +48,4 @@ interface UserRepository : CrudRepository<Usuario, Long>{
 
     @EntityGraph(attributePaths = ["diasHorariosPreferidos", "plataformas", "juegosPreferidos","resenias"])
     fun findAllByjuegosPreferidos_Id(juegoId: Long): List<Usuario>
-
 }

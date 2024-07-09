@@ -8,6 +8,7 @@ import com.gamerly.projectgamerly.utils.PasswordMismatch
 import com.gamerly.projectgamerly.domain.DiaHorarioPreferido
 import jakarta.persistence.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "usuarios")
@@ -88,6 +89,13 @@ class Usuario(
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     var reseniasPendientes: MutableSet<Resenia> = mutableSetOf()
+
+    @Column
+    var fechaRecuperacionClave: LocalDateTime? = null
+
+    @Column
+    var tokenRecuperacion: String? = null
+
 
     /*init {
         generarDiasHorariosPreferidos()

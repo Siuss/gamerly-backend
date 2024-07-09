@@ -8,7 +8,8 @@ server:
 spring:
   application:
     name: project-gamerly
-
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     url: jdbc:postgresql://0.0.0.0:5433/gamerly
     username: postgres
@@ -22,6 +23,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USER}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
   level:

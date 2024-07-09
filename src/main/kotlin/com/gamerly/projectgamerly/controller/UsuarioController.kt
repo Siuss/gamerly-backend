@@ -28,6 +28,21 @@ class UsuarioController {
         return usuarioService.login(credenciales)
     }
 
+    @PostMapping("/solicitud-clave/{email}")
+    fun solicitudClave(@PathVariable email: String): String {
+        return usuarioService.solicitarClave(email)
+    }
+
+    @PostMapping("/verificar-codigo-recuperacion/{token}")
+    fun verificarTokenDeRecuperacion(@PathVariable token: String): UsuarioLoginDTO {
+        return UsuarioLoginDTO.from(usuarioService.verificarTokenDeRecuperacion(token))
+    }
+
+    @PostMapping("/nueva-clave")
+    fun nuevaClave(@RequestBody body: NuevaClaveDto): String {
+        return usuarioService.nuevaClave(body.email, body.contrasenia).email
+    }
+
     @GetMapping("/detalle/{idUsuario}")
     fun detalleUsuario(@PathVariable idUsuario: Long): UsuarioDetalleDTO {
         val usuario = usuarioService.getUsuario(idUsuario)

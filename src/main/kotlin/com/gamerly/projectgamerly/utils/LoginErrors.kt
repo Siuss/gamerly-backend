@@ -16,5 +16,5 @@ internal class InvalidFields (msg : String) : RuntimeException(msg)
 internal class PasswordMismatch (msg : String) : RuntimeException(msg)
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-internal class userNotFound (msg: String) : RuntimeException(msg)
+internal class UserNotFound (msg: String) : RuntimeException(msg)
 

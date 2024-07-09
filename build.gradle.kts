@@ -32,6 +32,14 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	// Para envio de mails
+	implementation("org.springframework:spring-context-support:6.1.10")
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	implementation("org.springframework.boot:spring-boot-starter-mail:3.3.1")
+
+	// Para variables de entorno
+	implementation("me.paulschwarz:spring-dotenv:4.0.0:")
 }
 
 tasks.withType<KotlinCompile> {
