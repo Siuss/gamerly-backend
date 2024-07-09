@@ -49,7 +49,19 @@ class UsuarioService {
 
     fun getUsuarioPorTokenRecuperacion(token: String): Usuario {
         val usuario = usuarioRepository.findByTokenRecuperacion(token).orElse(null)
-            ?: throw UserNotFound("Usuario con el email token no existe");
+            ?: throw UserNotFound("Usuario con ese token de recuperacion no existe");
+
+        if(usuario.fechaRecuperacionClave == null){
+            throw UserNotFound("Usuario con ese token de recuperacion no existe")
+        }
+
+        val horarioMaximoValidez = usuario.fechaRecuperacionClave?.plusMinutes(5)
+        val presente = LocalDateTime.now()
+
+        if(presente.isAfter(horarioMaximoValidez)){
+            throw UserNotFound("Han pasado mas de 5 minutos y el token ha expirado")
+        }
+
         return usuario
     }
 
