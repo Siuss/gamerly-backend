@@ -28,6 +28,6 @@ class Resenia(
     ) {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
-
-
+    @Column
+    var verificada: Boolean = false
 }

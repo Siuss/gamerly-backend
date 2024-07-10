@@ -69,13 +69,6 @@ class UsuarioController {
         return usuarioService.editarUsuario(idUsuario, usuarioEditado)
     }
 
-    @ExceptionHandler(Exception::class)
-    fun excepcionGenerica(exception: Exception): ResponseEntity<HashMap<String, Any>> {
-        val entity = hashMapOf<String, Any>()
-        exception.message?.let { entity.put("message", it) }
-        return ResponseEntity(entity, HttpStatus.BAD_REQUEST)
-    }
-
     @GetMapping("/jugadoresPorJuego/{idJuego}")
     fun traerUsuariosPorJuego(@PathVariable idJuego: Long): List<UsuarioBusquedaJuegosDTO> {
         return usuarioService.getUsuarioPorJuego(idJuego)

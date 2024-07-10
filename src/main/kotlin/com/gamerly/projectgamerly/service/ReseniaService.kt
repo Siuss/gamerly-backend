@@ -6,6 +6,7 @@ import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.ReviewRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.utilities.ReseniaException
+import com.gamerly.projectgamerly.utilities.ReseniaNotFound
 import com.gamerly.projectgamerly.utils.ReseniaPendienteNotFound
 import com.gamerly.projectgamerly.utils.Ruta
 import com.gamerly.projectgamerly.utils.TipoNotificacion
@@ -42,6 +43,7 @@ class ReseniaService() {
             LocalDate.now(),
             LocalTime.now()
         )
+        usuarioReceptor.addResenia(nuevaResenia)
         usuarioReceptor.addReseniaPendiente(nuevaResenia)
         usuarioRepository.save(usuarioReceptor)
 
@@ -68,6 +70,16 @@ class ReseniaService() {
         return usuarioReceptor.resenias.any{it.idUsuarioEmisor == idUsuarioCreador}
     }
 
+    fun getReseniaById(idResenia: Long): Resenia {
+        val resenia = reseniaRepository.findById(idResenia)
+
+        if(resenia.isEmpty){
+            throw ReseniaNotFound("Reseña con el id solicitado no existe")
+        }
+
+        return resenia.get()
+    }
+
     @Transactional
     fun aceptarReseniaPendiente(idResenia: Long, idUsuarioLogueado: Long): Resenia{
         val usuario = usuarioService.getUsuario(idUsuarioLogueado)
@@ -77,10 +89,13 @@ class ReseniaService() {
             throw ReseniaPendienteNotFound("Reseña con el id solicitado no existe")
         }
 
-        val resenia = reseniaRepository.findById(idResenia)
+        val resenia = getReseniaById(idResenia)
+
+        resenia.verificada = true
+
+        reseniaRepository.save(resenia)
 
         usuario.removeReseniaPendienteById(idResenia)
-        usuario.addResenia(resenia.get())
 
         val usuarioCreador = usuarioService.getUsuario(reseniaPendiente.idUsuarioEmisor)
 
@@ -91,7 +106,7 @@ class ReseniaService() {
         }
         notificacionService.enviarNotificacion(notificacion)
 
-        return resenia.get()
+        return resenia
     }
 
     @Transactional
@@ -103,7 +118,7 @@ class ReseniaService() {
             throw ReseniaPendienteNotFound("Reseña con el id solicitado no existe")
         }
 
-        val resenia = reseniaRepository.findById(idResenia)
+        val resenia = getReseniaById(idResenia)
         usuario.removeReseniaPendienteById(idResenia)
 
         val usuarioCreador = usuarioService.getUsuario(reseniaPendiente.idUsuarioEmisor)
@@ -115,6 +130,6 @@ class ReseniaService() {
         }
         notificacionService.enviarNotificacion(notificacion)
 
-        return resenia.get()
+        return resenia
     }
 }

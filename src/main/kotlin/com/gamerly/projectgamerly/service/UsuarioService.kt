@@ -4,8 +4,8 @@ import com.gamerly.projectgamerly.domain.*
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.UserRepository
+import com.gamerly.projectgamerly.utilities.CredencialesInvalidas
 import com.gamerly.projectgamerly.utilities.InvalidEmail
-import com.gamerly.projectgamerly.utilities.PasswordMismatch
 import com.gamerly.projectgamerly.utilities.userNotFound
 import com.gamerly.projectgamerly.utils.UserNotFound
 import org.springframework.beans.factory.annotation.Autowired
@@ -88,18 +88,21 @@ class UsuarioService {
             tokenNotificaciones = credenciales.tokenNotificaciones
         }
         val usuario = usuarioRepository.findByEmail(usuarioCrendecial.email)
-        if (usuario.isPresent) {
-            val usuarioEncontrado = usuario.get()
-            if (usuarioEncontrado.password == usuarioCrendecial.password) {
-                usuarioEncontrado.tokenNotificaciones = credenciales.tokenNotificaciones
-                usuarioRepository.save(usuarioEncontrado)
-                return UsuarioLoginDTO.from(usuarioEncontrado);
-            } else {
-                throw PasswordMismatch("Contraseña incorrecta")
-            }
-        } else {
-            throw userNotFound("Usuario no encontrado")
+
+        if (usuario.isEmpty) {
+            throw CredencialesInvalidas("Credenciales invalidas")
         }
+
+        val usuarioEncontrado = usuario.get()
+
+        if (usuarioEncontrado.password != usuarioCrendecial.password) {
+            throw CredencialesInvalidas("Credenciales invalidas")
+        }
+
+        usuarioEncontrado.tokenNotificaciones = credenciales.tokenNotificaciones
+        usuarioRepository.save(usuarioEncontrado)
+
+        return UsuarioLoginDTO.from(usuarioEncontrado);
     }
 
     fun crearUsuario(user: UsuarioCreacionDTO): Usuario {

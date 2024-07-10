@@ -8,6 +8,7 @@ class ReseniasDTO {
     lateinit var foto: String
     var puntaje: Int = 0
     lateinit var comentario: String
+    var verificada: Boolean = false
 
     companion object {
         fun fromResenias(usuarioEmisor: Usuario, resenia: Resenia) : ReseniasDTO = ReseniasDTO().also {
@@ -15,6 +16,7 @@ class ReseniasDTO {
             it.foto = usuarioEmisor.foto
             it.puntaje = resenia.puntaje
             it.comentario = resenia.comentario
+            it.verificada = resenia.verificada
         }
     }
 

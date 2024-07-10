@@ -7,13 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 internal class InvalidEmail(msg : String) : RuntimeException(msg)
 
 @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-internal class InvalidPassword (msg : String) : RuntimeException(msg)
-
-@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-internal class InvalidFields (msg : String) : RuntimeException(msg)
-
-@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-internal class PasswordMismatch (msg : String) : RuntimeException(msg)
+internal class CredencialesInvalidas(msg : String) : Exception(msg)
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
 internal class userNotFound (msg: String) : RuntimeException(msg)
