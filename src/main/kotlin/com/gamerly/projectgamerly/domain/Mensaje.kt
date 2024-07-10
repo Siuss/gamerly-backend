@@ -1,5 +1,6 @@
 package com.gamerly.projectgamerly.domain
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "mensaje")
@@ -12,5 +13,7 @@ class Mensaje (
     @ManyToOne()
     var usuarioReceptor: Usuario,
     @Column
-    var contenido: String
+    var contenido: String,
+    @Column
+    var fecha: LocalDateTime
 )

@@ -10,6 +10,7 @@ import com.gamerly.projectgamerly.utilities.ChatYaExiste
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -78,7 +79,7 @@ class ChatService {
         val usuarioCreador = usuarioService.getUsuario(mensaje.idUsuarioCreador)
         val usuarioReceptor = usuarioService.getUsuario(mensaje.idUsuarioReceptor)
 
-        val nuevoMensaje = Mensaje(0, usuarioCreador, usuarioReceptor, mensaje.contenido)
+        val nuevoMensaje = Mensaje(0, usuarioCreador, usuarioReceptor, mensaje.contenido, LocalDateTime.now())
 
         val posibleChat = getChatById(idChat)
 
