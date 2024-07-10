@@ -16,7 +16,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4_container_gamerly
-    restart: always
+    restart: unless-stopped
     ports:
       - "5051:80"
     environment:
