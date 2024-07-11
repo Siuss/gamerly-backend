@@ -9,10 +9,6 @@ import jakarta.persistence.JoinColumn
 import java.time.LocalDate
 import java.time.LocalTime
 
-/*
-*
-* aca podriamos agregar la fecha y hora como columna x ahora, te sale la importacion de la columna Juili*/
-//puede ser siii
 @Entity
 class Resenia(
     @JoinColumn(name = "usuario_id")

@@ -2,6 +2,7 @@ package com.gamerly.projectgamerly.service
 import com.gamerly.projectgamerly.domain.Chat
 import com.gamerly.projectgamerly.domain.Mensaje
 import com.gamerly.projectgamerly.domain.Notificacion
+import com.gamerly.projectgamerly.dtos.ChatDTO
 import com.gamerly.projectgamerly.dtos.NuevoMensajeDTO
 import com.gamerly.projectgamerly.repos.ChatRepository
 import com.gamerly.projectgamerly.repos.MensajeRepository
@@ -73,6 +74,17 @@ class ChatService {
         val chat = chatRepository.findById(idChat)
         return chat
     }
+
+    fun getChat(idChat: Long): Chat {
+        val chat = chatRepository.findById(idChat)
+
+        if(chat.isEmpty){
+            throw ChatNoExiste("No existe un chat con ese id")
+        }
+
+        return chat.get()
+    }
+
 
     @Transactional
     fun nuevoMensaje(idChat: Long, mensaje: NuevoMensajeDTO): Mensaje {

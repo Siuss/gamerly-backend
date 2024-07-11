@@ -96,6 +96,9 @@ class Usuario(
     @Column
     var tokenRecuperacion: String? = null
 
+    @Column
+    var shadowBan: Boolean? = false
+
 
     /*init {
         generarDiasHorariosPreferidos()

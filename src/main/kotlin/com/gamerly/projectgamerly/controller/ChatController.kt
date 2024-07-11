@@ -27,8 +27,13 @@ class ChatController {
         return chatService.getChatsDelUsuario(idUsuario).map{ChatDTO.from(it)}
     }
 
+    @GetMapping("/chat/{idChat}")
+    fun getChat(@PathVariable idChat: Long): ChatDTO {
+        return ChatDTO.from(chatService.getChat(idChat))
+    }
+
     @PostMapping("/mensaje/{idChat}")
-    fun nuevoChat(@PathVariable idChat: Long, @RequestBody mensaje: NuevoMensajeDTO): MensajeDTO {
+    fun enviarMensaje(@PathVariable idChat: Long, @RequestBody mensaje: NuevoMensajeDTO): MensajeDTO {
         return MensajeDTO.from(chatService.nuevoMensaje(idChat, mensaje))
     }
 }
