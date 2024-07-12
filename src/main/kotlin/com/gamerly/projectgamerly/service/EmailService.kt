@@ -14,7 +14,7 @@ class EmailService {
         to: String?, asunto: String?, texto: String?
     ) {
         val message = SimpleMailMessage()
-        message.from = "spazosrubio@estudiantes.unsam.edu.ar"
+        message.from = "gamerly.app@gmail.com"
         message.setTo(to)
         message.subject = asunto
         message.text = texto

@@ -32,6 +32,11 @@ class ChatController {
         return ChatDTO.from(chatService.getChat(idChat))
     }
 
+    @GetMapping("{idUsuario}/leer-chat/{idChat}")
+    fun abrirChat(@PathVariable idUsuario: Long, @PathVariable idChat: Long): ChatDTO {
+        return ChatDTO.from(chatService.leerChat(idUsuario, idChat))
+    }
+
     @PostMapping("/mensaje/{idChat}")
     fun enviarMensaje(@PathVariable idChat: Long, @RequestBody mensaje: NuevoMensajeDTO): MensajeDTO {
         return MensajeDTO.from(chatService.nuevoMensaje(idChat, mensaje))

@@ -60,9 +60,9 @@ class ChatService {
         }
 
         val chat = Chat(0, usuarioCreador, usuarioReceptor, mutableListOf())
-        chatRepository.save(chat)
+        val chatCreado = chatRepository.save(chat)
 
-        return chat
+        return chatCreado
     }
 
     fun getChatsDelUsuario(idUsuario: Long): List<Chat>{
@@ -85,19 +85,38 @@ class ChatService {
         return chat.get()
     }
 
+    fun leerChat(idUsuario:Long, idChat: Long): Chat {
+        val chat = chatRepository.findById(idChat)
+
+        if(chat.isEmpty){
+            throw ChatNoExiste("No existe un chat con ese id")
+        }
+
+        val mensajesRecibidos = chat.get().mensajes.filter{it.usuarioReceptor.id == idUsuario && !it.leido}
+        val mensajesMarcadosComoLeido: MutableList<Mensaje> = mutableListOf()
+        mensajesRecibidos.forEach {
+            val mensajeComoLeido = it
+            mensajeComoLeido.leido = true
+            mensajesMarcadosComoLeido.add(mensajeComoLeido)
+        }
+
+        mensajesMarcadosComoLeido.forEach {mensajeRepository.save(it)}
+        return chat.get()
+    }
+
 
     @Transactional
     fun nuevoMensaje(idChat: Long, mensaje: NuevoMensajeDTO): Mensaje {
         val usuarioCreador = usuarioService.getUsuario(mensaje.idUsuarioCreador)
         val usuarioReceptor = usuarioService.getUsuario(mensaje.idUsuarioReceptor)
 
-        val nuevoMensaje = Mensaje(0, usuarioCreador, usuarioReceptor, mensaje.contenido, LocalDateTime.now())
-
         val posibleChat = getChatById(idChat)
 
         if(posibleChat.isEmpty){
-          throw ChatNoExiste("No existe un chat con ese id")
+            throw ChatNoExiste("No existe un chat con ese id")
         }
+
+        val nuevoMensaje = Mensaje(0, usuarioCreador, usuarioReceptor, mensaje.contenido, LocalDateTime.now())
 
         val chat = posibleChat.get()
 

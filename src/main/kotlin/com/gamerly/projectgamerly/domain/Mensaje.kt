@@ -15,5 +15,7 @@ class Mensaje (
     @Column
     var contenido: String,
     @Column
-    var fecha: LocalDateTime
+    var fecha: LocalDateTime,
+    @Column
+    var leido: Boolean = false
 )

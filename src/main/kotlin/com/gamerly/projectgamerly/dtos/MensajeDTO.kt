@@ -15,7 +15,8 @@ class MensajeDTO (
     var idCreador: Long,
     var idReceptor: Long,
     var contenido: String,
-    var fecha: String
+    var fecha: String,
+    var leido: Boolean
 ){
     companion object {
         fun from(mensaje: Mensaje): MensajeDTO = MensajeDTO(
@@ -23,7 +24,8 @@ class MensajeDTO (
             idCreador = mensaje.usuarioCreador.id,
             idReceptor = mensaje.usuarioReceptor.id,
             contenido = mensaje.contenido,
-            fecha = formatFecha(mensaje.fecha)
+            fecha = formatFecha(mensaje.fecha),
+            leido = mensaje.leido
         )
     }
 
