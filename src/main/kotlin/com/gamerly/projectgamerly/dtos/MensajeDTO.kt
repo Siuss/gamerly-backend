@@ -2,13 +2,20 @@ package com.gamerly.projectgamerly.dtos
 
 import com.gamerly.projectgamerly.domain.Mensaje
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+
+fun formatFecha(fecha: LocalDateTime): String{
+    return DateTimeFormatter.ofPattern("E d '**' MMMM HH:mm", Locale.of("es","ES")).format(fecha).split(' ')
+        .joinToString(" ") { it.replaceFirstChar(Char::uppercaseChar) }.replace("**", "de")
+}
 
 class MensajeDTO (
     var id: Long,
     var idCreador: Long,
     var idReceptor: Long,
     var contenido: String,
-    var fecha: LocalDateTime
+    var fecha: String
 ){
     companion object {
         fun from(mensaje: Mensaje): MensajeDTO = MensajeDTO(
@@ -16,8 +23,9 @@ class MensajeDTO (
             idCreador = mensaje.usuarioCreador.id,
             idReceptor = mensaje.usuarioReceptor.id,
             contenido = mensaje.contenido,
-            fecha = mensaje.fecha
+            fecha = formatFecha(mensaje.fecha)
         )
     }
+
 }
 

@@ -2,7 +2,9 @@ package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Reporte
 import com.gamerly.projectgamerly.dtos.NuevoReporteDTO
+import com.gamerly.projectgamerly.dtos.formatFecha
 import com.gamerly.projectgamerly.repos.ReporteRepository
+import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.utilities.ReporteYaExiste
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -13,13 +15,16 @@ class ReporteService {
     private lateinit var usuarioService: UsuarioService
 
     @Autowired
+    private lateinit var chatService: ChatService
+
+    @Autowired
     private lateinit var reporteRepository: ReporteRepository
 
     @Autowired
-    private lateinit var emailService: EmailService
+    private lateinit var usuarioRepository: UserRepository
 
     @Autowired
-    private lateinit var chatService: ChatService
+    private lateinit var emailService: EmailService
 
     fun nuevoReporte(idCreador: Long, idReportado: Long, reporte: NuevoReporteDTO): Long {
         if(idCreador == idReportado){
@@ -33,6 +38,14 @@ class ReporteService {
 
         reporteRepository.save(nuevoReporte)
 
+        // Si es el cuarto reporte del usuario (por personas diferentes)
+        // Lo flageamos como shadow baneado
+        val cantidadReportes = getCantidadReportesDelUsuario(idReportado)
+        if(cantidadReportes >= 4){
+            usuarioReportado.shadowBan = true
+            usuarioRepository.save(usuarioReportado)
+        }
+
         // Si ambos usuarios tienen un chat se obtienen los ultimos 20 mensajes
         val cantidadDeMensajes = 20
         var ultimoChatString = ""
@@ -43,7 +56,7 @@ class ReporteService {
 
             ultimoChat.mensajes.takeLast(cantidadDeMensajes).forEach{mensaje ->
                 run {
-                    ultimoChatString += "${mensaje.usuarioCreador.nombre}: ${mensaje.contenido}\r\n"
+                    ultimoChatString += "${formatFecha(mensaje.fecha)} - ${mensaje.usuarioCreador.nombre}: ${mensaje.contenido}\r\n"
                 }
             }
         }
