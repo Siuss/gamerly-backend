@@ -8,6 +8,8 @@ import com.gamerly.projectgamerly.repos.ChatRepository
 import com.gamerly.projectgamerly.repos.MensajeRepository
 import com.gamerly.projectgamerly.utilities.ChatNoExiste
 import com.gamerly.projectgamerly.utilities.ChatYaExiste
+import com.gamerly.projectgamerly.utils.Ruta
+import com.gamerly.projectgamerly.utils.TipoNotificacion
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -126,8 +128,12 @@ class ChatService {
 
         chatRepository.save(chat)
 
-        // TODO: Agregar un data para redirigir derecho al chat
-        val notificacion = Notificacion(usuarioReceptor.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado un mensaje", mensaje.contenido)
+        val dataNotificacion: MutableMap<String, Any> = mutableMapOf("ruta" to Ruta.CHAT, "tipo" to TipoNotificacion.CHAT, "idChat" to idChat)
+
+        val notificacion = Notificacion(usuarioReceptor.tokenNotificaciones, "${usuarioCreador.nombre} te ha enviado un mensaje", mensaje.contenido).apply{
+            data = dataNotificacion
+        }
+
         notificacionService.enviarNotificacion(notificacion)
 
         return mensajeCreado

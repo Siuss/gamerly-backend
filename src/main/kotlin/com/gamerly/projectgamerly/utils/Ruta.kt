@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.utils
 
 object Ruta {
+    const val CHAT = "chat"
     const val AMIGOS = "amigos"
     const val REGISTRO = "registro"
     const val JUEGO = "juego"

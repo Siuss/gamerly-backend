@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.utils
 
 object TipoNotificacion {
+    const val CHAT = "chat"
     const val ACEPTAR_RESENIA = "aceptarResenia"
     const val RECHAZAR_RESENIA = "rechazarResenia"
     const val NUEVA_SOLICITUD_AMISTAD = "nuevaSolicitudAmistad"
