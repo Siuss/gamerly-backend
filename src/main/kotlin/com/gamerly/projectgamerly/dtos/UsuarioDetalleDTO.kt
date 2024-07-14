@@ -39,10 +39,7 @@ class UsuarioDetalleDTO() {
         this.plataformas = usuario.plataformas.map { it.nombre }.toSet()
         this.nacionalidad = usuario.nacionalidad
         this.amigos = emptyList()
-//        this.amigos = usuario.amigos.map { AgregarAmigoDTO(it.id, it.id) }
         this.reputacion = usuario.calculoPuntaje()
         this.resenias = resenias
-
-
     }
 }

@@ -8,6 +8,7 @@ import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.SolicitudRepository
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
+import com.gamerly.projectgamerly.utilities.NoSePuedeAgregarComoAmigoASiMismo
 import com.gamerly.projectgamerly.utilities.userNotFound
 import com.gamerly.projectgamerly.utils.Ruta
 import com.gamerly.projectgamerly.utils.SolicitudNotFound
@@ -36,10 +37,9 @@ class SolicitudService {
 
     @Transactional
     fun crearSolicitudDeAmistad(idCreador: Long, idAmigo: Long, mensaje: String){
-        if(idCreador === idAmigo) {
-            //TODO: Tirar excepcion
+        if(idCreador == idAmigo) {
+            throw NoSePuedeAgregarComoAmigoASiMismo("Un usuario no puede agregarse como amigo a si ismo")
         }
-
          
         val usuarioCreador = usuarioService.getUsuario(idCreador)
         val usuarioAmigo = usuarioService.getUsuario(idAmigo)
@@ -51,6 +51,12 @@ class SolicitudService {
 
         usuarioCreador.solicitudesEnviadas.add(nuevaSolicitud)
         usuarioRepository.save(usuarioCreador)
+
+        // Si el usuario esta shadowbaneado no se envia la solicitud pero la peticion
+        // finaliza satisfactoriamente, para generar la ilusion de interaccion
+        if(usuarioCreador.shadowBan == true){
+            return
+        }
 
         usuarioAmigo.solicitudesRecibidas.add(nuevaSolicitud)
         usuarioRepository.save(usuarioAmigo)

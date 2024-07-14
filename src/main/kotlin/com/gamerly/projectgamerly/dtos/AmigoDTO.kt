@@ -9,6 +9,7 @@ class AmigoDTO {
     lateinit var foto: String
     lateinit var juegosPreferidos: List<String>
     lateinit var plataformas: Set<String>
+    var bloqueado: Boolean = false
 
     companion object {
         fun from(usuario: Usuario): AmigoDTO = AmigoDTO().also { dto ->

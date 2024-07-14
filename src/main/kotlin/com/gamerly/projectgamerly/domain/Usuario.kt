@@ -99,16 +99,8 @@ class Usuario(
     @Column
     var shadowBan: Boolean? = false
 
-
-    /*init {
-        generarDiasHorariosPreferidos()
-    }
-
-    private fun generarDiasHorariosPreferidos() {
-        diaFavorito.zip(horariosPreferidos).forEach { (dia, horario) ->
-            diasHorariosPreferidos.add(DiaHorarioPreferido(dia, horario))
-        }
-    }*/
+    @ManyToMany
+    var bloqueados: MutableSet<Usuario> = mutableSetOf()
 
     fun addResenia(resenia: Resenia)  {
         resenias.add(resenia)

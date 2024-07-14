@@ -18,8 +18,6 @@ import java.util.*
 @Service
 class UsuarioService {
     @Autowired
-    private lateinit var userRepository: UserRepository
-    @Autowired
     lateinit var usuarioRepository: UserRepository
     @Autowired
     lateinit var juegoRepository: GameRepository
@@ -124,7 +122,7 @@ class UsuarioService {
             nacionalidad = user.nacionalidad
 
         }
-        return userRepository.save(usuarioRegistro)
+        return usuarioRepository.save(usuarioRegistro)
     }
 
     fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
@@ -171,8 +169,6 @@ class UsuarioService {
         return reseniasDTO
     }
 
-//hice el pull
-
     fun getAllUsers(): List<UsuarioDetalleDTO> {
         val usuarios = usuarioRepository.findAll()
         val usuariosDTO = mutableListOf<UsuarioDetalleDTO>()
@@ -198,10 +194,17 @@ class UsuarioService {
         return usuarios.map{UsuarioBusquedaJuegosDTO(it)}
     }
 
-    fun getAmigosDelUsuario(idUsuario: Long): List<Usuario> {
+    fun getAmigosDelUsuario(idUsuario: Long, traerBloqueados: Boolean): List<AmigoDTO> {
         val usuario = getUsuario(idUsuario)
+        val amigos = usuario.amigos.map{AmigoDTO.from(getUsuario(it.id))}
 
-        return usuario.amigos.map{getUsuario(it.id)}
+        if(!traerBloqueados){
+            return amigos
+        }
+        val bloqueados = usuario.bloqueados.map{AmigoDTO.from(getUsuario(it.id)).also{ dto -> dto.bloqueado=true }}
+        val amigosYBloqueados = amigos + bloqueados
+
+        return amigosYBloqueados
     }
 
     fun deleteAmigoDelUsuario(idUsuario: Long, idAmigo: Long): Usuario{

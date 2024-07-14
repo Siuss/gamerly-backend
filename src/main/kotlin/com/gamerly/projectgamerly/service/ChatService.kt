@@ -2,7 +2,6 @@ package com.gamerly.projectgamerly.service
 import com.gamerly.projectgamerly.domain.Chat
 import com.gamerly.projectgamerly.domain.Mensaje
 import com.gamerly.projectgamerly.domain.Notificacion
-import com.gamerly.projectgamerly.dtos.ChatDTO
 import com.gamerly.projectgamerly.dtos.NuevoMensajeDTO
 import com.gamerly.projectgamerly.repos.ChatRepository
 import com.gamerly.projectgamerly.repos.MensajeRepository

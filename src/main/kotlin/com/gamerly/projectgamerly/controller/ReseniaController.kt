@@ -29,9 +29,9 @@ class ReseniaController {
         return resenias.map{ReseniaPendienteDTO.fromResenia(usuarioService.getUsuario(it.idUsuarioEmisor), it)}
     }
 
-    @GetMapping("/resenias/{idUsuario}")
-    fun getResenias(@PathVariable idUsuario : Long): List<ReseniasDTO> {
-        val resenias = reseniaService.getResenias(idUsuario)
+    @GetMapping("{idUsuarioLogueado}/resenias/{idUsuario}")
+    fun getResenias(@PathVariable idUsuarioLogueado: Long, @PathVariable idUsuario: Long): List<ReseniasDTO> {
+        val resenias = reseniaService.getResenias(idUsuarioLogueado, idUsuario)
         return resenias.map{ReseniasDTO.fromResenias(usuarioService.getUsuario(it.idUsuarioEmisor), it)}
     }
 
@@ -43,7 +43,6 @@ class ReseniaController {
             return false
         }
     }
-
 
     @PostMapping("/resenias/{idResenia}/aceptar/{idUsuarioLogueado}")
     fun aceptarSolicitud(@PathVariable idResenia: Long, @PathVariable idUsuarioLogueado: Long): ReseniaSolicitudDTO {

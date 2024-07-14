@@ -265,7 +265,7 @@ class Bootstrap: InitializingBean {
             "Nanami",
             "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
             LocalDate.of(1999, 1, 5),
-            "test1@gmail.com",
+            "nanami@gmail.com",
             "123",
             "ExponentPushToken[V7baJvCPhSPqloakKk6M6o]",
             mutableSetOf(
@@ -293,7 +293,7 @@ class Bootstrap: InitializingBean {
             "NicolasMar",
             "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
             LocalDate.of(2001, 7, 1),
-            "test2@gmail.com",
+            "nico@gmail.com",
             "123",
             "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
@@ -321,7 +321,7 @@ class Bootstrap: InitializingBean {
             "Cirr",
             "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png",
             LocalDate.of(1998, 9, 27),
-            "test3@gmail.com",
+            "cirr@gmail.com",
             "123",
             "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
@@ -352,7 +352,7 @@ class Bootstrap: InitializingBean {
             "Playxel",
             "https://www.fieremostre.it/wp-content/uploads/2023/09/gaming-computer-table-video-game-room-with-neon-lighting-purple-color.jpg",
             LocalDate.of(1985, 11, 2),
-            "test4@gmail.com",
+            "playxel@gmail.com",
             "123",
             "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
@@ -382,10 +382,10 @@ class Bootstrap: InitializingBean {
         )
 
         usuario5 = Usuario(
-            "ElVendeHumo",
+            "ShadowDragon",
             "https://media.wired.com/photos/593277b144db296121d6b56f/master/w_1600%2Cc_limit/conorclarke_03.jpg",
             LocalDate.of(1996, 3, 29),
-            "test5@gmail.com",
+            "shadowdragon@gmail.com",
             "123",
             "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
@@ -407,14 +407,14 @@ class Bootstrap: InitializingBean {
                 DiaHorarioPreferido(DiaDeLaSemana.MARTES, HorariosFavoritos.MAÑANA),
                 DiaHorarioPreferido(DiaDeLaSemana.MIERCOLES, HorariosFavoritos.TARDE)
             ),
-            "elvendehumo123"
+            "ShadowDragon96"
         )
 
         usuario6 = Usuario(
             "omnimrgus",
             "https://i.ytimg.com/vi/Mc-bUk5z5p4/mqdefault.jpg",
             LocalDate.of(2005, 5, 15),
-            "test6@gmail.com",
+            "omnimrgus@gmail.com",
             "123",
             "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
             mutableSetOf(
@@ -439,10 +439,13 @@ class Bootstrap: InitializingBean {
 
         usuario1.amigos.add(usuario2)
         usuario2.amigos.add(usuario1)
+
         usuario3.amigos.add(usuario4)
-        usuario3.amigos.add(usuario5)
         usuario4.amigos.add(usuario3)
+
+        usuario3.amigos.add(usuario5)
         usuario5.amigos.add(usuario3)
+
         usuarioRepository.saveAll(listOf(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6))
     }
 
@@ -477,7 +480,7 @@ class Bootstrap: InitializingBean {
         resenia3 = Resenia(
             usuario1.id,
             5,
-            "Pasame la receta para ganar en el fifa",
+            "Un placer jugar con vos (pasame la receta para ganar en el fifa)",
             LocalDate.of(2024, 2, 21),
             LocalTime.of(22,30)
         )
@@ -504,7 +507,7 @@ class Bootstrap: InitializingBean {
         resenia6 = Resenia(
             usuario4.id,
             1,
-            "Juega para atras, muy toxico",
+            "Se la paso insultando al resto del equipo, no duramos ni 15 minutos",
             LocalDate.of(2024, 2, 17),
             LocalTime.of(22,30)
         )

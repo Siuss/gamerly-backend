@@ -31,7 +31,7 @@ interface UserRepository : CrudRepository<Usuario, Long>{
         @Param("horarios") horarios: List<HorariosFavoritos>?,
         @Param("nombre") nombre: String?
     ): List<Usuario>
-    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias", "amigos", "reseniasPendientes"])
+    @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias", "amigos", "reseniasPendientes", "bloqueados"])
     override fun findById(id: Long): Optional<Usuario>
 
     @EntityGraph(attributePaths = ["juegosPreferidos", "plataformas"])

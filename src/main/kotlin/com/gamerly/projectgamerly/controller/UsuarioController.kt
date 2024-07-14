@@ -1,6 +1,7 @@
 package com.gamerly.projectgamerly.controller;
 
 import com.gamerly.projectgamerly.dtos.*
+import com.gamerly.projectgamerly.service.BloqueosService
 import com.gamerly.projectgamerly.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.*
 class UsuarioController {
     @Autowired
     lateinit var usuarioService: UsuarioService
+
+    @Autowired
+    lateinit var bloqueosService: BloqueosService
 
     @PostMapping("/sign-up")
     fun crearUsuario(@RequestBody usuarioNuevo: UsuarioCreacionDTO) {
@@ -76,13 +80,35 @@ class UsuarioController {
 
     // Trae los amigos de un usuario a partir del id del usuario
     @GetMapping("/amigos/{idUsuario}")
-    fun getAmigosDelUsuario(@PathVariable idUsuario: Long): List<AmigoDTO> {
-        return usuarioService.getAmigosDelUsuario(idUsuario).map{AmigoDTO.from(it)}
+    fun getAmigosDelUsuario(@PathVariable idUsuario: Long, @RequestParam(required = false) bloqueados: Boolean): List<AmigoDTO> {
+        return usuarioService.getAmigosDelUsuario(idUsuario, bloqueados)
     }
 
     // Borrar un amigo del usuario
     @PostMapping("/{idUsuario}/amigos/{idAmigo}")
     fun deleteAmigoDelUsuario(@PathVariable idUsuario: Long, @PathVariable idAmigo: Long):AmigoDTO {
         return AmigoDTO.from(usuarioService.deleteAmigoDelUsuario(idUsuario, idAmigo))
+    }
+
+    // Bloquear un usuario
+    @PostMapping("/{idUsuario}/bloquear/{idBloqueado}")
+    fun bloquearUsuario(@PathVariable idUsuario: Long, @PathVariable idBloqueado: Long): UsuarioBloqueadoDTO {
+        return UsuarioBloqueadoDTO.from(bloqueosService.bloquearUsuario(idUsuario, idBloqueado))
+    }
+
+    // Desbloquear un usuario
+    @PostMapping("/{idUsuario}/desbloquear/{idBloqueado}")
+    fun desbloquearUsuario(@PathVariable idUsuario: Long, @PathVariable idBloqueado: Long): UsuarioBloqueadoDTO {
+        return UsuarioBloqueadoDTO.from(bloqueosService.desbloquearUsuario(idUsuario, idBloqueado))
+    }
+
+    @GetMapping("{idUsuarioLogueado}/esta-bloqueado/{idUsuario}")
+    fun getUsuarioEstaBloqueado(@PathVariable idUsuarioLogueado: Long, @PathVariable idUsuario: Long): Boolean {
+        return bloqueosService.getUsuarioEstaBloqueado(idUsuarioLogueado, idUsuario)
+    }
+
+    @GetMapping("/bloqueados/{idUsuario}")
+    fun getUsuariosBloqueados(@PathVariable idUsuario: Long): List<UsuarioBloqueadoDTO> {
+        return bloqueosService.getUsuariosBloqueados(idUsuario).map{UsuarioBloqueadoDTO.from(it)}
     }
 }

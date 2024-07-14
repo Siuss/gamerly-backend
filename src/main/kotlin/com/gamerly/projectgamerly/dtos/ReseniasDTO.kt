@@ -4,6 +4,8 @@ import com.gamerly.projectgamerly.domain.Resenia
 import com.gamerly.projectgamerly.domain.Usuario
 
 class ReseniasDTO {
+    var idResenia: Long = 0
+    var idUsuarioEmisor: Long = 0
     lateinit var nombre: String
     lateinit var foto: String
     var puntaje: Int = 0
@@ -12,6 +14,8 @@ class ReseniasDTO {
 
     companion object {
         fun fromResenias(usuarioEmisor: Usuario, resenia: Resenia) : ReseniasDTO = ReseniasDTO().also {
+            it.idResenia = resenia.id
+            it.idUsuarioEmisor = usuarioEmisor.id
             it.nombre = usuarioEmisor.nombre
             it.foto = usuarioEmisor.foto
             it.puntaje = resenia.puntaje

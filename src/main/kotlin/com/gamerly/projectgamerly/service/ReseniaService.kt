@@ -2,6 +2,7 @@ package com.gamerly.projectgamerly.service
 
 import com.gamerly.projectgamerly.domain.Notificacion
 import com.gamerly.projectgamerly.domain.Resenia
+import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.ReviewRepository
 import com.gamerly.projectgamerly.repos.UserRepository
@@ -55,9 +56,17 @@ class ReseniaService() {
         return reseniaRepository.save(nuevaResenia)
     }
 
-    fun getResenias(idUsuario: Long): MutableSet<Resenia> {
+    fun getResenias(idUsuarioLogueado: Long, idUsuario: Long): MutableSet<Resenia> {
         val usuario = usuarioService.getUsuario(idUsuario)
-        return usuario.resenias
+        var resenias = usuario.resenias
+
+        // El usuario esta obteniendo sus propias resenias asi que ocultamos las resenias de los usuarios que tiene bloqueados
+        if(idUsuarioLogueado == idUsuario){
+            val idsDesusUsuariosBloqueados = usuario.bloqueados.map{it.id}
+            resenias = resenias.filter{resenia -> !idsDesusUsuariosBloqueados.contains(resenia.idUsuarioEmisor)}.toMutableSet()
+        }
+
+        return resenias
     }
 
     fun getReseniasPendientes(idUsuario: Long): MutableSet<Resenia> {
