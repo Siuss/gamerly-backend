@@ -1,29 +1,21 @@
 package com.gamerly.projectgamerly.controller
 
 import com.gamerly.projectgamerly.domain.Juego
+import com.gamerly.projectgamerly.domain.Plataformas
 import com.gamerly.projectgamerly.dtos.ComunidadDTO
 import com.gamerly.projectgamerly.service.JuegoService
+import com.gamerly.projectgamerly.service.PlataformaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @CrossOrigin(origins = ["*"])
 @RestController
-class JuegoController {
+class PlataformaController {
     @Autowired
-    lateinit var juegoService: JuegoService
+    lateinit var plataformaService: PlataformaService
 
-    @GetMapping("/listaJuegos/{nombre}")
-    fun traerJuegosPorNombre(@PathVariable nombre: String): List<Juego> {
-        return juegoService.getJuegosPorNombre(nombre)
-    }
-
-    @GetMapping("/listaJuegos")
-    fun traerJuegosConLimite(@RequestParam(required = false) numero: Int?): List<Juego> {
-        return juegoService.getJuegosConLimite(numero)
-    }
-
-    @GetMapping("/comunidad")
-    fun traerComunidad(): List<ComunidadDTO> {
-        return juegoService.getAllComunidad()
+    @GetMapping("/listaPlataformas/{nombre}")
+    fun traerPlataformasPorNombre(@PathVariable nombre: String): List<String> {
+        return plataformaService.getPlataformasPorNombre(nombre).map{it.nombre}
     }
 }

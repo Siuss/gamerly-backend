@@ -53,6 +53,18 @@ class UsuarioController {
         return UsuarioDetalleDTO(usuario, usuario.resenias.map{usuarioService.conversionReseniaDTO(it)})
     }
 
+    @GetMapping("/detalle-edicion/{idUsuario}")
+    fun detalleEdicionUsuario(@PathVariable idUsuario: Long): UsuarioDetalleEdicionDTO {
+        val usuario = usuarioService.getUsuario(idUsuario)
+        return UsuarioDetalleEdicionDTO(usuario)
+    }
+
+    @PutMapping("/perfil")
+    fun actualizarPerfil(@RequestBody perfil: UsuarioDetalleEdicionDTO): UsuarioDetalleEdicionDTO {
+        val usuario = usuarioService.actualizarPerfil(perfil)
+        return UsuarioDetalleEdicionDTO(usuario)
+    }
+
     @GetMapping("/comentarios/{idUsuario}")
     fun comentariosUsuario(@PathVariable idUsuario: Long) : List<ReseniasDTO>{
         return usuarioService.comentariosUsuario(idUsuario)

@@ -34,7 +34,6 @@ class UsuarioService {
     fun getUsuario(idUsuario: Long): Usuario {
         val usuario = usuarioRepository.findById(idUsuario).orElse(null)
             ?: throw Exception("Usuario con el id solicitado no existe");
-
         return usuario
     }
 
@@ -159,6 +158,41 @@ class UsuarioService {
         return UsuarioDetalleDTO(usuarioRepository.save(usuario), reseniasDto)
     }
 
+    fun actualizarPerfil(perfil: UsuarioDetalleEdicionDTO): Usuario{
+            val usuario = getUsuario(perfil.id)
+
+            perfil.nombre?.let { usuario.nombre = it }
+            perfil?.foto?.let { usuario.foto = it }
+            perfil?.nacionalidad?.let { usuario.nacionalidad = it }
+            perfil?.discord?.let { usuario.discord = it }
+
+            if (perfil?.fechaDeNacimiento != null) {
+                val fechaNacimiento = LocalDate.parse(
+                    perfil.fechaDeNacimiento.toString(),
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                )
+                fechaNacimiento.let { usuario.fechaDeNacimiento = it }
+            }
+
+            if (perfil.juegosPreferidos != null) {
+                val juegos = perfil.juegosPreferidos!!.map { juegoRepository.findJuegoByNombre(it) }.toMutableSet()
+                juegos.let { usuario.juegosPreferidos = it }
+            }
+
+            if (perfil.plataformas != null) {
+                val plataformas = perfil.plataformas!!.map {
+                    Plataformas.valueOf(it.uppercase().replace(" ", ""))
+                }.toSet()
+                plataformas.let { usuario.plataformas = it }
+            }
+
+        if (perfil.diasHorariosPreferidos != null) {
+            val diasHorariosPreferidos = perfil.diasHorariosPreferidos.toMutableSet()
+            diasHorariosPreferidos.let { usuario.diasHorariosPreferidos = it }
+        }
+
+            return usuarioRepository.save(usuario)
+    }
 
     fun comentariosUsuario(idUsuario: Long): List<ReseniasDTO> {
         val usuarioReceptor = usuarioRepository.findById(idUsuario).get()
