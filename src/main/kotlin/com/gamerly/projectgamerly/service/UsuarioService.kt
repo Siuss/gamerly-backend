@@ -119,6 +119,7 @@ class UsuarioService {
             password = user.password
             discord = user.discord
             nacionalidad = user.nacionalidad
+            foto = "https://i.ibb.co/HG1GTNR/avatar.png"
 
         }
         return usuarioRepository.save(usuarioRegistro)
