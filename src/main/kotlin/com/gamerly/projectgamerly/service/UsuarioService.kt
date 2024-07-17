@@ -37,6 +37,12 @@ class UsuarioService {
         return usuario
     }
 
+    fun getUsuarioConSolicitudes(idUsuario: Long): Usuario {
+        val usuario = usuarioRepository.findSolicitudesById(idUsuario).orElse(null)
+            ?: throw Exception("Usuario con el id solicitado no existe");
+        return usuario
+    }
+
     fun getUsuarioPorEmail(email: String): Usuario {
         val usuario = usuarioRepository.findByEmail(email).orElse(null)
             ?: throw Exception("Usuario con el email solicitado no existe");

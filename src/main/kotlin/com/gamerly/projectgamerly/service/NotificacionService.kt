@@ -14,7 +14,7 @@ class NotificacionService {
 
         // Si el token no es valido se tira un error
         if (!PushClient.isExponentPushToken(notificacion.tokenReceptor)) {
-            throw Error("El token de notificacion: ${notificacion.tokenReceptor} no es valido.")
+            return
         }
 
         // Se crea la notificacion en la libreria del server de expo

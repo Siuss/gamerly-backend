@@ -62,17 +62,6 @@ class Usuario(
     @Column(name = "plataforma")
     var plataformas: Set<Plataformas> = mutableSetOf(),
 
-    /*@ElementCollection(targetClass = DiaDeLaSemana::class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "usuario_dia_favorito", joinColumns = [JoinColumn(name = "usuario_id")])
-    @Enumerated(EnumType.STRING)
-    @Column(name = "dia_favorito")
-    var diaFavorito: MutableSet<DiaDeLaSemana> = mutableSetOf(),
-
-    @ElementCollection(targetClass = HorariosFavoritos::class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "usuario_dias_horarios_preferidos", joinColumns = [JoinColumn(name = "usuario_id")])
-    @Column(name = "dia_horario_preferido")
-    var horariosPreferidos: MutableList<HorariosFavoritos> = mutableListOf(),*/
-
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinColumn(name = "diasHorariosPreferidos")
     var diasHorariosPreferidos: MutableSet<DiaHorarioPreferido> = mutableSetOf(),

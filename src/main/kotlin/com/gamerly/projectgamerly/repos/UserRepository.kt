@@ -35,6 +35,9 @@ interface UserRepository : CrudRepository<Usuario, Long>{
     @EntityGraph(attributePaths = ["juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias", "amigos", "reseniasPendientes", "bloqueados"])
     override fun findById(id: Long): Optional<Usuario>
 
+    @EntityGraph(attributePaths = ["solicitudesRecibidas", "juegosPreferidos", "diasHorariosPreferidos", "plataformas", "resenias", "amigos", "reseniasPendientes", "bloqueados"])
+    fun findSolicitudesById(id: Long): Optional<Usuario>
+
     @EntityGraph(attributePaths = ["juegosPreferidos", "plataformas"])
     fun findByTokenRecuperacion(token: String): Optional<Usuario>
 

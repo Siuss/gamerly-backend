@@ -81,7 +81,8 @@ class SolicitudService {
     }
 
     fun getSolicitudesPendientes(idUsuario: Long): List<Solicitud> {
-        return solicitudRepository.findByUsuarioReceptor_Id(idUsuario)
+        val usuario = usuarioService.getUsuarioConSolicitudes(idUsuario)
+        return usuario.solicitudesRecibidas.toList()
     }
 
     @Transactional

@@ -267,7 +267,7 @@ class Bootstrap: InitializingBean {
             LocalDate.of(1999, 1, 5),
             "nanami@gmail.com",
             "123",
-            "ExponentPushToken[V7baJvCPhSPqloakKk6M6o]",
+            "1",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("League of Legends"),
                 juegoRepository.findJuegoByNombre("Terraria")
@@ -295,7 +295,7 @@ class Bootstrap: InitializingBean {
             LocalDate.of(2001, 7, 1),
             "nico@gmail.com",
             "123",
-            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
+            "2",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Stardew Valley"),
                 juegoRepository.findJuegoByNombre("Content Warning"),
@@ -323,7 +323,7 @@ class Bootstrap: InitializingBean {
             LocalDate.of(1998, 9, 27),
             "cirr@gmail.com",
             "123",
-            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
+            "3",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
                 juegoRepository.findJuegoByNombre("WWE 2K23"),
@@ -354,7 +354,7 @@ class Bootstrap: InitializingBean {
             LocalDate.of(1985, 11, 2),
             "playxel@gmail.com",
             "123",
-            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
+            "4",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
                 juegoRepository.findJuegoByNombre("Astroneer"),
@@ -387,7 +387,7 @@ class Bootstrap: InitializingBean {
             LocalDate.of(1996, 3, 29),
             "shadowdragon@gmail.com",
             "123",
-            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
+            "5",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Counter-Strike: Global Offensive"),
                 juegoRepository.findJuegoByNombre("Rocket League"),
@@ -416,7 +416,7 @@ class Bootstrap: InitializingBean {
             LocalDate.of(2005, 5, 15),
             "omnimrgus@gmail.com",
             "123",
-            "ExponentPushToken[2AWcruDQ4i9WVxRfHwe_Pi]",
+            "6",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Content Warning"),
                 juegoRepository.findJuegoByNombre("Deep Rock Galactic"),
