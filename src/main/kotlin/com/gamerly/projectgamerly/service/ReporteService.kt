@@ -64,7 +64,7 @@ class ReporteService {
         // Se envia un reporte por mail al equipo de gamerly
         emailService.enviarMail("gamerly.app@gmail.com",
             "Gamerly - Se ha recibido un nuevo reporte",
-            "El usuario ${usuarioCreador.nombre} (email: ${usuarioCreador.email}, id: ${usuarioCreador.id}) emitio un reporte sobre el usuario ${usuarioReportado.nombre} (email: ${usuarioCreador.email}, id: ${usuarioReportado.id}) con el siguiente mensaje:\r\n\r\n ${reporte.contenido}$ultimoChatString")
+            "El usuario ${usuarioCreador.nombre} (email: ${usuarioCreador.email}, id: ${usuarioCreador.id}) emitio un reporte sobre el usuario ${usuarioReportado.nombre} (email: ${usuarioReportado.email}, id: ${usuarioReportado.id}) con el siguiente mensaje:\r\n\r\n ${reporte.contenido}$ultimoChatString")
 
         return getCantidadReportesDelUsuario(usuarioReportado.id)
     }
