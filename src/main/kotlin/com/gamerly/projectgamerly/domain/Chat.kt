@@ -15,6 +15,3 @@ class Chat (
     @OrderColumn(name = "id")
     var mensajes: MutableList<Mensaje>
 )
-
-
-

@@ -62,8 +62,8 @@ class ReseniaService() {
 
         // El usuario esta obteniendo sus propias resenias asi que ocultamos las resenias de los usuarios que tiene bloqueados
         if(idUsuarioLogueado == idUsuario){
-            val idsDesusUsuariosBloqueados = usuario.bloqueados.map{it.id}
-            resenias = resenias.filter{resenia -> !idsDesusUsuariosBloqueados.contains(resenia.idUsuarioEmisor)}.toMutableSet()
+            val idsDeSusUsuariosBloqueados = usuario.bloqueados.map{it.id}
+            resenias = resenias.filter{resenia -> !idsDeSusUsuariosBloqueados.contains(resenia.idUsuarioEmisor)}.toMutableSet()
         }
 
         return resenias

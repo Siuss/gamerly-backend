@@ -16,7 +16,7 @@ class JuegoService {
         val pageable = PageRequest.of(0, 5)
 
         if(nombre.isEmpty()){
-            return getJuegosConLimite(10)
+            return getJuegosConLimite(null)
         }
 
         return juegoRepository.findJuegosByNombreContainingIgnoreCase(nombre, pageable).toList()
