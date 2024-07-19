@@ -10,6 +10,14 @@ class UsuarioBusquedaDto() {
     var puntaje: Long = 0
     var plataforma: String = ""
 
+    fun getPlataforma(usuario: Usuario): String{
+        if(usuario.plataformas.size > 0){
+            return usuario.plataformas.toList().get(0).nombre
+        }else{
+            return ""
+        }
+    }
+
     constructor(
         usuario: Usuario
     ) : this() {
@@ -18,6 +26,6 @@ class UsuarioBusquedaDto() {
         this.foto = usuario.foto
         this.email = usuario.email
         this.puntaje = usuario.calculoPuntaje()
-        this.plataforma = usuario.plataformas.toList().get(0).nombre
+        this.plataforma = getPlataforma(usuario)
     }
 }
