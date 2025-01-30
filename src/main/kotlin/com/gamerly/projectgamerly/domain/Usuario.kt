@@ -6,7 +6,10 @@ import com.gamerly.projectgamerly.utils.InvalidFields
 import com.gamerly.projectgamerly.utils.InvalidPassword
 import com.gamerly.projectgamerly.utils.PasswordMismatch
 import com.gamerly.projectgamerly.domain.DiaHorarioPreferido
+import com.gamerly.projectgamerly.exceptions.CredencialesInvalidasException
 import jakarta.persistence.*
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -91,6 +94,8 @@ class Usuario(
     @ManyToMany
     var bloqueados: MutableSet<Usuario> = mutableSetOf()
 
+    var ultimoLogin: LocalDateTime? = null
+
     fun addResenia(resenia: Resenia)  {
         resenias.add(resenia)
     }
@@ -111,7 +116,7 @@ class Usuario(
         }
     }
 
-    fun camposValidos(): Boolean {
+    fun validar(): Boolean {
         return validateEmail() && validatePassword() && camposVacios() && validatePasswordMatch(password)
 
     }
@@ -147,6 +152,22 @@ class Usuario(
         } else {
             throw PasswordMismatch("Las contraseñas no coinciden")
         }
+    }
+
+
+    // https://www.baeldung.com/java-password-hashing
+    fun validarCredenciales(passwordAVerificar: String) {
+            if (!getDefaultEncoder().matches(passwordAVerificar, password)) {
+            throw CredencialesInvalidasException()
+        }
+    }
+
+    private fun getDefaultEncoder(): PasswordEncoder {
+        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8()!!
+    }
+
+    fun loguearse() {
+        ultimoLogin = LocalDateTime.now()
     }
 }
 

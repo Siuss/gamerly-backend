@@ -33,6 +33,15 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+	// seguridad y autenticación
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
+	implementation("io.jsonwebtoken:jjwt-impl:0.12.5")
+	implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
+
+	//cryoto
+	implementation("org.bouncycastle:bcprov-jdk18on:1.77")
+
 	// Para envio de mails
 	implementation("org.springframework:spring-context-support:6.1.10")
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail

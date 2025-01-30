@@ -7,6 +7,7 @@ import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalTime
@@ -45,6 +46,11 @@ class Bootstrap: InitializingBean {
         this.juegos()
         this.usuario()
         this.resenias()
+    }
+
+    fun hashearContraseña(plainPassword: String): String {
+        val encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8()
+        return encoder.encode(plainPassword)
     }
 
     fun juegos() {
@@ -266,7 +272,7 @@ class Bootstrap: InitializingBean {
             "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
             LocalDate.of(1999, 1, 5),
             "nanami@gmail.com",
-            "123",
+            hashearContraseña("0912Carp"),
             "1",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("League of Legends"),
@@ -294,7 +300,7 @@ class Bootstrap: InitializingBean {
             "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
             LocalDate.of(2001, 7, 1),
             "nico@gmail.com",
-            "123",
+            hashearContraseña("1812Arg@"),
             "2",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Stardew Valley"),
@@ -322,7 +328,7 @@ class Bootstrap: InitializingBean {
             "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png",
             LocalDate.of(1998, 9, 27),
             "cirr@gmail.com",
-            "123",
+            hashearContraseña("1812Arg@"),
             "3",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
@@ -352,8 +358,8 @@ class Bootstrap: InitializingBean {
             "Playxel",
             "https://www.fieremostre.it/wp-content/uploads/2023/09/gaming-computer-table-video-game-room-with-neon-lighting-purple-color.jpg",
             LocalDate.of(1985, 11, 2),
-            "playxel@gmail.com",
-            "123",
+                "playxel@gmail.com",
+            hashearContraseña("1812Arg@"),
             "4",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("FIFA 23"),
@@ -386,7 +392,7 @@ class Bootstrap: InitializingBean {
             "https://media.wired.com/photos/593277b144db296121d6b56f/master/w_1600%2Cc_limit/conorclarke_03.jpg",
             LocalDate.of(1996, 3, 29),
             "shadowdragon@gmail.com",
-            "123",
+            hashearContraseña("1812Arg@"),
             "5",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Counter-Strike: Global Offensive"),
@@ -415,7 +421,7 @@ class Bootstrap: InitializingBean {
             "https://i.ytimg.com/vi/Mc-bUk5z5p4/mqdefault.jpg",
             LocalDate.of(2005, 5, 15),
             "omnimrgus@gmail.com",
-            "123",
+            hashearContraseña("1812Arg@"),
             "6",
             mutableSetOf(
                 juegoRepository.findJuegoByNombre("Content Warning"),
