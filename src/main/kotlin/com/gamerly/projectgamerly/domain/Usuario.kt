@@ -155,15 +155,29 @@ class Usuario(
     }
 
 
-    // https://www.baeldung.com/java-password-hashing
+    /**
+     * Valida las credenciales del usuario
+     * ttps://www.baeldung.com/java-password-hashing
+     */
     fun validarCredenciales(passwordAVerificar: String) {
             if (!getDefaultEncoder().matches(passwordAVerificar, password)) {
             throw CredencialesInvalidasException()
         }
     }
 
+    /**
+     * Obtiene el encoder por defecto
+     */
     private fun getDefaultEncoder(): PasswordEncoder {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8()!!
+    }
+
+
+    /**
+     * Crea un hash de la contraseña del usuario
+     */
+    fun crearPassword(rawPassword: String) {
+        password = getDefaultEncoder().encode(rawPassword)
     }
 
     fun loguearse() {
