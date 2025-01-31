@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
 
 @Configuration
 @EnableWebSecurity
@@ -32,7 +35,7 @@ class WebSecurityConfig {
     @Bean
     fun filterChain(httpSecurity: HttpSecurity, authenticationManager: AuthenticationManager): SecurityFilterChain {
         return httpSecurity
-            .cors { it.disable() }
+            .cors { it.configurationSource(corsConfigurationSource()) }
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
@@ -48,5 +51,25 @@ class WebSecurityConfig {
             .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling(Customizer.withDefaults())
             .build()
+    }
+
+
+    @Bean
+    fun corsConfigurationSource(): UrlBasedCorsConfigurationSource {
+        val source = UrlBasedCorsConfigurationSource()
+        val config = CorsConfiguration()
+
+        config.allowedOriginPatterns = listOf("http://localhost:*")
+        config.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
+        config.allowedHeaders = listOf("*") // Permitir todos los headers
+        config.allowCredentials = true // Permitir credenciales
+
+        source.registerCorsConfiguration("/**", config)
+        return source
+    }
+
+    @Bean
+    fun corsFilter(): CorsFilter {
+        return CorsFilter(corsConfigurationSource())
     }
 }
