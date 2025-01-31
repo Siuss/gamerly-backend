@@ -1,10 +1,15 @@
 package com.gamerly.projectgamerly.service
 
+import com.gamerly.projectgamerly.domain.Resenia
+import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.AuthDTO
+import com.gamerly.projectgamerly.dtos.ReseniasDTO
+import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.exceptions.CredencialesInvalidasException
 import com.gamerly.projectgamerly.exceptions.NotFoundException
 import com.gamerly.projectgamerly.repos.UserRepository
 import com.gamerly.projectgamerly.security.TokenUtils
+import com.gamerly.projectgamerly.utilities.InvalidEmail
 import jakarta.transaction.Transactional
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Service
 class AuthService : UserDetailsService {
@@ -47,5 +54,25 @@ class AuthService : UserDetailsService {
 
     // El efecto que tiene es simplemente devolver un ok si el filtro de JWT (JWTAuthorizationFilter) pasa
     fun validar(): String = "ok"
+
+    @Transactional(Transactional.TxType.REQUIRED)
+    fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
+        if (usuarioRepository.findByEmail(user.email).isPresent) throw InvalidEmail("El email ${user.email} ya está en uso")
+
+        val usuarioRegistro = Usuario().apply {
+            nombre = user.nombre
+            fechaDeNacimiento = LocalDate.parse(
+                user.fechaNacimiento,
+                DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            )
+            email = user.email
+            crearPassword(user.password)
+            discord = user.discord
+            nacionalidad = user.nacionalidad
+            foto = "https://i.ibb.co/HG1GTNR/avatar.png"
+        }
+        usuarioRepository.save(usuarioRegistro)
+        return usuarioRegistro
+    }
 
 }

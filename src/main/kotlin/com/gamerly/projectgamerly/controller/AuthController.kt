@@ -1,14 +1,12 @@
 package com.gamerly.projectgamerly.controller
 
 import com.gamerly.projectgamerly.dtos.AuthDTO
+import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
+import com.gamerly.projectgamerly.dtos.UsuarioDetalleDTO
 import com.gamerly.projectgamerly.security.TokenUtils
 import com.gamerly.projectgamerly.service.AuthService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin(origins = ["**"])
@@ -24,4 +22,9 @@ class AuthController {
         authService.login(authDTO)
         return tokenUtils.createToken(authDTO.email)
     }
+
+    @PostMapping("/user")
+    fun crear(@RequestBody crendentialUser : UsuarioCreacionDTO) = authService.crearUsuario(crendentialUser)
+
+
 }
