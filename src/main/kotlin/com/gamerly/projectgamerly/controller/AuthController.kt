@@ -19,8 +19,8 @@ class AuthController {
 
     @PostMapping("/login")
     fun loginAuth (@RequestBody authDTO : AuthDTO) : String {
-        authService.login(authDTO)
-        return tokenUtils.createToken(authDTO.email)
+        val user = authService.login(authDTO)
+        return tokenUtils.createToken(user.email, user.id)
     }
 
     @PostMapping("/user")

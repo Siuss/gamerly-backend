@@ -23,12 +23,13 @@ class TokenUtils {
     /**
      * Crea un token JWT sin roles, solo con el nombre de usuario
      */
-    fun createToken(nombre: String): String {
+    fun createToken(nombre: String, id: Long): String {
         val expirationTimeMillis = accessTokenMinutes * 60 * 1000  // Corrección en cálculo de tiempo
         val now = Date()
 
         return Jwts.builder()
             .subject(nombre)
+            .claim("id", id)
             .issuedAt(now)
             .expiration(Date(now.time + expirationTimeMillis))
             .signWith(Keys.hmacShaKeyFor(secretKey.toByteArray()))
