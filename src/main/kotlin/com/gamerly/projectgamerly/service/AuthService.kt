@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/*
+Se crea un nuevo service para iniciar sesion y crear usuario*/
 @Service
 class AuthService : UserDetailsService {
 
@@ -34,11 +36,11 @@ class AuthService : UserDetailsService {
 
 
     @Transactional(Transactional.TxType.REQUIRED)
-    fun login( authData : AuthDTO) {
+    fun login( authData : AuthDTO) : Usuario {
         val usuarioData = validarUsuario(authData.email)
         usuarioData.loguearse()
         usuarioData.validarCredenciales(authData.password)
-
+        return usuarioData
     }
 
 
