@@ -4,6 +4,11 @@ server:
     whitelabel:
       enabled: false
     include-message: always
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
 
 spring:
   application:
