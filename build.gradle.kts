@@ -39,8 +39,11 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-impl:0.12.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
 
-	//cryoto
+	//encryptación de password
 	implementation("org.bouncycastle:bcprov-jdk18on:1.77")
+
+	// documentacion api
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
 	// Para envio de mails
 	implementation("org.springframework:spring-context-support:6.1.10")
