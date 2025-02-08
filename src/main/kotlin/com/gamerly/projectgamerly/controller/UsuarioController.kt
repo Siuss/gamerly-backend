@@ -17,20 +17,21 @@ class UsuarioController {
     @Autowired
     lateinit var bloqueosService: BloqueosService
 
-//    @PostMapping("/sign-up")
-//    fun crearUsuario(@RequestBody usuarioNuevo: UsuarioCreacionDTO) {
-//        usuarioService.crearUsuario(usuarioNuevo)
-//    }
+
 
     @PostMapping("/buscar/{idJuego}")
     fun busquedaAvanzada(@RequestBody inputBusqueda: InputBusquedaDTO, @PathVariable idJuego: Long): List<UsuarioBusquedaDto> {
         return usuarioService.busquedaAvanzada(inputBusqueda, idJuego)
     }
 
-//    @PostMapping("/login")
-//    fun loginUsuario(@RequestBody credenciales: CredencialesDTO): UsuarioLoginDTO {
-//        return usuarioService.login(credenciales)
-//    }
+    @PutMapping("/token/{id}")
+    fun actualizarToken(
+        @PathVariable id: Long,
+        @RequestBody request: ExpoTokenRequest
+    ): Boolean {
+        return (usuarioService.actualizarTokenNotificaciones(id, request.expoPushToken))
+    }
+
 
     @PostMapping("/solicitud-clave/{email}")
     fun solicitudClave(@PathVariable email: String): String {

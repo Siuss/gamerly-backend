@@ -183,6 +183,10 @@ class Usuario(
     fun loguearse() {
         ultimoLogin = LocalDateTime.now()
     }
+
+    fun actualizarTokenNotificaciones(nuevoToken: String) {
+        tokenNotificaciones = nuevoToken
+    }
 }
 
 

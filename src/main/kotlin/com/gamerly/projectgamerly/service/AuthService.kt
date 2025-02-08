@@ -1,23 +1,19 @@
 package com.gamerly.projectgamerly.service
 
-import com.gamerly.projectgamerly.domain.Resenia
+
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.AuthDTO
-import com.gamerly.projectgamerly.dtos.ReseniasDTO
 import com.gamerly.projectgamerly.dtos.UsuarioCreacionDTO
 import com.gamerly.projectgamerly.exceptions.CredencialesInvalidasException
 import com.gamerly.projectgamerly.exceptions.NotFoundException
 import com.gamerly.projectgamerly.repos.UserRepository
-import com.gamerly.projectgamerly.security.TokenUtils
 import com.gamerly.projectgamerly.utilities.InvalidEmail
 import jakarta.transaction.Transactional
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
-
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

@@ -4,10 +4,9 @@ import com.gamerly.projectgamerly.domain.*
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.UserRepository
-import com.gamerly.projectgamerly.utilities.CredencialesInvalidas
-import com.gamerly.projectgamerly.utilities.InvalidEmail
 import com.gamerly.projectgamerly.utilities.userNotFound
 import com.gamerly.projectgamerly.utils.UserNotFound
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -84,52 +83,16 @@ class UsuarioService {
         return usuariosFiltrados.map{usuario -> UsuarioBusquedaDto(usuario) }
     }
 
-//    fun login(credenciales: CredencialesDTO): UsuarioLoginDTO {
-//        val usuarioCrendecial = Usuario().apply {
-//            email = credenciales.email
-//            password = credenciales.password
-//            tokenNotificaciones = credenciales.tokenNotificaciones
-//        }
-//        val usuario = usuarioRepository.findByEmail(usuarioCrendecial.email)
-//
-//        if (usuario.isEmpty) {
-//            throw CredencialesInvalidas("Credenciales invalidas")
-//        }
-//
-//        val usuarioEncontrado = usuario.get()
-//
-//        if (usuarioEncontrado.password != usuarioCrendecial.password) {
-//            throw CredencialesInvalidas("Credenciales invalidas")
-//        }
-//
-//        usuarioEncontrado.tokenNotificaciones = credenciales.tokenNotificaciones
-//        usuarioRepository.save(usuarioEncontrado)
-//
-//        return UsuarioLoginDTO.from(usuarioEncontrado);
-//    }
 
-//    fun crearUsuario(user: UsuarioCreacionDTO): Usuario {
-//        val usuario = usuarioRepository.findByEmail(user.email).orElse(null)
-//
-//        if(usuario != null){
-//            throw InvalidEmail("Ya existe un usuario registrado con ese email")
-//        }
-//
-//        val usuarioRegistro = Usuario().apply {
-//            nombre = user.nombre
-//            fechaDeNacimiento = LocalDate.parse(
-//                user.fechaNacimiento,
-//                DateTimeFormatter.ofPattern("dd/MM/yyyy")
-//            )
-//            email = user.email
-//            password = user.password
-//            discord = user.discord
-//            nacionalidad = user.nacionalidad
-//            foto = "https://i.ibb.co/HG1GTNR/avatar.png"
-//
-//        }
-//        return usuarioRepository.save(usuarioRegistro)
-//    }
+    @Transactional
+    fun actualizarTokenNotificaciones(id: Long, nuevoToken: String): Boolean {
+        val usuario = usuarioRepository.findById(id).orElse(null)
+            ?: return false
+
+        usuario.actualizarTokenNotificaciones(nuevoToken)
+        usuarioRepository.save(usuario)
+        return true
+    }
 
     fun editarUsuario(idUsuario: Long, usuarioEditado: UsuarioEditarDTO): UsuarioDetalleDTO {
         val usuario = usuarioRepository.findById(idUsuario)
