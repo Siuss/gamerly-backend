@@ -20,7 +20,7 @@ class Usuario(
     var nombre: String = "",
 
     @Column(nullable = false)
-    var foto: String = "",
+    var fileName: String = "",
 
     @Column(name = "fecha_de_nacimiento", nullable = false)
     var fechaDeNacimiento: LocalDate = LocalDate.now(),

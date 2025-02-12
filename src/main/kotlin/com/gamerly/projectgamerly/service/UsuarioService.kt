@@ -8,7 +8,9 @@ import com.gamerly.projectgamerly.utilities.userNotFound
 import com.gamerly.projectgamerly.utils.UserNotFound
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.method.P
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -16,6 +18,9 @@ import java.util.*
 
 @Service
 class UsuarioService {
+    @Autowired
+    private lateinit var userRepository: UserRepository
+
     @Autowired
     lateinit var usuarioRepository: UserRepository
     @Autowired
@@ -101,7 +106,7 @@ class UsuarioService {
             }
 
         usuarioEditado.nombre?.let { usuario.nombre = it }
-        usuarioEditado.foto?.let { usuario.foto = it }
+        usuarioEditado.uri?.let { usuario.fileName = it }
         usuarioEditado.nacionalidad?.let { usuario.nacionalidad = it }
 
         if (usuarioEditado.fechaNacimiento != null) {
@@ -132,7 +137,7 @@ class UsuarioService {
             val usuario = getUsuario(perfil.id)
 
             perfil.nombre?.let { usuario.nombre = it }
-            perfil?.foto?.let { usuario.foto = it }
+            perfil?.fileName?.let { usuario.fileName= it }
             perfil?.nacionalidad?.let { usuario.nacionalidad = it }
             perfil?.discord?.let { usuario.discord = it }
 
@@ -265,4 +270,5 @@ class UsuarioService {
 
         return usuario
     }
+
 }

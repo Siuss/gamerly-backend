@@ -1,5 +1,6 @@
 package com.gamerly.projectgamerly.controller;
 
+import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.service.BloqueosService
 import com.gamerly.projectgamerly.service.UsuarioService
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @CrossOrigin(origins = ["*"])
@@ -124,4 +126,5 @@ class UsuarioController {
     fun getUsuariosBloqueados(@PathVariable idUsuario: Long): List<UsuarioBloqueadoDTO> {
         return bloqueosService.getUsuariosBloqueados(idUsuario).map{UsuarioBloqueadoDTO.from(it)}
     }
+
 }

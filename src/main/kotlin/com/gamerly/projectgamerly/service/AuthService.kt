@@ -67,7 +67,7 @@ class AuthService : UserDetailsService {
             crearPassword(user.password)
             discord = user.discord
             nacionalidad = user.nacionalidad
-            foto = "https://i.ibb.co/HG1GTNR/avatar.png"
+            fileName = "https://i.ibb.co/HG1GTNR/avatar.png"
         }
         usuarioRepository.save(usuarioRegistro)
         return usuarioRegistro

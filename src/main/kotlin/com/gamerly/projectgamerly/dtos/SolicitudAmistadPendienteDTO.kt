@@ -6,7 +6,7 @@ class SolicitudAmistadPendienteDTO {
     var idUsuario: Long = 0
     var idSolicitud: Long = 0
     var nombre: String = ""
-    var foto: String = ""
+    var fileName: String = ""
     var mensaje: String = ""
     var discord: String = ""
 
@@ -15,7 +15,7 @@ class SolicitudAmistadPendienteDTO {
             dto.idSolicitud = solicitud.id
             dto.idUsuario = solicitud.usuarioCreador.id
             dto.nombre = solicitud.usuarioCreador.nombre
-            dto.foto = solicitud.usuarioCreador.foto
+            dto.fileName = solicitud.usuarioCreador.fileName
             dto.mensaje = solicitud.mensaje
             dto.discord = solicitud.usuarioCreador.discord
         }

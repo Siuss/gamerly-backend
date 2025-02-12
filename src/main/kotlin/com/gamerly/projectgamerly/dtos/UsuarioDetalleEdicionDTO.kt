@@ -7,7 +7,7 @@ class UsuarioDetalleEdicionDTO() {
     var id : Long = 0
     lateinit var nombre: String
     lateinit var discord: String
-    lateinit var foto: String
+    lateinit var fileName: String
     lateinit var email: String
     lateinit var password: String
     lateinit var juegosPreferidos: List<String>
@@ -22,7 +22,7 @@ class UsuarioDetalleEdicionDTO() {
         this.id = usuario.id
         this.nombre = usuario.nombre
         this.discord = usuario.discord
-        this.foto = usuario.foto
+        this.fileName = usuario.fileName
         this.email = usuario.email
         this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos.map{it.nombre}

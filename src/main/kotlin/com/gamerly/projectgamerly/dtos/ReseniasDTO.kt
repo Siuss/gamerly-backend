@@ -7,7 +7,7 @@ class ReseniasDTO {
     var idResenia: Long = 0
     var idUsuarioEmisor: Long = 0
     lateinit var nombre: String
-    lateinit var foto: String
+    lateinit var fileName: String
     var puntaje: Int = 0
     lateinit var comentario: String
     var verificada: Boolean = false
@@ -17,7 +17,7 @@ class ReseniasDTO {
             it.idResenia = resenia.id
             it.idUsuarioEmisor = usuarioEmisor.id
             it.nombre = usuarioEmisor.nombre
-            it.foto = usuarioEmisor.foto
+            it.fileName = usuarioEmisor.fileName
             it.puntaje = resenia.puntaje
             it.comentario = resenia.comentario
             it.verificada = resenia.verificada

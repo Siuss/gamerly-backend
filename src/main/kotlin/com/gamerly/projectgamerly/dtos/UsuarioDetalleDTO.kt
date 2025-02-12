@@ -9,7 +9,7 @@ class UsuarioDetalleDTO() {
     var id : Long = 0
     lateinit var nombre: String
     lateinit var discord: String
-    lateinit var foto: String
+    lateinit var fileName: String
     var edad: Int = 0
     lateinit var email: String
     lateinit var password: String
@@ -30,7 +30,7 @@ class UsuarioDetalleDTO() {
         this.nombre = usuario.nombre
         this.discord = usuario.discord
         this.edad = Period.between(usuario.fechaDeNacimiento, LocalDate.now()).years
-        this.foto = usuario.foto
+        this.fileName = usuario.fileName
         this.email = usuario.email
         this.password = usuario.password
         this.juegosPreferidos = usuario.juegosPreferidos.map { it.nombre }
