@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: ${SPRINGBOOT_PORT}
   error:
     whitelabel:
       enabled: false
@@ -16,7 +16,7 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:postgresql://0.0.0.0:5433/gamerly
+    url: ${DATABASE_URL}
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -41,7 +41,7 @@ spring:
             enable: true
 
 security:
-  secret-key: fc11a8a903105382311a8c17a6595dbc3618b2c0d201c92bf56c7bbf1c4f55cb
+  secret-key: ${SECRET_KEY}
   access-token-minutes: 300
 
 

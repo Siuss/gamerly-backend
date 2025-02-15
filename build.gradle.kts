@@ -39,6 +39,9 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-impl:0.12.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
 
+	// env config
+	implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+
 	//encryptación de password
 	implementation("org.bouncycastle:bcprov-jdk18on:1.77")
 

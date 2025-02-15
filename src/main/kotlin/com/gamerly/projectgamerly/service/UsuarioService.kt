@@ -4,6 +4,7 @@ import com.gamerly.projectgamerly.domain.*
 import com.gamerly.projectgamerly.dtos.*
 import com.gamerly.projectgamerly.repos.GameRepository
 import com.gamerly.projectgamerly.repos.UserRepository
+import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import com.gamerly.projectgamerly.utilities.userNotFound
 import com.gamerly.projectgamerly.utils.UserNotFound
 import jakarta.transaction.Transactional
@@ -269,6 +270,25 @@ class UsuarioService {
         usuarioRepository.save(usuario)
 
         return usuario
+    }
+
+    fun getUsuariosFiltrados(
+        puntaje: Long?,
+        dias: List<DiaDeLaSemana>?,
+        horarios: List<HorariosFavoritos>?,
+        nombre: String?
+    ): List<UsuarioDetalleDTO> {
+        val usuarios = userRepository.findUsuariosSegunFiltros(
+            puntaje,
+            dias,
+            horarios,
+            nombre
+        )
+
+        return usuarios.map { usuario ->
+            val reseniasDto = usuario.resenias.map { conversionReseniaDTO(it) }
+            UsuarioDetalleDTO(usuario, reseniasDto)
+        }
     }
 
 }

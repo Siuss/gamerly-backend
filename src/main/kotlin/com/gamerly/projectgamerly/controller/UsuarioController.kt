@@ -1,7 +1,9 @@
 package com.gamerly.projectgamerly.controller;
 
+import com.gamerly.projectgamerly.domain.HorariosFavoritos
 import com.gamerly.projectgamerly.domain.Usuario
 import com.gamerly.projectgamerly.dtos.*
+import com.gamerly.projectgamerly.resources.enum.DiaDeLaSemana
 import com.gamerly.projectgamerly.service.BloqueosService
 import com.gamerly.projectgamerly.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
@@ -126,5 +128,16 @@ class UsuarioController {
     fun getUsuariosBloqueados(@PathVariable idUsuario: Long): List<UsuarioBloqueadoDTO> {
         return bloqueosService.getUsuariosBloqueados(idUsuario).map{UsuarioBloqueadoDTO.from(it)}
     }
+
+    @GetMapping("/usuarios")
+    fun getUsuariosFiltrados(
+        @RequestParam(required = false) puntaje: Long?,
+        @RequestParam(required = false) dias: List<DiaDeLaSemana>?,
+        @RequestParam(required = false) horarios: List<HorariosFavoritos>?,
+        @RequestParam(required = false) nombre: String?
+    ): List<UsuarioDetalleDTO> {
+        return usuarioService.getUsuariosFiltrados(puntaje, dias, horarios, nombre)
+    }
+
 
 }

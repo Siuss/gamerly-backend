@@ -4,9 +4,8 @@ services:
     image: postgres:16-alpine
     container_name: gamerly_sql
     restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - .env
     ports:
       - '5433:5432'
     volumes:
@@ -19,9 +18,8 @@ services:
     restart: unless-stopped
     ports:
       - "5051:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: proyecto@gamerly.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+    env_file:
+      - .env
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
