@@ -29,5 +29,7 @@ class AuthController {
     @Operation(summary = "Creacion de usuario", description = "Permite crear usuarios a la app")
     fun crear(@RequestBody crendentialUser : UsuarioCreacionDTO) = authService.crearUsuario(crendentialUser)
 
-
+    @PostMapping("/oauth")
+    @Operation(summary = "OAuth", description = "Permite loguearse a la app mediante Google")
+    fun loginGoogle(@RequestBody crendentialUser : UsuarioCreacionDTO) = authService.loginGoogle(crendentialUser)
 }

@@ -73,4 +73,26 @@ class AuthService : UserDetailsService {
         return usuarioRegistro
     }
 
+    @Transactional(Transactional.TxType.REQUIRED)
+    fun loginGoogle(user: UsuarioCreacionDTO): Usuario {
+        if (usuarioRepository.findByEmail(user.email).isPresent) {
+            return login(AuthDTO(user.email, user.password))
+        } else {
+            val usuarioRegistro = Usuario().apply {
+                nombre = user.nombre
+                fechaDeNacimiento = LocalDate.parse(
+                    user.fechaNacimiento,
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                )
+                email = user.email
+                crearPassword(user.password)
+                discord = user.discord
+                nacionalidad = user.nacionalidad
+                fileName = "https://i.ibb.co/HG1GTNR/avatar.png"
+            }
+            usuarioRepository.save(usuarioRegistro)
+            return usuarioRegistro
+        }
+    }
+
 }

@@ -44,6 +44,7 @@ class WebSecurityConfig {
                 it.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 it.requestMatchers("/error").permitAll()
                 it.requestMatchers(HttpMethod.POST, "/auth/user").permitAll()
+                it.requestMatchers(HttpMethod.POST, "/auth/oauth").permitAll()
                 it.requestMatchers(HttpMethod.DELETE, "/auth/user/**").permitAll()
                     .anyRequest().authenticated()
             }
