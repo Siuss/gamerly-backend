@@ -31,5 +31,8 @@ class AuthController {
 
     @PostMapping("/oauth")
     @Operation(summary = "OAuth", description = "Permite loguearse a la app mediante Google")
-    fun loginGoogle(@RequestBody crendentialUser : UsuarioCreacionDTO) = authService.loginGoogle(crendentialUser)
+    fun loginGoogle(@RequestBody crendentialUser : UsuarioCreacionDTO) : String {
+        val user = authService.loginGoogle(crendentialUser)
+        return tokenUtils.createToken(user.email, user.id)
+    }
 }
