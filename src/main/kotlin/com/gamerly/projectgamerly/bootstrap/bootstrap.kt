@@ -269,7 +269,7 @@ class Bootstrap: InitializingBean {
     fun usuario() {
         usuario1 = Usuario(
             "Nanami",
-            "https://imagen.nextn.es/wp-content/uploads/2018/06/1807-03-Pok%C3%A9mon-GO-Squirtle-gafas-de-sol.jpg?strip=all&lossy=1&ssl=1",
+            "https://res.cloudinary.com/dwuwtg0ds/image/upload/v1739760199/za9ji12kosmw0ts8imiu.jpg",
             LocalDate.of(1999, 1, 5),
             "nanami@gmail.com",
             hashearContraseña("0912Carp"),
@@ -297,7 +297,7 @@ class Bootstrap: InitializingBean {
 
         usuario2 = Usuario(
             "NicolasMar",
-            "https://descubre.rci.com/wp-content/uploads/2019/08/800x500px_Bariloche2_A.png",
+            "https://res.cloudinary.com/dwuwtg0ds/image/upload/v1739330356/lrasxoka79zjs7oihnpa.png",
             LocalDate.of(2001, 7, 1),
             "nico@gmail.com",
             hashearContraseña("1812Arg@"),
